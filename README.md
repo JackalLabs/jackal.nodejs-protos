@@ -1,2 +1,2 @@
-# jackal.js-protos
-Package of all protos used by Jackal.js
+# jackal.nodejs-protos
+Package of all protos used by Jackal.nodejs
