@@ -187,7 +187,9 @@ export const QueryProposalRequest = {
 
   toJSON(message: QueryProposalRequest): unknown {
     const obj: any = {};
-    message.proposalId !== undefined && (obj.proposalId = Math.round(message.proposalId));
+    if (message.proposalId !== 0) {
+      obj.proposalId = Math.round(message.proposalId);
+    }
     return obj;
   },
 
@@ -243,7 +245,9 @@ export const QueryProposalResponse = {
 
   toJSON(message: QueryProposalResponse): unknown {
     const obj: any = {};
-    message.proposal !== undefined && (obj.proposal = message.proposal ? Proposal.toJSON(message.proposal) : undefined);
+    if (message.proposal !== undefined) {
+      obj.proposal = Proposal.toJSON(message.proposal);
+    }
     return obj;
   },
 
@@ -336,11 +340,18 @@ export const QueryProposalsRequest = {
 
   toJSON(message: QueryProposalsRequest): unknown {
     const obj: any = {};
-    message.proposalStatus !== undefined && (obj.proposalStatus = proposalStatusToJSON(message.proposalStatus));
-    message.voter !== undefined && (obj.voter = message.voter);
-    message.depositor !== undefined && (obj.depositor = message.depositor);
-    message.pagination !== undefined &&
-      (obj.pagination = message.pagination ? PageRequest.toJSON(message.pagination) : undefined);
+    if (message.proposalStatus !== 0) {
+      obj.proposalStatus = proposalStatusToJSON(message.proposalStatus);
+    }
+    if (message.voter !== "") {
+      obj.voter = message.voter;
+    }
+    if (message.depositor !== "") {
+      obj.depositor = message.depositor;
+    }
+    if (message.pagination !== undefined) {
+      obj.pagination = PageRequest.toJSON(message.pagination);
+    }
     return obj;
   },
 
@@ -414,13 +425,12 @@ export const QueryProposalsResponse = {
 
   toJSON(message: QueryProposalsResponse): unknown {
     const obj: any = {};
-    if (message.proposals) {
-      obj.proposals = message.proposals.map((e) => e ? Proposal.toJSON(e) : undefined);
-    } else {
-      obj.proposals = [];
+    if (message.proposals?.length) {
+      obj.proposals = message.proposals.map((e) => Proposal.toJSON(e));
     }
-    message.pagination !== undefined &&
-      (obj.pagination = message.pagination ? PageResponse.toJSON(message.pagination) : undefined);
+    if (message.pagination !== undefined) {
+      obj.pagination = PageResponse.toJSON(message.pagination);
+    }
     return obj;
   },
 
@@ -492,8 +502,12 @@ export const QueryVoteRequest = {
 
   toJSON(message: QueryVoteRequest): unknown {
     const obj: any = {};
-    message.proposalId !== undefined && (obj.proposalId = Math.round(message.proposalId));
-    message.voter !== undefined && (obj.voter = message.voter);
+    if (message.proposalId !== 0) {
+      obj.proposalId = Math.round(message.proposalId);
+    }
+    if (message.voter !== "") {
+      obj.voter = message.voter;
+    }
     return obj;
   },
 
@@ -550,7 +564,9 @@ export const QueryVoteResponse = {
 
   toJSON(message: QueryVoteResponse): unknown {
     const obj: any = {};
-    message.vote !== undefined && (obj.vote = message.vote ? Vote.toJSON(message.vote) : undefined);
+    if (message.vote !== undefined) {
+      obj.vote = Vote.toJSON(message.vote);
+    }
     return obj;
   },
 
@@ -619,9 +635,12 @@ export const QueryVotesRequest = {
 
   toJSON(message: QueryVotesRequest): unknown {
     const obj: any = {};
-    message.proposalId !== undefined && (obj.proposalId = Math.round(message.proposalId));
-    message.pagination !== undefined &&
-      (obj.pagination = message.pagination ? PageRequest.toJSON(message.pagination) : undefined);
+    if (message.proposalId !== 0) {
+      obj.proposalId = Math.round(message.proposalId);
+    }
+    if (message.pagination !== undefined) {
+      obj.pagination = PageRequest.toJSON(message.pagination);
+    }
     return obj;
   },
 
@@ -693,13 +712,12 @@ export const QueryVotesResponse = {
 
   toJSON(message: QueryVotesResponse): unknown {
     const obj: any = {};
-    if (message.votes) {
-      obj.votes = message.votes.map((e) => e ? Vote.toJSON(e) : undefined);
-    } else {
-      obj.votes = [];
+    if (message.votes?.length) {
+      obj.votes = message.votes.map((e) => Vote.toJSON(e));
     }
-    message.pagination !== undefined &&
-      (obj.pagination = message.pagination ? PageResponse.toJSON(message.pagination) : undefined);
+    if (message.pagination !== undefined) {
+      obj.pagination = PageResponse.toJSON(message.pagination);
+    }
     return obj;
   },
 
@@ -758,7 +776,9 @@ export const QueryParamsRequest = {
 
   toJSON(message: QueryParamsRequest): unknown {
     const obj: any = {};
-    message.paramsType !== undefined && (obj.paramsType = message.paramsType);
+    if (message.paramsType !== "") {
+      obj.paramsType = message.paramsType;
+    }
     return obj;
   },
 
@@ -838,12 +858,15 @@ export const QueryParamsResponse = {
 
   toJSON(message: QueryParamsResponse): unknown {
     const obj: any = {};
-    message.votingParams !== undefined &&
-      (obj.votingParams = message.votingParams ? VotingParams.toJSON(message.votingParams) : undefined);
-    message.depositParams !== undefined &&
-      (obj.depositParams = message.depositParams ? DepositParams.toJSON(message.depositParams) : undefined);
-    message.tallyParams !== undefined &&
-      (obj.tallyParams = message.tallyParams ? TallyParams.toJSON(message.tallyParams) : undefined);
+    if (message.votingParams !== undefined) {
+      obj.votingParams = VotingParams.toJSON(message.votingParams);
+    }
+    if (message.depositParams !== undefined) {
+      obj.depositParams = DepositParams.toJSON(message.depositParams);
+    }
+    if (message.tallyParams !== undefined) {
+      obj.tallyParams = TallyParams.toJSON(message.tallyParams);
+    }
     return obj;
   },
 
@@ -920,8 +943,12 @@ export const QueryDepositRequest = {
 
   toJSON(message: QueryDepositRequest): unknown {
     const obj: any = {};
-    message.proposalId !== undefined && (obj.proposalId = Math.round(message.proposalId));
-    message.depositor !== undefined && (obj.depositor = message.depositor);
+    if (message.proposalId !== 0) {
+      obj.proposalId = Math.round(message.proposalId);
+    }
+    if (message.depositor !== "") {
+      obj.depositor = message.depositor;
+    }
     return obj;
   },
 
@@ -978,7 +1005,9 @@ export const QueryDepositResponse = {
 
   toJSON(message: QueryDepositResponse): unknown {
     const obj: any = {};
-    message.deposit !== undefined && (obj.deposit = message.deposit ? Deposit.toJSON(message.deposit) : undefined);
+    if (message.deposit !== undefined) {
+      obj.deposit = Deposit.toJSON(message.deposit);
+    }
     return obj;
   },
 
@@ -1049,9 +1078,12 @@ export const QueryDepositsRequest = {
 
   toJSON(message: QueryDepositsRequest): unknown {
     const obj: any = {};
-    message.proposalId !== undefined && (obj.proposalId = Math.round(message.proposalId));
-    message.pagination !== undefined &&
-      (obj.pagination = message.pagination ? PageRequest.toJSON(message.pagination) : undefined);
+    if (message.proposalId !== 0) {
+      obj.proposalId = Math.round(message.proposalId);
+    }
+    if (message.pagination !== undefined) {
+      obj.pagination = PageRequest.toJSON(message.pagination);
+    }
     return obj;
   },
 
@@ -1123,13 +1155,12 @@ export const QueryDepositsResponse = {
 
   toJSON(message: QueryDepositsResponse): unknown {
     const obj: any = {};
-    if (message.deposits) {
-      obj.deposits = message.deposits.map((e) => e ? Deposit.toJSON(e) : undefined);
-    } else {
-      obj.deposits = [];
+    if (message.deposits?.length) {
+      obj.deposits = message.deposits.map((e) => Deposit.toJSON(e));
     }
-    message.pagination !== undefined &&
-      (obj.pagination = message.pagination ? PageResponse.toJSON(message.pagination) : undefined);
+    if (message.pagination !== undefined) {
+      obj.pagination = PageResponse.toJSON(message.pagination);
+    }
     return obj;
   },
 
@@ -1188,7 +1219,9 @@ export const QueryTallyResultRequest = {
 
   toJSON(message: QueryTallyResultRequest): unknown {
     const obj: any = {};
-    message.proposalId !== undefined && (obj.proposalId = Math.round(message.proposalId));
+    if (message.proposalId !== 0) {
+      obj.proposalId = Math.round(message.proposalId);
+    }
     return obj;
   },
 
@@ -1244,7 +1277,9 @@ export const QueryTallyResultResponse = {
 
   toJSON(message: QueryTallyResultResponse): unknown {
     const obj: any = {};
-    message.tally !== undefined && (obj.tally = message.tally ? TallyResult.toJSON(message.tally) : undefined);
+    if (message.tally !== undefined) {
+      obj.tally = TallyResult.toJSON(message.tally);
+    }
     return obj;
   },
 
@@ -1568,14 +1603,14 @@ export class GrpcWebImpl {
     const request = { ..._request, ...methodDesc.requestType };
     const maybeCombinedMetadata = metadata && this.options.metadata
       ? new BrowserHeaders({ ...this.options?.metadata.headersMap, ...metadata?.headersMap })
-      : metadata || this.options.metadata;
+      : metadata ?? this.options.metadata;
     return new Promise((resolve, reject) => {
       grpc.unary(methodDesc, {
         request,
         host: this.host,
-        metadata: maybeCombinedMetadata,
-        transport: this.options.transport,
-        debug: this.options.debug,
+        metadata: maybeCombinedMetadata ?? {},
+        ...(this.options.transport !== undefined ? { transport: this.options.transport } : {}),
+        debug: this.options.debug ?? false,
         onEnd: function (response) {
           if (response.status === grpc.Code.OK) {
             resolve(response.message!.toObject());
@@ -1589,10 +1624,10 @@ export class GrpcWebImpl {
   }
 }
 
-declare var self: any | undefined;
-declare var window: any | undefined;
-declare var global: any | undefined;
-var tsProtoGlobalThis: any = (() => {
+declare const self: any | undefined;
+declare const window: any | undefined;
+declare const global: any | undefined;
+const tsProtoGlobalThis: any = (() => {
   if (typeof globalThis !== "undefined") {
     return globalThis;
   }

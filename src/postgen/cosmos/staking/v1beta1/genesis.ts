@@ -43,7 +43,7 @@ export interface LastValidatorPower {
 function createBaseGenesisState(): GenesisState {
   return {
     params: undefined,
-    lastTotalPower: new Uint8Array(),
+    lastTotalPower: new Uint8Array(0),
     lastValidatorPowers: [],
     validators: [],
     delegations: [],
@@ -157,7 +157,7 @@ export const GenesisState = {
   fromJSON(object: any): GenesisState {
     return {
       params: isSet(object.params) ? Params.fromJSON(object.params) : undefined,
-      lastTotalPower: isSet(object.lastTotalPower) ? bytesFromBase64(object.lastTotalPower) : new Uint8Array(),
+      lastTotalPower: isSet(object.lastTotalPower) ? bytesFromBase64(object.lastTotalPower) : new Uint8Array(0),
       lastValidatorPowers: Array.isArray(object?.lastValidatorPowers)
         ? object.lastValidatorPowers.map((e: any) => LastValidatorPower.fromJSON(e))
         : [],
@@ -175,37 +175,30 @@ export const GenesisState = {
 
   toJSON(message: GenesisState): unknown {
     const obj: any = {};
-    message.params !== undefined && (obj.params = message.params ? Params.toJSON(message.params) : undefined);
-    message.lastTotalPower !== undefined &&
-      (obj.lastTotalPower = base64FromBytes(
-        message.lastTotalPower !== undefined ? message.lastTotalPower : new Uint8Array(),
-      ));
-    if (message.lastValidatorPowers) {
-      obj.lastValidatorPowers = message.lastValidatorPowers.map((e) => e ? LastValidatorPower.toJSON(e) : undefined);
-    } else {
-      obj.lastValidatorPowers = [];
+    if (message.params !== undefined) {
+      obj.params = Params.toJSON(message.params);
     }
-    if (message.validators) {
-      obj.validators = message.validators.map((e) => e ? Validator.toJSON(e) : undefined);
-    } else {
-      obj.validators = [];
+    if (message.lastTotalPower.length !== 0) {
+      obj.lastTotalPower = base64FromBytes(message.lastTotalPower);
     }
-    if (message.delegations) {
-      obj.delegations = message.delegations.map((e) => e ? Delegation.toJSON(e) : undefined);
-    } else {
-      obj.delegations = [];
+    if (message.lastValidatorPowers?.length) {
+      obj.lastValidatorPowers = message.lastValidatorPowers.map((e) => LastValidatorPower.toJSON(e));
     }
-    if (message.unbondingDelegations) {
-      obj.unbondingDelegations = message.unbondingDelegations.map((e) => e ? UnbondingDelegation.toJSON(e) : undefined);
-    } else {
-      obj.unbondingDelegations = [];
+    if (message.validators?.length) {
+      obj.validators = message.validators.map((e) => Validator.toJSON(e));
     }
-    if (message.redelegations) {
-      obj.redelegations = message.redelegations.map((e) => e ? Redelegation.toJSON(e) : undefined);
-    } else {
-      obj.redelegations = [];
+    if (message.delegations?.length) {
+      obj.delegations = message.delegations.map((e) => Delegation.toJSON(e));
     }
-    message.exported !== undefined && (obj.exported = message.exported);
+    if (message.unbondingDelegations?.length) {
+      obj.unbondingDelegations = message.unbondingDelegations.map((e) => UnbondingDelegation.toJSON(e));
+    }
+    if (message.redelegations?.length) {
+      obj.redelegations = message.redelegations.map((e) => Redelegation.toJSON(e));
+    }
+    if (message.exported === true) {
+      obj.exported = message.exported;
+    }
     return obj;
   },
 
@@ -218,7 +211,7 @@ export const GenesisState = {
     message.params = (object.params !== undefined && object.params !== null)
       ? Params.fromPartial(object.params)
       : undefined;
-    message.lastTotalPower = object.lastTotalPower ?? new Uint8Array();
+    message.lastTotalPower = object.lastTotalPower ?? new Uint8Array(0);
     message.lastValidatorPowers = object.lastValidatorPowers?.map((e) => LastValidatorPower.fromPartial(e)) || [];
     message.validators = object.validators?.map((e) => Validator.fromPartial(e)) || [];
     message.delegations = object.delegations?.map((e) => Delegation.fromPartial(e)) || [];
@@ -283,8 +276,12 @@ export const LastValidatorPower = {
 
   toJSON(message: LastValidatorPower): unknown {
     const obj: any = {};
-    message.address !== undefined && (obj.address = message.address);
-    message.power !== undefined && (obj.power = Math.round(message.power));
+    if (message.address !== "") {
+      obj.address = message.address;
+    }
+    if (message.power !== 0) {
+      obj.power = Math.round(message.power);
+    }
     return obj;
   },
 
@@ -300,10 +297,10 @@ export const LastValidatorPower = {
   },
 };
 
-declare var self: any | undefined;
-declare var window: any | undefined;
-declare var global: any | undefined;
-var tsProtoGlobalThis: any = (() => {
+declare const self: any | undefined;
+declare const window: any | undefined;
+declare const global: any | undefined;
+const tsProtoGlobalThis: any = (() => {
   if (typeof globalThis !== "undefined") {
     return globalThis;
   }

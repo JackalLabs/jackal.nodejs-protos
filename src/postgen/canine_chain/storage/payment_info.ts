@@ -100,11 +100,21 @@ export const StoragePaymentInfo = {
 
   toJSON(message: StoragePaymentInfo): unknown {
     const obj: any = {};
-    message.start !== undefined && (obj.start = message.start.toISOString());
-    message.end !== undefined && (obj.end = message.end.toISOString());
-    message.spaceAvailable !== undefined && (obj.spaceAvailable = Math.round(message.spaceAvailable));
-    message.spaceUsed !== undefined && (obj.spaceUsed = Math.round(message.spaceUsed));
-    message.address !== undefined && (obj.address = message.address);
+    if (message.start !== undefined) {
+      obj.start = message.start.toISOString();
+    }
+    if (message.end !== undefined) {
+      obj.end = message.end.toISOString();
+    }
+    if (message.spaceAvailable !== 0) {
+      obj.spaceAvailable = Math.round(message.spaceAvailable);
+    }
+    if (message.spaceUsed !== 0) {
+      obj.spaceUsed = Math.round(message.spaceUsed);
+    }
+    if (message.address !== "") {
+      obj.address = message.address;
+    }
     return obj;
   },
 
@@ -123,10 +133,10 @@ export const StoragePaymentInfo = {
   },
 };
 
-declare var self: any | undefined;
-declare var window: any | undefined;
-declare var global: any | undefined;
-var tsProtoGlobalThis: any = (() => {
+declare const self: any | undefined;
+declare const window: any | undefined;
+declare const global: any | undefined;
+const tsProtoGlobalThis: any = (() => {
   if (typeof globalThis !== "undefined") {
     return globalThis;
   }

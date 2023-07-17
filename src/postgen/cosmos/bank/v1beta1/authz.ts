@@ -55,10 +55,8 @@ export const SendAuthorization = {
 
   toJSON(message: SendAuthorization): unknown {
     const obj: any = {};
-    if (message.spendLimit) {
-      obj.spendLimit = message.spendLimit.map((e) => e ? Coin.toJSON(e) : undefined);
-    } else {
-      obj.spendLimit = [];
+    if (message.spendLimit?.length) {
+      obj.spendLimit = message.spendLimit.map((e) => Coin.toJSON(e));
     }
     return obj;
   },

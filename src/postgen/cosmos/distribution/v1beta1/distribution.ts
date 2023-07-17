@@ -202,10 +202,18 @@ export const Params = {
 
   toJSON(message: Params): unknown {
     const obj: any = {};
-    message.communityTax !== undefined && (obj.communityTax = message.communityTax);
-    message.baseProposerReward !== undefined && (obj.baseProposerReward = message.baseProposerReward);
-    message.bonusProposerReward !== undefined && (obj.bonusProposerReward = message.bonusProposerReward);
-    message.withdrawAddrEnabled !== undefined && (obj.withdrawAddrEnabled = message.withdrawAddrEnabled);
+    if (message.communityTax !== "") {
+      obj.communityTax = message.communityTax;
+    }
+    if (message.baseProposerReward !== "") {
+      obj.baseProposerReward = message.baseProposerReward;
+    }
+    if (message.bonusProposerReward !== "") {
+      obj.bonusProposerReward = message.bonusProposerReward;
+    }
+    if (message.withdrawAddrEnabled === true) {
+      obj.withdrawAddrEnabled = message.withdrawAddrEnabled;
+    }
     return obj;
   },
 
@@ -279,12 +287,12 @@ export const ValidatorHistoricalRewards = {
 
   toJSON(message: ValidatorHistoricalRewards): unknown {
     const obj: any = {};
-    if (message.cumulativeRewardRatio) {
-      obj.cumulativeRewardRatio = message.cumulativeRewardRatio.map((e) => e ? DecCoin.toJSON(e) : undefined);
-    } else {
-      obj.cumulativeRewardRatio = [];
+    if (message.cumulativeRewardRatio?.length) {
+      obj.cumulativeRewardRatio = message.cumulativeRewardRatio.map((e) => DecCoin.toJSON(e));
     }
-    message.referenceCount !== undefined && (obj.referenceCount = Math.round(message.referenceCount));
+    if (message.referenceCount !== 0) {
+      obj.referenceCount = Math.round(message.referenceCount);
+    }
     return obj;
   },
 
@@ -354,12 +362,12 @@ export const ValidatorCurrentRewards = {
 
   toJSON(message: ValidatorCurrentRewards): unknown {
     const obj: any = {};
-    if (message.rewards) {
-      obj.rewards = message.rewards.map((e) => e ? DecCoin.toJSON(e) : undefined);
-    } else {
-      obj.rewards = [];
+    if (message.rewards?.length) {
+      obj.rewards = message.rewards.map((e) => DecCoin.toJSON(e));
     }
-    message.period !== undefined && (obj.period = Math.round(message.period));
+    if (message.period !== 0) {
+      obj.period = Math.round(message.period);
+    }
     return obj;
   },
 
@@ -418,10 +426,8 @@ export const ValidatorAccumulatedCommission = {
 
   toJSON(message: ValidatorAccumulatedCommission): unknown {
     const obj: any = {};
-    if (message.commission) {
-      obj.commission = message.commission.map((e) => e ? DecCoin.toJSON(e) : undefined);
-    } else {
-      obj.commission = [];
+    if (message.commission?.length) {
+      obj.commission = message.commission.map((e) => DecCoin.toJSON(e));
     }
     return obj;
   },
@@ -480,10 +486,8 @@ export const ValidatorOutstandingRewards = {
 
   toJSON(message: ValidatorOutstandingRewards): unknown {
     const obj: any = {};
-    if (message.rewards) {
-      obj.rewards = message.rewards.map((e) => e ? DecCoin.toJSON(e) : undefined);
-    } else {
-      obj.rewards = [];
+    if (message.rewards?.length) {
+      obj.rewards = message.rewards.map((e) => DecCoin.toJSON(e));
     }
     return obj;
   },
@@ -553,8 +557,12 @@ export const ValidatorSlashEvent = {
 
   toJSON(message: ValidatorSlashEvent): unknown {
     const obj: any = {};
-    message.validatorPeriod !== undefined && (obj.validatorPeriod = Math.round(message.validatorPeriod));
-    message.fraction !== undefined && (obj.fraction = message.fraction);
+    if (message.validatorPeriod !== 0) {
+      obj.validatorPeriod = Math.round(message.validatorPeriod);
+    }
+    if (message.fraction !== "") {
+      obj.fraction = message.fraction;
+    }
     return obj;
   },
 
@@ -615,10 +623,8 @@ export const ValidatorSlashEvents = {
 
   toJSON(message: ValidatorSlashEvents): unknown {
     const obj: any = {};
-    if (message.validatorSlashEvents) {
-      obj.validatorSlashEvents = message.validatorSlashEvents.map((e) => e ? ValidatorSlashEvent.toJSON(e) : undefined);
-    } else {
-      obj.validatorSlashEvents = [];
+    if (message.validatorSlashEvents?.length) {
+      obj.validatorSlashEvents = message.validatorSlashEvents.map((e) => ValidatorSlashEvent.toJSON(e));
     }
     return obj;
   },
@@ -679,10 +685,8 @@ export const FeePool = {
 
   toJSON(message: FeePool): unknown {
     const obj: any = {};
-    if (message.communityPool) {
-      obj.communityPool = message.communityPool.map((e) => e ? DecCoin.toJSON(e) : undefined);
-    } else {
-      obj.communityPool = [];
+    if (message.communityPool?.length) {
+      obj.communityPool = message.communityPool.map((e) => DecCoin.toJSON(e));
     }
     return obj;
   },
@@ -774,13 +778,17 @@ export const CommunityPoolSpendProposal = {
 
   toJSON(message: CommunityPoolSpendProposal): unknown {
     const obj: any = {};
-    message.title !== undefined && (obj.title = message.title);
-    message.description !== undefined && (obj.description = message.description);
-    message.recipient !== undefined && (obj.recipient = message.recipient);
-    if (message.amount) {
-      obj.amount = message.amount.map((e) => e ? Coin.toJSON(e) : undefined);
-    } else {
-      obj.amount = [];
+    if (message.title !== "") {
+      obj.title = message.title;
+    }
+    if (message.description !== "") {
+      obj.description = message.description;
+    }
+    if (message.recipient !== "") {
+      obj.recipient = message.recipient;
+    }
+    if (message.amount?.length) {
+      obj.amount = message.amount.map((e) => Coin.toJSON(e));
     }
     return obj;
   },
@@ -864,9 +872,15 @@ export const DelegatorStartingInfo = {
 
   toJSON(message: DelegatorStartingInfo): unknown {
     const obj: any = {};
-    message.previousPeriod !== undefined && (obj.previousPeriod = Math.round(message.previousPeriod));
-    message.stake !== undefined && (obj.stake = message.stake);
-    message.height !== undefined && (obj.height = Math.round(message.height));
+    if (message.previousPeriod !== 0) {
+      obj.previousPeriod = Math.round(message.previousPeriod);
+    }
+    if (message.stake !== "") {
+      obj.stake = message.stake;
+    }
+    if (message.height !== 0) {
+      obj.height = Math.round(message.height);
+    }
     return obj;
   },
 
@@ -937,11 +951,11 @@ export const DelegationDelegatorReward = {
 
   toJSON(message: DelegationDelegatorReward): unknown {
     const obj: any = {};
-    message.validatorAddress !== undefined && (obj.validatorAddress = message.validatorAddress);
-    if (message.reward) {
-      obj.reward = message.reward.map((e) => e ? DecCoin.toJSON(e) : undefined);
-    } else {
-      obj.reward = [];
+    if (message.validatorAddress !== "") {
+      obj.validatorAddress = message.validatorAddress;
+    }
+    if (message.reward?.length) {
+      obj.reward = message.reward.map((e) => DecCoin.toJSON(e));
     }
     return obj;
   },
@@ -1045,11 +1059,21 @@ export const CommunityPoolSpendProposalWithDeposit = {
 
   toJSON(message: CommunityPoolSpendProposalWithDeposit): unknown {
     const obj: any = {};
-    message.title !== undefined && (obj.title = message.title);
-    message.description !== undefined && (obj.description = message.description);
-    message.recipient !== undefined && (obj.recipient = message.recipient);
-    message.amount !== undefined && (obj.amount = message.amount);
-    message.deposit !== undefined && (obj.deposit = message.deposit);
+    if (message.title !== "") {
+      obj.title = message.title;
+    }
+    if (message.description !== "") {
+      obj.description = message.description;
+    }
+    if (message.recipient !== "") {
+      obj.recipient = message.recipient;
+    }
+    if (message.amount !== "") {
+      obj.amount = message.amount;
+    }
+    if (message.deposit !== "") {
+      obj.deposit = message.deposit;
+    }
     return obj;
   },
 
@@ -1072,10 +1096,10 @@ export const CommunityPoolSpendProposalWithDeposit = {
   },
 };
 
-declare var self: any | undefined;
-declare var window: any | undefined;
-declare var global: any | undefined;
-var tsProtoGlobalThis: any = (() => {
+declare const self: any | undefined;
+declare const window: any | undefined;
+declare const global: any | undefined;
+const tsProtoGlobalThis: any = (() => {
   if (typeof globalThis !== "undefined") {
     return globalThis;
   }

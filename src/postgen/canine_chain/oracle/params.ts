@@ -49,7 +49,9 @@ export const Params = {
 
   toJSON(message: Params): unknown {
     const obj: any = {};
-    message.deposit !== undefined && (obj.deposit = message.deposit);
+    if (message.deposit !== "") {
+      obj.deposit = message.deposit;
+    }
     return obj;
   },
 

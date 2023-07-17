@@ -213,11 +213,21 @@ export const MsgPostContract = {
 
   toJSON(message: MsgPostContract): unknown {
     const obj: any = {};
-    message.creator !== undefined && (obj.creator = message.creator);
-    message.merkle !== undefined && (obj.merkle = message.merkle);
-    message.signee !== undefined && (obj.signee = message.signee);
-    message.filesize !== undefined && (obj.filesize = message.filesize);
-    message.fid !== undefined && (obj.fid = message.fid);
+    if (message.creator !== "") {
+      obj.creator = message.creator;
+    }
+    if (message.merkle !== "") {
+      obj.merkle = message.merkle;
+    }
+    if (message.signee !== "") {
+      obj.signee = message.signee;
+    }
+    if (message.filesize !== "") {
+      obj.filesize = message.filesize;
+    }
+    if (message.fid !== "") {
+      obj.fid = message.fid;
+    }
     return obj;
   },
 
@@ -356,10 +366,18 @@ export const MsgPostproof = {
 
   toJSON(message: MsgPostproof): unknown {
     const obj: any = {};
-    message.creator !== undefined && (obj.creator = message.creator);
-    message.item !== undefined && (obj.item = message.item);
-    message.hashlist !== undefined && (obj.hashlist = message.hashlist);
-    message.cid !== undefined && (obj.cid = message.cid);
+    if (message.creator !== "") {
+      obj.creator = message.creator;
+    }
+    if (message.item !== "") {
+      obj.item = message.item;
+    }
+    if (message.hashlist !== "") {
+      obj.hashlist = message.hashlist;
+    }
+    if (message.cid !== "") {
+      obj.cid = message.cid;
+    }
     return obj;
   },
 
@@ -431,8 +449,12 @@ export const MsgPostproofResponse = {
 
   toJSON(message: MsgPostproofResponse): unknown {
     const obj: any = {};
-    message.success !== undefined && (obj.success = message.success);
-    message.errorMessage !== undefined && (obj.errorMessage = message.errorMessage);
+    if (message.success === true) {
+      obj.success = message.success;
+    }
+    if (message.errorMessage !== "") {
+      obj.errorMessage = message.errorMessage;
+    }
     return obj;
   },
 
@@ -513,9 +535,15 @@ export const MsgSignContract = {
 
   toJSON(message: MsgSignContract): unknown {
     const obj: any = {};
-    message.creator !== undefined && (obj.creator = message.creator);
-    message.cid !== undefined && (obj.cid = message.cid);
-    message.payOnce !== undefined && (obj.payOnce = message.payOnce);
+    if (message.creator !== "") {
+      obj.creator = message.creator;
+    }
+    if (message.cid !== "") {
+      obj.cid = message.cid;
+    }
+    if (message.payOnce === true) {
+      obj.payOnce = message.payOnce;
+    }
     return obj;
   },
 
@@ -630,8 +658,12 @@ export const MsgSetProviderIP = {
 
   toJSON(message: MsgSetProviderIP): unknown {
     const obj: any = {};
-    message.creator !== undefined && (obj.creator = message.creator);
-    message.ip !== undefined && (obj.ip = message.ip);
+    if (message.creator !== "") {
+      obj.creator = message.creator;
+    }
+    if (message.ip !== "") {
+      obj.ip = message.ip;
+    }
     return obj;
   },
 
@@ -745,8 +777,12 @@ export const MsgSetProviderKeybase = {
 
   toJSON(message: MsgSetProviderKeybase): unknown {
     const obj: any = {};
-    message.creator !== undefined && (obj.creator = message.creator);
-    message.keybase !== undefined && (obj.keybase = message.keybase);
+    if (message.creator !== "") {
+      obj.creator = message.creator;
+    }
+    if (message.keybase !== "") {
+      obj.keybase = message.keybase;
+    }
     return obj;
   },
 
@@ -860,8 +896,12 @@ export const MsgSetProviderTotalspace = {
 
   toJSON(message: MsgSetProviderTotalspace): unknown {
     const obj: any = {};
-    message.creator !== undefined && (obj.creator = message.creator);
-    message.space !== undefined && (obj.space = message.space);
+    if (message.creator !== "") {
+      obj.creator = message.creator;
+    }
+    if (message.space !== "") {
+      obj.space = message.space;
+    }
     return obj;
   },
 
@@ -979,8 +1019,12 @@ export const MsgAddClaimer = {
 
   toJSON(message: MsgAddClaimer): unknown {
     const obj: any = {};
-    message.creator !== undefined && (obj.creator = message.creator);
-    message.claimAddress !== undefined && (obj.claimAddress = message.claimAddress);
+    if (message.creator !== "") {
+      obj.creator = message.creator;
+    }
+    if (message.claimAddress !== "") {
+      obj.claimAddress = message.claimAddress;
+    }
     return obj;
   },
 
@@ -1094,8 +1138,12 @@ export const MsgRemoveClaimer = {
 
   toJSON(message: MsgRemoveClaimer): unknown {
     const obj: any = {};
-    message.creator !== undefined && (obj.creator = message.creator);
-    message.claimAddress !== undefined && (obj.claimAddress = message.claimAddress);
+    if (message.creator !== "") {
+      obj.creator = message.creator;
+    }
+    if (message.claimAddress !== "") {
+      obj.claimAddress = message.claimAddress;
+    }
     return obj;
   },
 
@@ -1231,10 +1279,18 @@ export const MsgInitProvider = {
 
   toJSON(message: MsgInitProvider): unknown {
     const obj: any = {};
-    message.creator !== undefined && (obj.creator = message.creator);
-    message.ip !== undefined && (obj.ip = message.ip);
-    message.keybase !== undefined && (obj.keybase = message.keybase);
-    message.totalspace !== undefined && (obj.totalspace = message.totalspace);
+    if (message.creator !== "") {
+      obj.creator = message.creator;
+    }
+    if (message.ip !== "") {
+      obj.ip = message.ip;
+    }
+    if (message.keybase !== "") {
+      obj.keybase = message.keybase;
+    }
+    if (message.totalspace !== "") {
+      obj.totalspace = message.totalspace;
+    }
     return obj;
   },
 
@@ -1350,8 +1406,12 @@ export const MsgCancelContract = {
 
   toJSON(message: MsgCancelContract): unknown {
     const obj: any = {};
-    message.creator !== undefined && (obj.creator = message.creator);
-    message.cid !== undefined && (obj.cid = message.cid);
+    if (message.creator !== "") {
+      obj.creator = message.creator;
+    }
+    if (message.cid !== "") {
+      obj.cid = message.cid;
+    }
     return obj;
   },
 
@@ -1498,11 +1558,21 @@ export const MsgBuyStorage = {
 
   toJSON(message: MsgBuyStorage): unknown {
     const obj: any = {};
-    message.creator !== undefined && (obj.creator = message.creator);
-    message.forAddress !== undefined && (obj.forAddress = message.forAddress);
-    message.duration !== undefined && (obj.duration = message.duration);
-    message.bytes !== undefined && (obj.bytes = message.bytes);
-    message.paymentDenom !== undefined && (obj.paymentDenom = message.paymentDenom);
+    if (message.creator !== "") {
+      obj.creator = message.creator;
+    }
+    if (message.forAddress !== "") {
+      obj.forAddress = message.forAddress;
+    }
+    if (message.duration !== "") {
+      obj.duration = message.duration;
+    }
+    if (message.bytes !== "") {
+      obj.bytes = message.bytes;
+    }
+    if (message.paymentDenom !== "") {
+      obj.paymentDenom = message.paymentDenom;
+    }
     return obj;
   },
 
@@ -1630,9 +1700,15 @@ export const MsgClaimStray = {
 
   toJSON(message: MsgClaimStray): unknown {
     const obj: any = {};
-    message.creator !== undefined && (obj.creator = message.creator);
-    message.cid !== undefined && (obj.cid = message.cid);
-    message.forAddress !== undefined && (obj.forAddress = message.forAddress);
+    if (message.creator !== "") {
+      obj.creator = message.creator;
+    }
+    if (message.cid !== "") {
+      obj.cid = message.cid;
+    }
+    if (message.forAddress !== "") {
+      obj.forAddress = message.forAddress;
+    }
     return obj;
   },
 
@@ -1780,11 +1856,21 @@ export const MsgUpgradeStorage = {
 
   toJSON(message: MsgUpgradeStorage): unknown {
     const obj: any = {};
-    message.creator !== undefined && (obj.creator = message.creator);
-    message.forAddress !== undefined && (obj.forAddress = message.forAddress);
-    message.duration !== undefined && (obj.duration = message.duration);
-    message.bytes !== undefined && (obj.bytes = message.bytes);
-    message.paymentDenom !== undefined && (obj.paymentDenom = message.paymentDenom);
+    if (message.creator !== "") {
+      obj.creator = message.creator;
+    }
+    if (message.forAddress !== "") {
+      obj.forAddress = message.forAddress;
+    }
+    if (message.duration !== "") {
+      obj.duration = message.duration;
+    }
+    if (message.bytes !== "") {
+      obj.bytes = message.bytes;
+    }
+    if (message.paymentDenom !== "") {
+      obj.paymentDenom = message.paymentDenom;
+    }
     return obj;
   },
 
@@ -2309,14 +2395,14 @@ export class GrpcWebImpl {
     const request = { ..._request, ...methodDesc.requestType };
     const maybeCombinedMetadata = metadata && this.options.metadata
       ? new BrowserHeaders({ ...this.options?.metadata.headersMap, ...metadata?.headersMap })
-      : metadata || this.options.metadata;
+      : metadata ?? this.options.metadata;
     return new Promise((resolve, reject) => {
       grpc.unary(methodDesc, {
         request,
         host: this.host,
-        metadata: maybeCombinedMetadata,
-        transport: this.options.transport,
-        debug: this.options.debug,
+        metadata: maybeCombinedMetadata ?? {},
+        ...(this.options.transport !== undefined ? { transport: this.options.transport } : {}),
+        debug: this.options.debug ?? false,
         onEnd: function (response) {
           if (response.status === grpc.Code.OK) {
             resolve(response.message!.toObject());
@@ -2330,10 +2416,10 @@ export class GrpcWebImpl {
   }
 }
 
-declare var self: any | undefined;
-declare var window: any | undefined;
-declare var global: any | undefined;
-var tsProtoGlobalThis: any = (() => {
+declare const self: any | undefined;
+declare const window: any | undefined;
+declare const global: any | undefined;
+const tsProtoGlobalThis: any = (() => {
   if (typeof globalThis !== "undefined") {
     return globalThis;
   }

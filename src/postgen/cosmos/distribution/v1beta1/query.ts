@@ -263,7 +263,9 @@ export const QueryParamsResponse = {
 
   toJSON(message: QueryParamsResponse): unknown {
     const obj: any = {};
-    message.params !== undefined && (obj.params = message.params ? Params.toJSON(message.params) : undefined);
+    if (message.params !== undefined) {
+      obj.params = Params.toJSON(message.params);
+    }
     return obj;
   },
 
@@ -321,7 +323,9 @@ export const QueryValidatorOutstandingRewardsRequest = {
 
   toJSON(message: QueryValidatorOutstandingRewardsRequest): unknown {
     const obj: any = {};
-    message.validatorAddress !== undefined && (obj.validatorAddress = message.validatorAddress);
+    if (message.validatorAddress !== "") {
+      obj.validatorAddress = message.validatorAddress;
+    }
     return obj;
   },
 
@@ -381,8 +385,9 @@ export const QueryValidatorOutstandingRewardsResponse = {
 
   toJSON(message: QueryValidatorOutstandingRewardsResponse): unknown {
     const obj: any = {};
-    message.rewards !== undefined &&
-      (obj.rewards = message.rewards ? ValidatorOutstandingRewards.toJSON(message.rewards) : undefined);
+    if (message.rewards !== undefined) {
+      obj.rewards = ValidatorOutstandingRewards.toJSON(message.rewards);
+    }
     return obj;
   },
 
@@ -444,7 +449,9 @@ export const QueryValidatorCommissionRequest = {
 
   toJSON(message: QueryValidatorCommissionRequest): unknown {
     const obj: any = {};
-    message.validatorAddress !== undefined && (obj.validatorAddress = message.validatorAddress);
+    if (message.validatorAddress !== "") {
+      obj.validatorAddress = message.validatorAddress;
+    }
     return obj;
   },
 
@@ -504,8 +511,9 @@ export const QueryValidatorCommissionResponse = {
 
   toJSON(message: QueryValidatorCommissionResponse): unknown {
     const obj: any = {};
-    message.commission !== undefined &&
-      (obj.commission = message.commission ? ValidatorAccumulatedCommission.toJSON(message.commission) : undefined);
+    if (message.commission !== undefined) {
+      obj.commission = ValidatorAccumulatedCommission.toJSON(message.commission);
+    }
     return obj;
   },
 
@@ -602,11 +610,18 @@ export const QueryValidatorSlashesRequest = {
 
   toJSON(message: QueryValidatorSlashesRequest): unknown {
     const obj: any = {};
-    message.validatorAddress !== undefined && (obj.validatorAddress = message.validatorAddress);
-    message.startingHeight !== undefined && (obj.startingHeight = Math.round(message.startingHeight));
-    message.endingHeight !== undefined && (obj.endingHeight = Math.round(message.endingHeight));
-    message.pagination !== undefined &&
-      (obj.pagination = message.pagination ? PageRequest.toJSON(message.pagination) : undefined);
+    if (message.validatorAddress !== "") {
+      obj.validatorAddress = message.validatorAddress;
+    }
+    if (message.startingHeight !== 0) {
+      obj.startingHeight = Math.round(message.startingHeight);
+    }
+    if (message.endingHeight !== 0) {
+      obj.endingHeight = Math.round(message.endingHeight);
+    }
+    if (message.pagination !== undefined) {
+      obj.pagination = PageRequest.toJSON(message.pagination);
+    }
     return obj;
   },
 
@@ -680,13 +695,12 @@ export const QueryValidatorSlashesResponse = {
 
   toJSON(message: QueryValidatorSlashesResponse): unknown {
     const obj: any = {};
-    if (message.slashes) {
-      obj.slashes = message.slashes.map((e) => e ? ValidatorSlashEvent.toJSON(e) : undefined);
-    } else {
-      obj.slashes = [];
+    if (message.slashes?.length) {
+      obj.slashes = message.slashes.map((e) => ValidatorSlashEvent.toJSON(e));
     }
-    message.pagination !== undefined &&
-      (obj.pagination = message.pagination ? PageResponse.toJSON(message.pagination) : undefined);
+    if (message.pagination !== undefined) {
+      obj.pagination = PageResponse.toJSON(message.pagination);
+    }
     return obj;
   },
 
@@ -760,8 +774,12 @@ export const QueryDelegationRewardsRequest = {
 
   toJSON(message: QueryDelegationRewardsRequest): unknown {
     const obj: any = {};
-    message.delegatorAddress !== undefined && (obj.delegatorAddress = message.delegatorAddress);
-    message.validatorAddress !== undefined && (obj.validatorAddress = message.validatorAddress);
+    if (message.delegatorAddress !== "") {
+      obj.delegatorAddress = message.delegatorAddress;
+    }
+    if (message.validatorAddress !== "") {
+      obj.validatorAddress = message.validatorAddress;
+    }
     return obj;
   },
 
@@ -820,10 +838,8 @@ export const QueryDelegationRewardsResponse = {
 
   toJSON(message: QueryDelegationRewardsResponse): unknown {
     const obj: any = {};
-    if (message.rewards) {
-      obj.rewards = message.rewards.map((e) => e ? DecCoin.toJSON(e) : undefined);
-    } else {
-      obj.rewards = [];
+    if (message.rewards?.length) {
+      obj.rewards = message.rewards.map((e) => DecCoin.toJSON(e));
     }
     return obj;
   },
@@ -882,7 +898,9 @@ export const QueryDelegationTotalRewardsRequest = {
 
   toJSON(message: QueryDelegationTotalRewardsRequest): unknown {
     const obj: any = {};
-    message.delegatorAddress !== undefined && (obj.delegatorAddress = message.delegatorAddress);
+    if (message.delegatorAddress !== "") {
+      obj.delegatorAddress = message.delegatorAddress;
+    }
     return obj;
   },
 
@@ -957,15 +975,11 @@ export const QueryDelegationTotalRewardsResponse = {
 
   toJSON(message: QueryDelegationTotalRewardsResponse): unknown {
     const obj: any = {};
-    if (message.rewards) {
-      obj.rewards = message.rewards.map((e) => e ? DelegationDelegatorReward.toJSON(e) : undefined);
-    } else {
-      obj.rewards = [];
+    if (message.rewards?.length) {
+      obj.rewards = message.rewards.map((e) => DelegationDelegatorReward.toJSON(e));
     }
-    if (message.total) {
-      obj.total = message.total.map((e) => e ? DecCoin.toJSON(e) : undefined);
-    } else {
-      obj.total = [];
+    if (message.total?.length) {
+      obj.total = message.total.map((e) => DecCoin.toJSON(e));
     }
     return obj;
   },
@@ -1027,7 +1041,9 @@ export const QueryDelegatorValidatorsRequest = {
 
   toJSON(message: QueryDelegatorValidatorsRequest): unknown {
     const obj: any = {};
-    message.delegatorAddress !== undefined && (obj.delegatorAddress = message.delegatorAddress);
+    if (message.delegatorAddress !== "") {
+      obj.delegatorAddress = message.delegatorAddress;
+    }
     return obj;
   },
 
@@ -1085,10 +1101,8 @@ export const QueryDelegatorValidatorsResponse = {
 
   toJSON(message: QueryDelegatorValidatorsResponse): unknown {
     const obj: any = {};
-    if (message.validators) {
-      obj.validators = message.validators.map((e) => e);
-    } else {
-      obj.validators = [];
+    if (message.validators?.length) {
+      obj.validators = message.validators;
     }
     return obj;
   },
@@ -1149,7 +1163,9 @@ export const QueryDelegatorWithdrawAddressRequest = {
 
   toJSON(message: QueryDelegatorWithdrawAddressRequest): unknown {
     const obj: any = {};
-    message.delegatorAddress !== undefined && (obj.delegatorAddress = message.delegatorAddress);
+    if (message.delegatorAddress !== "") {
+      obj.delegatorAddress = message.delegatorAddress;
+    }
     return obj;
   },
 
@@ -1209,7 +1225,9 @@ export const QueryDelegatorWithdrawAddressResponse = {
 
   toJSON(message: QueryDelegatorWithdrawAddressResponse): unknown {
     const obj: any = {};
-    message.withdrawAddress !== undefined && (obj.withdrawAddress = message.withdrawAddress);
+    if (message.withdrawAddress !== "") {
+      obj.withdrawAddress = message.withdrawAddress;
+    }
     return obj;
   },
 
@@ -1313,10 +1331,8 @@ export const QueryCommunityPoolResponse = {
 
   toJSON(message: QueryCommunityPoolResponse): unknown {
     const obj: any = {};
-    if (message.pool) {
-      obj.pool = message.pool.map((e) => e ? DecCoin.toJSON(e) : undefined);
-    } else {
-      obj.pool = [];
+    if (message.pool?.length) {
+      obj.pool = message.pool.map((e) => DecCoin.toJSON(e));
     }
     return obj;
   },
@@ -1726,14 +1742,14 @@ export class GrpcWebImpl {
     const request = { ..._request, ...methodDesc.requestType };
     const maybeCombinedMetadata = metadata && this.options.metadata
       ? new BrowserHeaders({ ...this.options?.metadata.headersMap, ...metadata?.headersMap })
-      : metadata || this.options.metadata;
+      : metadata ?? this.options.metadata;
     return new Promise((resolve, reject) => {
       grpc.unary(methodDesc, {
         request,
         host: this.host,
-        metadata: maybeCombinedMetadata,
-        transport: this.options.transport,
-        debug: this.options.debug,
+        metadata: maybeCombinedMetadata ?? {},
+        ...(this.options.transport !== undefined ? { transport: this.options.transport } : {}),
+        debug: this.options.debug ?? false,
         onEnd: function (response) {
           if (response.status === grpc.Code.OK) {
             resolve(response.message!.toObject());
@@ -1747,10 +1763,10 @@ export class GrpcWebImpl {
   }
 }
 
-declare var self: any | undefined;
-declare var window: any | undefined;
-declare var global: any | undefined;
-var tsProtoGlobalThis: any = (() => {
+declare const self: any | undefined;
+declare const window: any | undefined;
+declare const global: any | undefined;
+const tsProtoGlobalThis: any = (() => {
   if (typeof globalThis !== "undefined") {
     return globalThis;
   }

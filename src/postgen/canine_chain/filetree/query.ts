@@ -156,7 +156,9 @@ export const QueryParamsResponse = {
 
   toJSON(message: QueryParamsResponse): unknown {
     const obj: any = {};
-    message.params !== undefined && (obj.params = message.params ? Params.toJSON(message.params) : undefined);
+    if (message.params !== undefined) {
+      obj.params = Params.toJSON(message.params);
+    }
     return obj;
   },
 
@@ -227,8 +229,12 @@ export const QueryEncryptRequest = {
 
   toJSON(message: QueryEncryptRequest): unknown {
     const obj: any = {};
-    message.address !== undefined && (obj.address = message.address);
-    message.message !== undefined && (obj.message = message.message);
+    if (message.address !== "") {
+      obj.address = message.address;
+    }
+    if (message.message !== "") {
+      obj.message = message.message;
+    }
     return obj;
   },
 
@@ -285,7 +291,9 @@ export const QueryEncryptResponse = {
 
   toJSON(message: QueryEncryptResponse): unknown {
     const obj: any = {};
-    message.encryptionData !== undefined && (obj.encryptionData = message.encryptionData);
+    if (message.encryptionData !== "") {
+      obj.encryptionData = message.encryptionData;
+    }
     return obj;
   },
 
@@ -341,7 +349,9 @@ export const QueryDecryptRequest = {
 
   toJSON(message: QueryDecryptRequest): unknown {
     const obj: any = {};
-    message.message !== undefined && (obj.message = message.message);
+    if (message.message !== "") {
+      obj.message = message.message;
+    }
     return obj;
   },
 
@@ -397,7 +407,9 @@ export const QueryDecryptResponse = {
 
   toJSON(message: QueryDecryptResponse): unknown {
     const obj: any = {};
-    message.data !== undefined && (obj.data = message.data);
+    if (message.data !== "") {
+      obj.data = message.data;
+    }
     return obj;
   },
 
@@ -466,8 +478,12 @@ export const QueryFileRequest = {
 
   toJSON(message: QueryFileRequest): unknown {
     const obj: any = {};
-    message.address !== undefined && (obj.address = message.address);
-    message.ownerAddress !== undefined && (obj.ownerAddress = message.ownerAddress);
+    if (message.address !== "") {
+      obj.address = message.address;
+    }
+    if (message.ownerAddress !== "") {
+      obj.ownerAddress = message.ownerAddress;
+    }
     return obj;
   },
 
@@ -524,7 +540,9 @@ export const QueryFileResponse = {
 
   toJSON(message: QueryFileResponse): unknown {
     const obj: any = {};
-    message.files !== undefined && (obj.files = message.files ? Files.toJSON(message.files) : undefined);
+    if (message.files !== undefined) {
+      obj.files = Files.toJSON(message.files);
+    }
     return obj;
   },
 
@@ -580,8 +598,9 @@ export const QueryAllFilesRequest = {
 
   toJSON(message: QueryAllFilesRequest): unknown {
     const obj: any = {};
-    message.pagination !== undefined &&
-      (obj.pagination = message.pagination ? PageRequest.toJSON(message.pagination) : undefined);
+    if (message.pagination !== undefined) {
+      obj.pagination = PageRequest.toJSON(message.pagination);
+    }
     return obj;
   },
 
@@ -652,13 +671,12 @@ export const QueryAllFilesResponse = {
 
   toJSON(message: QueryAllFilesResponse): unknown {
     const obj: any = {};
-    if (message.files) {
-      obj.files = message.files.map((e) => e ? Files.toJSON(e) : undefined);
-    } else {
-      obj.files = [];
+    if (message.files?.length) {
+      obj.files = message.files.map((e) => Files.toJSON(e));
     }
-    message.pagination !== undefined &&
-      (obj.pagination = message.pagination ? PageResponse.toJSON(message.pagination) : undefined);
+    if (message.pagination !== undefined) {
+      obj.pagination = PageResponse.toJSON(message.pagination);
+    }
     return obj;
   },
 
@@ -717,7 +735,9 @@ export const QueryPubkeyRequest = {
 
   toJSON(message: QueryPubkeyRequest): unknown {
     const obj: any = {};
-    message.address !== undefined && (obj.address = message.address);
+    if (message.address !== "") {
+      obj.address = message.address;
+    }
     return obj;
   },
 
@@ -773,7 +793,9 @@ export const QueryPubkeyResponse = {
 
   toJSON(message: QueryPubkeyResponse): unknown {
     const obj: any = {};
-    message.pubkey !== undefined && (obj.pubkey = message.pubkey ? Pubkey.toJSON(message.pubkey) : undefined);
+    if (message.pubkey !== undefined) {
+      obj.pubkey = Pubkey.toJSON(message.pubkey);
+    }
     return obj;
   },
 
@@ -831,8 +853,9 @@ export const QueryAllPubkeysRequest = {
 
   toJSON(message: QueryAllPubkeysRequest): unknown {
     const obj: any = {};
-    message.pagination !== undefined &&
-      (obj.pagination = message.pagination ? PageRequest.toJSON(message.pagination) : undefined);
+    if (message.pagination !== undefined) {
+      obj.pagination = PageRequest.toJSON(message.pagination);
+    }
     return obj;
   },
 
@@ -903,13 +926,12 @@ export const QueryAllPubkeysResponse = {
 
   toJSON(message: QueryAllPubkeysResponse): unknown {
     const obj: any = {};
-    if (message.pubkey) {
-      obj.pubkey = message.pubkey.map((e) => e ? Pubkey.toJSON(e) : undefined);
-    } else {
-      obj.pubkey = [];
+    if (message.pubkey?.length) {
+      obj.pubkey = message.pubkey.map((e) => Pubkey.toJSON(e));
     }
-    message.pagination !== undefined &&
-      (obj.pagination = message.pagination ? PageResponse.toJSON(message.pagination) : undefined);
+    if (message.pagination !== undefined) {
+      obj.pagination = PageResponse.toJSON(message.pagination);
+    }
     return obj;
   },
 
@@ -1198,14 +1220,14 @@ export class GrpcWebImpl {
     const request = { ..._request, ...methodDesc.requestType };
     const maybeCombinedMetadata = metadata && this.options.metadata
       ? new BrowserHeaders({ ...this.options?.metadata.headersMap, ...metadata?.headersMap })
-      : metadata || this.options.metadata;
+      : metadata ?? this.options.metadata;
     return new Promise((resolve, reject) => {
       grpc.unary(methodDesc, {
         request,
         host: this.host,
-        metadata: maybeCombinedMetadata,
-        transport: this.options.transport,
-        debug: this.options.debug,
+        metadata: maybeCombinedMetadata ?? {},
+        ...(this.options.transport !== undefined ? { transport: this.options.transport } : {}),
+        debug: this.options.debug ?? false,
         onEnd: function (response) {
           if (response.status === grpc.Code.OK) {
             resolve(response.message!.toObject());
@@ -1219,10 +1241,10 @@ export class GrpcWebImpl {
   }
 }
 
-declare var self: any | undefined;
-declare var window: any | undefined;
-declare var global: any | undefined;
-var tsProtoGlobalThis: any = (() => {
+declare const self: any | undefined;
+declare const window: any | undefined;
+declare const global: any | undefined;
+const tsProtoGlobalThis: any = (() => {
   if (typeof globalThis !== "undefined") {
     return globalThis;
   }

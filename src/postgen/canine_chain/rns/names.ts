@@ -123,17 +123,27 @@ export const Names = {
 
   toJSON(message: Names): unknown {
     const obj: any = {};
-    message.name !== undefined && (obj.name = message.name);
-    message.expires !== undefined && (obj.expires = Math.round(message.expires));
-    message.value !== undefined && (obj.value = message.value);
-    message.data !== undefined && (obj.data = message.data);
-    if (message.subdomains) {
-      obj.subdomains = message.subdomains.map((e) => e ? Names.toJSON(e) : undefined);
-    } else {
-      obj.subdomains = [];
+    if (message.name !== "") {
+      obj.name = message.name;
     }
-    message.tld !== undefined && (obj.tld = message.tld);
-    message.locked !== undefined && (obj.locked = Math.round(message.locked));
+    if (message.expires !== 0) {
+      obj.expires = Math.round(message.expires);
+    }
+    if (message.value !== "") {
+      obj.value = message.value;
+    }
+    if (message.data !== "") {
+      obj.data = message.data;
+    }
+    if (message.subdomains?.length) {
+      obj.subdomains = message.subdomains.map((e) => Names.toJSON(e));
+    }
+    if (message.tld !== "") {
+      obj.tld = message.tld;
+    }
+    if (message.locked !== 0) {
+      obj.locked = Math.round(message.locked);
+    }
     return obj;
   },
 
@@ -154,10 +164,10 @@ export const Names = {
   },
 };
 
-declare var self: any | undefined;
-declare var window: any | undefined;
-declare var global: any | undefined;
-var tsProtoGlobalThis: any = (() => {
+declare const self: any | undefined;
+declare const window: any | undefined;
+declare const global: any | undefined;
+const tsProtoGlobalThis: any = (() => {
   if (typeof globalThis !== "undefined") {
     return globalThis;
   }

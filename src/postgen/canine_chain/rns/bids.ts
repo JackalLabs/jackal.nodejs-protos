@@ -86,10 +86,18 @@ export const Bids = {
 
   toJSON(message: Bids): unknown {
     const obj: any = {};
-    message.index !== undefined && (obj.index = message.index);
-    message.name !== undefined && (obj.name = message.name);
-    message.bidder !== undefined && (obj.bidder = message.bidder);
-    message.price !== undefined && (obj.price = message.price);
+    if (message.index !== "") {
+      obj.index = message.index;
+    }
+    if (message.name !== "") {
+      obj.name = message.name;
+    }
+    if (message.bidder !== "") {
+      obj.bidder = message.bidder;
+    }
+    if (message.price !== "") {
+      obj.price = message.price;
+    }
     return obj;
   },
 

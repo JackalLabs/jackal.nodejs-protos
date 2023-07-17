@@ -111,21 +111,17 @@ export const GenesisState = {
 
   toJSON(message: GenesisState): unknown {
     const obj: any = {};
-    message.params !== undefined && (obj.params = message.params ? Params.toJSON(message.params) : undefined);
-    if (message.balances) {
-      obj.balances = message.balances.map((e) => e ? Balance.toJSON(e) : undefined);
-    } else {
-      obj.balances = [];
+    if (message.params !== undefined) {
+      obj.params = Params.toJSON(message.params);
     }
-    if (message.supply) {
-      obj.supply = message.supply.map((e) => e ? Coin.toJSON(e) : undefined);
-    } else {
-      obj.supply = [];
+    if (message.balances?.length) {
+      obj.balances = message.balances.map((e) => Balance.toJSON(e));
     }
-    if (message.denomMetadata) {
-      obj.denomMetadata = message.denomMetadata.map((e) => e ? Metadata.toJSON(e) : undefined);
-    } else {
-      obj.denomMetadata = [];
+    if (message.supply?.length) {
+      obj.supply = message.supply.map((e) => Coin.toJSON(e));
+    }
+    if (message.denomMetadata?.length) {
+      obj.denomMetadata = message.denomMetadata.map((e) => Metadata.toJSON(e));
     }
     return obj;
   },
@@ -200,11 +196,11 @@ export const Balance = {
 
   toJSON(message: Balance): unknown {
     const obj: any = {};
-    message.address !== undefined && (obj.address = message.address);
-    if (message.coins) {
-      obj.coins = message.coins.map((e) => e ? Coin.toJSON(e) : undefined);
-    } else {
-      obj.coins = [];
+    if (message.address !== "") {
+      obj.address = message.address;
+    }
+    if (message.coins?.length) {
+      obj.coins = message.coins.map((e) => Coin.toJSON(e));
     }
     return obj;
   },

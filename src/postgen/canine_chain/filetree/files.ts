@@ -110,12 +110,24 @@ export const Files = {
 
   toJSON(message: Files): unknown {
     const obj: any = {};
-    message.address !== undefined && (obj.address = message.address);
-    message.contents !== undefined && (obj.contents = message.contents);
-    message.owner !== undefined && (obj.owner = message.owner);
-    message.viewingAccess !== undefined && (obj.viewingAccess = message.viewingAccess);
-    message.editAccess !== undefined && (obj.editAccess = message.editAccess);
-    message.trackingNumber !== undefined && (obj.trackingNumber = message.trackingNumber);
+    if (message.address !== "") {
+      obj.address = message.address;
+    }
+    if (message.contents !== "") {
+      obj.contents = message.contents;
+    }
+    if (message.owner !== "") {
+      obj.owner = message.owner;
+    }
+    if (message.viewingAccess !== "") {
+      obj.viewingAccess = message.viewingAccess;
+    }
+    if (message.editAccess !== "") {
+      obj.editAccess = message.editAccess;
+    }
+    if (message.trackingNumber !== "") {
+      obj.trackingNumber = message.trackingNumber;
+    }
     return obj;
   },
 

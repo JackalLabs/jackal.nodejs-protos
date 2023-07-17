@@ -150,12 +150,24 @@ export const ValidatorSigningInfo = {
 
   toJSON(message: ValidatorSigningInfo): unknown {
     const obj: any = {};
-    message.address !== undefined && (obj.address = message.address);
-    message.startHeight !== undefined && (obj.startHeight = Math.round(message.startHeight));
-    message.indexOffset !== undefined && (obj.indexOffset = Math.round(message.indexOffset));
-    message.jailedUntil !== undefined && (obj.jailedUntil = message.jailedUntil.toISOString());
-    message.tombstoned !== undefined && (obj.tombstoned = message.tombstoned);
-    message.missedBlocksCounter !== undefined && (obj.missedBlocksCounter = Math.round(message.missedBlocksCounter));
+    if (message.address !== "") {
+      obj.address = message.address;
+    }
+    if (message.startHeight !== 0) {
+      obj.startHeight = Math.round(message.startHeight);
+    }
+    if (message.indexOffset !== 0) {
+      obj.indexOffset = Math.round(message.indexOffset);
+    }
+    if (message.jailedUntil !== undefined) {
+      obj.jailedUntil = message.jailedUntil.toISOString();
+    }
+    if (message.tombstoned === true) {
+      obj.tombstoned = message.tombstoned;
+    }
+    if (message.missedBlocksCounter !== 0) {
+      obj.missedBlocksCounter = Math.round(message.missedBlocksCounter);
+    }
     return obj;
   },
 
@@ -178,10 +190,10 @@ export const ValidatorSigningInfo = {
 function createBaseParams(): Params {
   return {
     signedBlocksWindow: 0,
-    minSignedPerWindow: new Uint8Array(),
+    minSignedPerWindow: new Uint8Array(0),
     downtimeJailDuration: undefined,
-    slashFractionDoubleSign: new Uint8Array(),
-    slashFractionDowntime: new Uint8Array(),
+    slashFractionDoubleSign: new Uint8Array(0),
+    slashFractionDowntime: new Uint8Array(0),
   };
 }
 
@@ -261,37 +273,36 @@ export const Params = {
       signedBlocksWindow: isSet(object.signedBlocksWindow) ? Number(object.signedBlocksWindow) : 0,
       minSignedPerWindow: isSet(object.minSignedPerWindow)
         ? bytesFromBase64(object.minSignedPerWindow)
-        : new Uint8Array(),
+        : new Uint8Array(0),
       downtimeJailDuration: isSet(object.downtimeJailDuration)
         ? Duration.fromJSON(object.downtimeJailDuration)
         : undefined,
       slashFractionDoubleSign: isSet(object.slashFractionDoubleSign)
         ? bytesFromBase64(object.slashFractionDoubleSign)
-        : new Uint8Array(),
+        : new Uint8Array(0),
       slashFractionDowntime: isSet(object.slashFractionDowntime)
         ? bytesFromBase64(object.slashFractionDowntime)
-        : new Uint8Array(),
+        : new Uint8Array(0),
     };
   },
 
   toJSON(message: Params): unknown {
     const obj: any = {};
-    message.signedBlocksWindow !== undefined && (obj.signedBlocksWindow = Math.round(message.signedBlocksWindow));
-    message.minSignedPerWindow !== undefined &&
-      (obj.minSignedPerWindow = base64FromBytes(
-        message.minSignedPerWindow !== undefined ? message.minSignedPerWindow : new Uint8Array(),
-      ));
-    message.downtimeJailDuration !== undefined && (obj.downtimeJailDuration = message.downtimeJailDuration
-      ? Duration.toJSON(message.downtimeJailDuration)
-      : undefined);
-    message.slashFractionDoubleSign !== undefined &&
-      (obj.slashFractionDoubleSign = base64FromBytes(
-        message.slashFractionDoubleSign !== undefined ? message.slashFractionDoubleSign : new Uint8Array(),
-      ));
-    message.slashFractionDowntime !== undefined &&
-      (obj.slashFractionDowntime = base64FromBytes(
-        message.slashFractionDowntime !== undefined ? message.slashFractionDowntime : new Uint8Array(),
-      ));
+    if (message.signedBlocksWindow !== 0) {
+      obj.signedBlocksWindow = Math.round(message.signedBlocksWindow);
+    }
+    if (message.minSignedPerWindow.length !== 0) {
+      obj.minSignedPerWindow = base64FromBytes(message.minSignedPerWindow);
+    }
+    if (message.downtimeJailDuration !== undefined) {
+      obj.downtimeJailDuration = Duration.toJSON(message.downtimeJailDuration);
+    }
+    if (message.slashFractionDoubleSign.length !== 0) {
+      obj.slashFractionDoubleSign = base64FromBytes(message.slashFractionDoubleSign);
+    }
+    if (message.slashFractionDowntime.length !== 0) {
+      obj.slashFractionDowntime = base64FromBytes(message.slashFractionDowntime);
+    }
     return obj;
   },
 
@@ -302,20 +313,20 @@ export const Params = {
   fromPartial<I extends Exact<DeepPartial<Params>, I>>(object: I): Params {
     const message = createBaseParams();
     message.signedBlocksWindow = object.signedBlocksWindow ?? 0;
-    message.minSignedPerWindow = object.minSignedPerWindow ?? new Uint8Array();
+    message.minSignedPerWindow = object.minSignedPerWindow ?? new Uint8Array(0);
     message.downtimeJailDuration = (object.downtimeJailDuration !== undefined && object.downtimeJailDuration !== null)
       ? Duration.fromPartial(object.downtimeJailDuration)
       : undefined;
-    message.slashFractionDoubleSign = object.slashFractionDoubleSign ?? new Uint8Array();
-    message.slashFractionDowntime = object.slashFractionDowntime ?? new Uint8Array();
+    message.slashFractionDoubleSign = object.slashFractionDoubleSign ?? new Uint8Array(0);
+    message.slashFractionDowntime = object.slashFractionDowntime ?? new Uint8Array(0);
     return message;
   },
 };
 
-declare var self: any | undefined;
-declare var window: any | undefined;
-declare var global: any | undefined;
-var tsProtoGlobalThis: any = (() => {
+declare const self: any | undefined;
+declare const window: any | undefined;
+declare const global: any | undefined;
+const tsProtoGlobalThis: any = (() => {
   if (typeof globalThis !== "undefined") {
     return globalThis;
   }

@@ -146,36 +146,26 @@ export const GenesisState = {
 
   toJSON(message: GenesisState): unknown {
     const obj: any = {};
-    message.params !== undefined && (obj.params = message.params ? Params.toJSON(message.params) : undefined);
-    if (message.contractsList) {
-      obj.contractsList = message.contractsList.map((e) => e ? Contracts.toJSON(e) : undefined);
-    } else {
-      obj.contractsList = [];
+    if (message.params !== undefined) {
+      obj.params = Params.toJSON(message.params);
     }
-    if (message.activeDealsList) {
-      obj.activeDealsList = message.activeDealsList.map((e) => e ? ActiveDeals.toJSON(e) : undefined);
-    } else {
-      obj.activeDealsList = [];
+    if (message.contractsList?.length) {
+      obj.contractsList = message.contractsList.map((e) => Contracts.toJSON(e));
     }
-    if (message.providersList) {
-      obj.providersList = message.providersList.map((e) => e ? Providers.toJSON(e) : undefined);
-    } else {
-      obj.providersList = [];
+    if (message.activeDealsList?.length) {
+      obj.activeDealsList = message.activeDealsList.map((e) => ActiveDeals.toJSON(e));
     }
-    if (message.straysList) {
-      obj.straysList = message.straysList.map((e) => e ? Strays.toJSON(e) : undefined);
-    } else {
-      obj.straysList = [];
+    if (message.providersList?.length) {
+      obj.providersList = message.providersList.map((e) => Providers.toJSON(e));
     }
-    if (message.fidCidList) {
-      obj.fidCidList = message.fidCidList.map((e) => e ? FidCid.toJSON(e) : undefined);
-    } else {
-      obj.fidCidList = [];
+    if (message.straysList?.length) {
+      obj.straysList = message.straysList.map((e) => Strays.toJSON(e));
     }
-    if (message.paymentInfoList) {
-      obj.paymentInfoList = message.paymentInfoList.map((e) => e ? StoragePaymentInfo.toJSON(e) : undefined);
-    } else {
-      obj.paymentInfoList = [];
+    if (message.fidCidList?.length) {
+      obj.fidCidList = message.fidCidList.map((e) => FidCid.toJSON(e));
+    }
+    if (message.paymentInfoList?.length) {
+      obj.paymentInfoList = message.paymentInfoList.map((e) => StoragePaymentInfo.toJSON(e));
     }
     return obj;
   },

@@ -117,31 +117,23 @@ export const GenesisState = {
 
   toJSON(message: GenesisState): unknown {
     const obj: any = {};
-    message.params !== undefined && (obj.params = message.params ? Params.toJSON(message.params) : undefined);
-    if (message.whoIsList) {
-      obj.whoIsList = message.whoIsList.map((e) => e ? Whois.toJSON(e) : undefined);
-    } else {
-      obj.whoIsList = [];
+    if (message.params !== undefined) {
+      obj.params = Params.toJSON(message.params);
     }
-    if (message.namesList) {
-      obj.namesList = message.namesList.map((e) => e ? Names.toJSON(e) : undefined);
-    } else {
-      obj.namesList = [];
+    if (message.whoIsList?.length) {
+      obj.whoIsList = message.whoIsList.map((e) => Whois.toJSON(e));
     }
-    if (message.bidsList) {
-      obj.bidsList = message.bidsList.map((e) => e ? Bids.toJSON(e) : undefined);
-    } else {
-      obj.bidsList = [];
+    if (message.namesList?.length) {
+      obj.namesList = message.namesList.map((e) => Names.toJSON(e));
     }
-    if (message.forSaleList) {
-      obj.forSaleList = message.forSaleList.map((e) => e ? Forsale.toJSON(e) : undefined);
-    } else {
-      obj.forSaleList = [];
+    if (message.bidsList?.length) {
+      obj.bidsList = message.bidsList.map((e) => Bids.toJSON(e));
     }
-    if (message.initList) {
-      obj.initList = message.initList.map((e) => e ? Init.toJSON(e) : undefined);
-    } else {
-      obj.initList = [];
+    if (message.forSaleList?.length) {
+      obj.forSaleList = message.forSaleList.map((e) => Forsale.toJSON(e));
+    }
+    if (message.initList?.length) {
+      obj.initList = message.initList.map((e) => Init.toJSON(e));
     }
     return obj;
   },

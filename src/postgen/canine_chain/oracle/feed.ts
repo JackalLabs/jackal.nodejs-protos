@@ -87,10 +87,18 @@ export const Feed = {
 
   toJSON(message: Feed): unknown {
     const obj: any = {};
-    message.owner !== undefined && (obj.owner = message.owner);
-    message.data !== undefined && (obj.data = message.data);
-    message.lastUpdate !== undefined && (obj.lastUpdate = message.lastUpdate.toISOString());
-    message.name !== undefined && (obj.name = message.name);
+    if (message.owner !== "") {
+      obj.owner = message.owner;
+    }
+    if (message.data !== "") {
+      obj.data = message.data;
+    }
+    if (message.lastUpdate !== undefined) {
+      obj.lastUpdate = message.lastUpdate.toISOString();
+    }
+    if (message.name !== "") {
+      obj.name = message.name;
+    }
     return obj;
   },
 

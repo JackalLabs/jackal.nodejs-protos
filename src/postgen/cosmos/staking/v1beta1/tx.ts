@@ -204,15 +204,27 @@ export const MsgCreateValidator = {
 
   toJSON(message: MsgCreateValidator): unknown {
     const obj: any = {};
-    message.description !== undefined &&
-      (obj.description = message.description ? Description.toJSON(message.description) : undefined);
-    message.commission !== undefined &&
-      (obj.commission = message.commission ? CommissionRates.toJSON(message.commission) : undefined);
-    message.minSelfDelegation !== undefined && (obj.minSelfDelegation = message.minSelfDelegation);
-    message.delegatorAddress !== undefined && (obj.delegatorAddress = message.delegatorAddress);
-    message.validatorAddress !== undefined && (obj.validatorAddress = message.validatorAddress);
-    message.pubkey !== undefined && (obj.pubkey = message.pubkey ? Any.toJSON(message.pubkey) : undefined);
-    message.value !== undefined && (obj.value = message.value ? Coin.toJSON(message.value) : undefined);
+    if (message.description !== undefined) {
+      obj.description = Description.toJSON(message.description);
+    }
+    if (message.commission !== undefined) {
+      obj.commission = CommissionRates.toJSON(message.commission);
+    }
+    if (message.minSelfDelegation !== "") {
+      obj.minSelfDelegation = message.minSelfDelegation;
+    }
+    if (message.delegatorAddress !== "") {
+      obj.delegatorAddress = message.delegatorAddress;
+    }
+    if (message.validatorAddress !== "") {
+      obj.validatorAddress = message.validatorAddress;
+    }
+    if (message.pubkey !== undefined) {
+      obj.pubkey = Any.toJSON(message.pubkey);
+    }
+    if (message.value !== undefined) {
+      obj.value = Coin.toJSON(message.value);
+    }
     return obj;
   },
 
@@ -359,11 +371,18 @@ export const MsgEditValidator = {
 
   toJSON(message: MsgEditValidator): unknown {
     const obj: any = {};
-    message.description !== undefined &&
-      (obj.description = message.description ? Description.toJSON(message.description) : undefined);
-    message.validatorAddress !== undefined && (obj.validatorAddress = message.validatorAddress);
-    message.commissionRate !== undefined && (obj.commissionRate = message.commissionRate);
-    message.minSelfDelegation !== undefined && (obj.minSelfDelegation = message.minSelfDelegation);
+    if (message.description !== undefined) {
+      obj.description = Description.toJSON(message.description);
+    }
+    if (message.validatorAddress !== "") {
+      obj.validatorAddress = message.validatorAddress;
+    }
+    if (message.commissionRate !== "") {
+      obj.commissionRate = message.commissionRate;
+    }
+    if (message.minSelfDelegation !== "") {
+      obj.minSelfDelegation = message.minSelfDelegation;
+    }
     return obj;
   },
 
@@ -492,9 +511,15 @@ export const MsgDelegate = {
 
   toJSON(message: MsgDelegate): unknown {
     const obj: any = {};
-    message.delegatorAddress !== undefined && (obj.delegatorAddress = message.delegatorAddress);
-    message.validatorAddress !== undefined && (obj.validatorAddress = message.validatorAddress);
-    message.amount !== undefined && (obj.amount = message.amount ? Coin.toJSON(message.amount) : undefined);
+    if (message.delegatorAddress !== "") {
+      obj.delegatorAddress = message.delegatorAddress;
+    }
+    if (message.validatorAddress !== "") {
+      obj.validatorAddress = message.validatorAddress;
+    }
+    if (message.amount !== undefined) {
+      obj.amount = Coin.toJSON(message.amount);
+    }
     return obj;
   },
 
@@ -633,10 +658,18 @@ export const MsgBeginRedelegate = {
 
   toJSON(message: MsgBeginRedelegate): unknown {
     const obj: any = {};
-    message.delegatorAddress !== undefined && (obj.delegatorAddress = message.delegatorAddress);
-    message.validatorSrcAddress !== undefined && (obj.validatorSrcAddress = message.validatorSrcAddress);
-    message.validatorDstAddress !== undefined && (obj.validatorDstAddress = message.validatorDstAddress);
-    message.amount !== undefined && (obj.amount = message.amount ? Coin.toJSON(message.amount) : undefined);
+    if (message.delegatorAddress !== "") {
+      obj.delegatorAddress = message.delegatorAddress;
+    }
+    if (message.validatorSrcAddress !== "") {
+      obj.validatorSrcAddress = message.validatorSrcAddress;
+    }
+    if (message.validatorDstAddress !== "") {
+      obj.validatorDstAddress = message.validatorDstAddress;
+    }
+    if (message.amount !== undefined) {
+      obj.amount = Coin.toJSON(message.amount);
+    }
     return obj;
   },
 
@@ -697,7 +730,9 @@ export const MsgBeginRedelegateResponse = {
 
   toJSON(message: MsgBeginRedelegateResponse): unknown {
     const obj: any = {};
-    message.completionTime !== undefined && (obj.completionTime = message.completionTime.toISOString());
+    if (message.completionTime !== undefined) {
+      obj.completionTime = message.completionTime.toISOString();
+    }
     return obj;
   },
 
@@ -777,9 +812,15 @@ export const MsgUndelegate = {
 
   toJSON(message: MsgUndelegate): unknown {
     const obj: any = {};
-    message.delegatorAddress !== undefined && (obj.delegatorAddress = message.delegatorAddress);
-    message.validatorAddress !== undefined && (obj.validatorAddress = message.validatorAddress);
-    message.amount !== undefined && (obj.amount = message.amount ? Coin.toJSON(message.amount) : undefined);
+    if (message.delegatorAddress !== "") {
+      obj.delegatorAddress = message.delegatorAddress;
+    }
+    if (message.validatorAddress !== "") {
+      obj.validatorAddress = message.validatorAddress;
+    }
+    if (message.amount !== undefined) {
+      obj.amount = Coin.toJSON(message.amount);
+    }
     return obj;
   },
 
@@ -839,7 +880,9 @@ export const MsgUndelegateResponse = {
 
   toJSON(message: MsgUndelegateResponse): unknown {
     const obj: any = {};
-    message.completionTime !== undefined && (obj.completionTime = message.completionTime.toISOString());
+    if (message.completionTime !== undefined) {
+      obj.completionTime = message.completionTime.toISOString();
+    }
     return obj;
   },
 
@@ -1086,14 +1129,14 @@ export class GrpcWebImpl {
     const request = { ..._request, ...methodDesc.requestType };
     const maybeCombinedMetadata = metadata && this.options.metadata
       ? new BrowserHeaders({ ...this.options?.metadata.headersMap, ...metadata?.headersMap })
-      : metadata || this.options.metadata;
+      : metadata ?? this.options.metadata;
     return new Promise((resolve, reject) => {
       grpc.unary(methodDesc, {
         request,
         host: this.host,
-        metadata: maybeCombinedMetadata,
-        transport: this.options.transport,
-        debug: this.options.debug,
+        metadata: maybeCombinedMetadata ?? {},
+        ...(this.options.transport !== undefined ? { transport: this.options.transport } : {}),
+        debug: this.options.debug ?? false,
         onEnd: function (response) {
           if (response.status === grpc.Code.OK) {
             resolve(response.message!.toObject());
@@ -1107,10 +1150,10 @@ export class GrpcWebImpl {
   }
 }
 
-declare var self: any | undefined;
-declare var window: any | undefined;
-declare var global: any | undefined;
-var tsProtoGlobalThis: any = (() => {
+declare const self: any | undefined;
+declare const window: any | undefined;
+declare const global: any | undefined;
+const tsProtoGlobalThis: any = (() => {
   if (typeof globalThis !== "undefined") {
     return globalThis;
   }

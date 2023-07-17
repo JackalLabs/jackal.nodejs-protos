@@ -114,7 +114,9 @@ export const QueryParamsResponse = {
 
   toJSON(message: QueryParamsResponse): unknown {
     const obj: any = {};
-    message.params !== undefined && (obj.params = message.params ? Params.toJSON(message.params) : undefined);
+    if (message.params !== undefined) {
+      obj.params = Params.toJSON(message.params);
+    }
     return obj;
   },
 
@@ -176,7 +178,7 @@ export const QueryInflationRequest = {
 };
 
 function createBaseQueryInflationResponse(): QueryInflationResponse {
-  return { inflation: new Uint8Array() };
+  return { inflation: new Uint8Array(0) };
 }
 
 export const QueryInflationResponse = {
@@ -211,13 +213,14 @@ export const QueryInflationResponse = {
   },
 
   fromJSON(object: any): QueryInflationResponse {
-    return { inflation: isSet(object.inflation) ? bytesFromBase64(object.inflation) : new Uint8Array() };
+    return { inflation: isSet(object.inflation) ? bytesFromBase64(object.inflation) : new Uint8Array(0) };
   },
 
   toJSON(message: QueryInflationResponse): unknown {
     const obj: any = {};
-    message.inflation !== undefined &&
-      (obj.inflation = base64FromBytes(message.inflation !== undefined ? message.inflation : new Uint8Array()));
+    if (message.inflation.length !== 0) {
+      obj.inflation = base64FromBytes(message.inflation);
+    }
     return obj;
   },
 
@@ -227,7 +230,7 @@ export const QueryInflationResponse = {
 
   fromPartial<I extends Exact<DeepPartial<QueryInflationResponse>, I>>(object: I): QueryInflationResponse {
     const message = createBaseQueryInflationResponse();
-    message.inflation = object.inflation ?? new Uint8Array();
+    message.inflation = object.inflation ?? new Uint8Array(0);
     return message;
   },
 };
@@ -353,14 +356,14 @@ export class GrpcWebImpl {
     const request = { ..._request, ...methodDesc.requestType };
     const maybeCombinedMetadata = metadata && this.options.metadata
       ? new BrowserHeaders({ ...this.options?.metadata.headersMap, ...metadata?.headersMap })
-      : metadata || this.options.metadata;
+      : metadata ?? this.options.metadata;
     return new Promise((resolve, reject) => {
       grpc.unary(methodDesc, {
         request,
         host: this.host,
-        metadata: maybeCombinedMetadata,
-        transport: this.options.transport,
-        debug: this.options.debug,
+        metadata: maybeCombinedMetadata ?? {},
+        ...(this.options.transport !== undefined ? { transport: this.options.transport } : {}),
+        debug: this.options.debug ?? false,
         onEnd: function (response) {
           if (response.status === grpc.Code.OK) {
             resolve(response.message!.toObject());
@@ -374,10 +377,10 @@ export class GrpcWebImpl {
   }
 }
 
-declare var self: any | undefined;
-declare var window: any | undefined;
-declare var global: any | undefined;
-var tsProtoGlobalThis: any = (() => {
+declare const self: any | undefined;
+declare const window: any | undefined;
+declare const global: any | undefined;
+const tsProtoGlobalThis: any = (() => {
   if (typeof globalThis !== "undefined") {
     return globalThis;
   }

@@ -115,9 +115,15 @@ export const MsgCreateNotifications = {
 
   toJSON(message: MsgCreateNotifications): unknown {
     const obj: any = {};
-    message.creator !== undefined && (obj.creator = message.creator);
-    message.notification !== undefined && (obj.notification = message.notification);
-    message.address !== undefined && (obj.address = message.address);
+    if (message.creator !== "") {
+      obj.creator = message.creator;
+    }
+    if (message.notification !== "") {
+      obj.notification = message.notification;
+    }
+    if (message.address !== "") {
+      obj.address = message.address;
+    }
     return obj;
   },
 
@@ -175,7 +181,9 @@ export const MsgCreateNotificationsResponse = {
 
   toJSON(message: MsgCreateNotificationsResponse): unknown {
     const obj: any = {};
-    message.notiCounter !== undefined && (obj.notiCounter = Math.round(message.notiCounter));
+    if (message.notiCounter !== 0) {
+      obj.notiCounter = Math.round(message.notiCounter);
+    }
     return obj;
   },
 
@@ -268,10 +276,18 @@ export const MsgUpdateNotifications = {
 
   toJSON(message: MsgUpdateNotifications): unknown {
     const obj: any = {};
-    message.creator !== undefined && (obj.creator = message.creator);
-    message.count !== undefined && (obj.count = Math.round(message.count));
-    message.notification !== undefined && (obj.notification = message.notification);
-    message.address !== undefined && (obj.address = message.address);
+    if (message.creator !== "") {
+      obj.creator = message.creator;
+    }
+    if (message.count !== 0) {
+      obj.count = Math.round(message.count);
+    }
+    if (message.notification !== "") {
+      obj.notification = message.notification;
+    }
+    if (message.address !== "") {
+      obj.address = message.address;
+    }
     return obj;
   },
 
@@ -374,7 +390,9 @@ export const MsgDeleteNotifications = {
 
   toJSON(message: MsgDeleteNotifications): unknown {
     const obj: any = {};
-    message.creator !== undefined && (obj.creator = message.creator);
+    if (message.creator !== "") {
+      obj.creator = message.creator;
+    }
     return obj;
   },
 
@@ -430,7 +448,9 @@ export const MsgDeleteNotificationsResponse = {
 
   toJSON(message: MsgDeleteNotificationsResponse): unknown {
     const obj: any = {};
-    message.notiCounter !== undefined && (obj.notiCounter = Math.round(message.notiCounter));
+    if (message.notiCounter !== 0) {
+      obj.notiCounter = Math.round(message.notiCounter);
+    }
     return obj;
   },
 
@@ -488,7 +508,9 @@ export const MsgSetCounter = {
 
   toJSON(message: MsgSetCounter): unknown {
     const obj: any = {};
-    message.creator !== undefined && (obj.creator = message.creator);
+    if (message.creator !== "") {
+      obj.creator = message.creator;
+    }
     return obj;
   },
 
@@ -544,7 +566,9 @@ export const MsgSetCounterResponse = {
 
   toJSON(message: MsgSetCounterResponse): unknown {
     const obj: any = {};
-    message.notiCounter !== undefined && (obj.notiCounter = Math.round(message.notiCounter));
+    if (message.notiCounter !== 0) {
+      obj.notiCounter = Math.round(message.notiCounter);
+    }
     return obj;
   },
 
@@ -613,8 +637,12 @@ export const MsgBlockSenders = {
 
   toJSON(message: MsgBlockSenders): unknown {
     const obj: any = {};
-    message.creator !== undefined && (obj.creator = message.creator);
-    message.senderIds !== undefined && (obj.senderIds = message.senderIds);
+    if (message.creator !== "") {
+      obj.creator = message.creator;
+    }
+    if (message.senderIds !== "") {
+      obj.senderIds = message.senderIds;
+    }
     return obj;
   },
 
@@ -899,14 +927,14 @@ export class GrpcWebImpl {
     const request = { ..._request, ...methodDesc.requestType };
     const maybeCombinedMetadata = metadata && this.options.metadata
       ? new BrowserHeaders({ ...this.options?.metadata.headersMap, ...metadata?.headersMap })
-      : metadata || this.options.metadata;
+      : metadata ?? this.options.metadata;
     return new Promise((resolve, reject) => {
       grpc.unary(methodDesc, {
         request,
         host: this.host,
-        metadata: maybeCombinedMetadata,
-        transport: this.options.transport,
-        debug: this.options.debug,
+        metadata: maybeCombinedMetadata ?? {},
+        ...(this.options.transport !== undefined ? { transport: this.options.transport } : {}),
+        debug: this.options.debug ?? false,
         onEnd: function (response) {
           if (response.status === grpc.Code.OK) {
             resolve(response.message!.toObject());
@@ -920,10 +948,10 @@ export class GrpcWebImpl {
   }
 }
 
-declare var self: any | undefined;
-declare var window: any | undefined;
-declare var global: any | undefined;
-var tsProtoGlobalThis: any = (() => {
+declare const self: any | undefined;
+declare const window: any | undefined;
+declare const global: any | undefined;
+const tsProtoGlobalThis: any = (() => {
   if (typeof globalThis !== "undefined") {
     return globalThis;
   }

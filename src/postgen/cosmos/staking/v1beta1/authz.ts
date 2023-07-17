@@ -167,13 +167,18 @@ export const StakeAuthorization = {
 
   toJSON(message: StakeAuthorization): unknown {
     const obj: any = {};
-    message.maxTokens !== undefined && (obj.maxTokens = message.maxTokens ? Coin.toJSON(message.maxTokens) : undefined);
-    message.allowList !== undefined &&
-      (obj.allowList = message.allowList ? StakeAuthorization_Validators.toJSON(message.allowList) : undefined);
-    message.denyList !== undefined &&
-      (obj.denyList = message.denyList ? StakeAuthorization_Validators.toJSON(message.denyList) : undefined);
-    message.authorizationType !== undefined &&
-      (obj.authorizationType = authorizationTypeToJSON(message.authorizationType));
+    if (message.maxTokens !== undefined) {
+      obj.maxTokens = Coin.toJSON(message.maxTokens);
+    }
+    if (message.allowList !== undefined) {
+      obj.allowList = StakeAuthorization_Validators.toJSON(message.allowList);
+    }
+    if (message.denyList !== undefined) {
+      obj.denyList = StakeAuthorization_Validators.toJSON(message.denyList);
+    }
+    if (message.authorizationType !== 0) {
+      obj.authorizationType = authorizationTypeToJSON(message.authorizationType);
+    }
     return obj;
   },
 
@@ -238,10 +243,8 @@ export const StakeAuthorization_Validators = {
 
   toJSON(message: StakeAuthorization_Validators): unknown {
     const obj: any = {};
-    if (message.address) {
-      obj.address = message.address.map((e) => e);
-    } else {
-      obj.address = [];
+    if (message.address?.length) {
+      obj.address = message.address;
     }
     return obj;
   },

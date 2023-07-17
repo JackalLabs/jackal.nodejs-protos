@@ -70,7 +70,7 @@ export interface PageResponse {
 }
 
 function createBasePageRequest(): PageRequest {
-  return { key: new Uint8Array(), offset: 0, limit: 0, countTotal: false, reverse: false };
+  return { key: new Uint8Array(0), offset: 0, limit: 0, countTotal: false, reverse: false };
 }
 
 export const PageRequest = {
@@ -146,7 +146,7 @@ export const PageRequest = {
 
   fromJSON(object: any): PageRequest {
     return {
-      key: isSet(object.key) ? bytesFromBase64(object.key) : new Uint8Array(),
+      key: isSet(object.key) ? bytesFromBase64(object.key) : new Uint8Array(0),
       offset: isSet(object.offset) ? Number(object.offset) : 0,
       limit: isSet(object.limit) ? Number(object.limit) : 0,
       countTotal: isSet(object.countTotal) ? Boolean(object.countTotal) : false,
@@ -156,12 +156,21 @@ export const PageRequest = {
 
   toJSON(message: PageRequest): unknown {
     const obj: any = {};
-    message.key !== undefined &&
-      (obj.key = base64FromBytes(message.key !== undefined ? message.key : new Uint8Array()));
-    message.offset !== undefined && (obj.offset = Math.round(message.offset));
-    message.limit !== undefined && (obj.limit = Math.round(message.limit));
-    message.countTotal !== undefined && (obj.countTotal = message.countTotal);
-    message.reverse !== undefined && (obj.reverse = message.reverse);
+    if (message.key.length !== 0) {
+      obj.key = base64FromBytes(message.key);
+    }
+    if (message.offset !== 0) {
+      obj.offset = Math.round(message.offset);
+    }
+    if (message.limit !== 0) {
+      obj.limit = Math.round(message.limit);
+    }
+    if (message.countTotal === true) {
+      obj.countTotal = message.countTotal;
+    }
+    if (message.reverse === true) {
+      obj.reverse = message.reverse;
+    }
     return obj;
   },
 
@@ -171,7 +180,7 @@ export const PageRequest = {
 
   fromPartial<I extends Exact<DeepPartial<PageRequest>, I>>(object: I): PageRequest {
     const message = createBasePageRequest();
-    message.key = object.key ?? new Uint8Array();
+    message.key = object.key ?? new Uint8Array(0);
     message.offset = object.offset ?? 0;
     message.limit = object.limit ?? 0;
     message.countTotal = object.countTotal ?? false;
@@ -181,7 +190,7 @@ export const PageRequest = {
 };
 
 function createBasePageResponse(): PageResponse {
-  return { nextKey: new Uint8Array(), total: 0 };
+  return { nextKey: new Uint8Array(0), total: 0 };
 }
 
 export const PageResponse = {
@@ -227,16 +236,19 @@ export const PageResponse = {
 
   fromJSON(object: any): PageResponse {
     return {
-      nextKey: isSet(object.nextKey) ? bytesFromBase64(object.nextKey) : new Uint8Array(),
+      nextKey: isSet(object.nextKey) ? bytesFromBase64(object.nextKey) : new Uint8Array(0),
       total: isSet(object.total) ? Number(object.total) : 0,
     };
   },
 
   toJSON(message: PageResponse): unknown {
     const obj: any = {};
-    message.nextKey !== undefined &&
-      (obj.nextKey = base64FromBytes(message.nextKey !== undefined ? message.nextKey : new Uint8Array()));
-    message.total !== undefined && (obj.total = Math.round(message.total));
+    if (message.nextKey.length !== 0) {
+      obj.nextKey = base64FromBytes(message.nextKey);
+    }
+    if (message.total !== 0) {
+      obj.total = Math.round(message.total);
+    }
     return obj;
   },
 
@@ -246,16 +258,16 @@ export const PageResponse = {
 
   fromPartial<I extends Exact<DeepPartial<PageResponse>, I>>(object: I): PageResponse {
     const message = createBasePageResponse();
-    message.nextKey = object.nextKey ?? new Uint8Array();
+    message.nextKey = object.nextKey ?? new Uint8Array(0);
     message.total = object.total ?? 0;
     return message;
   },
 };
 
-declare var self: any | undefined;
-declare var window: any | undefined;
-declare var global: any | undefined;
-var tsProtoGlobalThis: any = (() => {
+declare const self: any | undefined;
+declare const window: any | undefined;
+declare const global: any | undefined;
+const tsProtoGlobalThis: any = (() => {
   if (typeof globalThis !== "undefined") {
     return globalThis;
   }

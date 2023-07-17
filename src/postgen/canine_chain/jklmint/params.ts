@@ -49,7 +49,9 @@ export const Params = {
 
   toJSON(message: Params): unknown {
     const obj: any = {};
-    message.mintDenom !== undefined && (obj.mintDenom = message.mintDenom);
+    if (message.mintDenom !== "") {
+      obj.mintDenom = message.mintDenom;
+    }
     return obj;
   },
 

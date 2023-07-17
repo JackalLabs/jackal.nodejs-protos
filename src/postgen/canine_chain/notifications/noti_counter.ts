@@ -75,9 +75,15 @@ export const NotiCounter = {
 
   toJSON(message: NotiCounter): unknown {
     const obj: any = {};
-    message.address !== undefined && (obj.address = message.address);
-    message.counter !== undefined && (obj.counter = Math.round(message.counter));
-    message.blockedSenders !== undefined && (obj.blockedSenders = message.blockedSenders);
+    if (message.address !== "") {
+      obj.address = message.address;
+    }
+    if (message.counter !== 0) {
+      obj.counter = Math.round(message.counter);
+    }
+    if (message.blockedSenders !== "") {
+      obj.blockedSenders = message.blockedSenders;
+    }
     return obj;
   },
 
@@ -94,10 +100,10 @@ export const NotiCounter = {
   },
 };
 
-declare var self: any | undefined;
-declare var window: any | undefined;
-declare var global: any | undefined;
-var tsProtoGlobalThis: any = (() => {
+declare const self: any | undefined;
+declare const window: any | undefined;
+declare const global: any | undefined;
+const tsProtoGlobalThis: any = (() => {
   if (typeof globalThis !== "undefined") {
     return globalThis;
   }

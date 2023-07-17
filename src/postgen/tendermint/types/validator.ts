@@ -88,14 +88,15 @@ export const ValidatorSet = {
 
   toJSON(message: ValidatorSet): unknown {
     const obj: any = {};
-    if (message.validators) {
-      obj.validators = message.validators.map((e) => e ? Validator.toJSON(e) : undefined);
-    } else {
-      obj.validators = [];
+    if (message.validators?.length) {
+      obj.validators = message.validators.map((e) => Validator.toJSON(e));
     }
-    message.proposer !== undefined &&
-      (obj.proposer = message.proposer ? Validator.toJSON(message.proposer) : undefined);
-    message.totalVotingPower !== undefined && (obj.totalVotingPower = Math.round(message.totalVotingPower));
+    if (message.proposer !== undefined) {
+      obj.proposer = Validator.toJSON(message.proposer);
+    }
+    if (message.totalVotingPower !== 0) {
+      obj.totalVotingPower = Math.round(message.totalVotingPower);
+    }
     return obj;
   },
 
@@ -115,7 +116,7 @@ export const ValidatorSet = {
 };
 
 function createBaseValidator(): Validator {
-  return { address: new Uint8Array(), pubKey: undefined, votingPower: 0, proposerPriority: 0 };
+  return { address: new Uint8Array(0), pubKey: undefined, votingPower: 0, proposerPriority: 0 };
 }
 
 export const Validator = {
@@ -181,7 +182,7 @@ export const Validator = {
 
   fromJSON(object: any): Validator {
     return {
-      address: isSet(object.address) ? bytesFromBase64(object.address) : new Uint8Array(),
+      address: isSet(object.address) ? bytesFromBase64(object.address) : new Uint8Array(0),
       pubKey: isSet(object.pubKey) ? PublicKey.fromJSON(object.pubKey) : undefined,
       votingPower: isSet(object.votingPower) ? Number(object.votingPower) : 0,
       proposerPriority: isSet(object.proposerPriority) ? Number(object.proposerPriority) : 0,
@@ -190,11 +191,18 @@ export const Validator = {
 
   toJSON(message: Validator): unknown {
     const obj: any = {};
-    message.address !== undefined &&
-      (obj.address = base64FromBytes(message.address !== undefined ? message.address : new Uint8Array()));
-    message.pubKey !== undefined && (obj.pubKey = message.pubKey ? PublicKey.toJSON(message.pubKey) : undefined);
-    message.votingPower !== undefined && (obj.votingPower = Math.round(message.votingPower));
-    message.proposerPriority !== undefined && (obj.proposerPriority = Math.round(message.proposerPriority));
+    if (message.address.length !== 0) {
+      obj.address = base64FromBytes(message.address);
+    }
+    if (message.pubKey !== undefined) {
+      obj.pubKey = PublicKey.toJSON(message.pubKey);
+    }
+    if (message.votingPower !== 0) {
+      obj.votingPower = Math.round(message.votingPower);
+    }
+    if (message.proposerPriority !== 0) {
+      obj.proposerPriority = Math.round(message.proposerPriority);
+    }
     return obj;
   },
 
@@ -204,7 +212,7 @@ export const Validator = {
 
   fromPartial<I extends Exact<DeepPartial<Validator>, I>>(object: I): Validator {
     const message = createBaseValidator();
-    message.address = object.address ?? new Uint8Array();
+    message.address = object.address ?? new Uint8Array(0);
     message.pubKey = (object.pubKey !== undefined && object.pubKey !== null)
       ? PublicKey.fromPartial(object.pubKey)
       : undefined;
@@ -268,8 +276,12 @@ export const SimpleValidator = {
 
   toJSON(message: SimpleValidator): unknown {
     const obj: any = {};
-    message.pubKey !== undefined && (obj.pubKey = message.pubKey ? PublicKey.toJSON(message.pubKey) : undefined);
-    message.votingPower !== undefined && (obj.votingPower = Math.round(message.votingPower));
+    if (message.pubKey !== undefined) {
+      obj.pubKey = PublicKey.toJSON(message.pubKey);
+    }
+    if (message.votingPower !== 0) {
+      obj.votingPower = Math.round(message.votingPower);
+    }
     return obj;
   },
 
@@ -287,10 +299,10 @@ export const SimpleValidator = {
   },
 };
 
-declare var self: any | undefined;
-declare var window: any | undefined;
-declare var global: any | undefined;
-var tsProtoGlobalThis: any = (() => {
+declare const self: any | undefined;
+declare const window: any | undefined;
+declare const global: any | undefined;
+const tsProtoGlobalThis: any = (() => {
   if (typeof globalThis !== "undefined") {
     return globalThis;
   }

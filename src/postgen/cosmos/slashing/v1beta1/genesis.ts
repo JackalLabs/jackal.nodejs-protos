@@ -119,16 +119,14 @@ export const GenesisState = {
 
   toJSON(message: GenesisState): unknown {
     const obj: any = {};
-    message.params !== undefined && (obj.params = message.params ? Params.toJSON(message.params) : undefined);
-    if (message.signingInfos) {
-      obj.signingInfos = message.signingInfos.map((e) => e ? SigningInfo.toJSON(e) : undefined);
-    } else {
-      obj.signingInfos = [];
+    if (message.params !== undefined) {
+      obj.params = Params.toJSON(message.params);
     }
-    if (message.missedBlocks) {
-      obj.missedBlocks = message.missedBlocks.map((e) => e ? ValidatorMissedBlocks.toJSON(e) : undefined);
-    } else {
-      obj.missedBlocks = [];
+    if (message.signingInfos?.length) {
+      obj.signingInfos = message.signingInfos.map((e) => SigningInfo.toJSON(e));
+    }
+    if (message.missedBlocks?.length) {
+      obj.missedBlocks = message.missedBlocks.map((e) => ValidatorMissedBlocks.toJSON(e));
     }
     return obj;
   },
@@ -204,10 +202,12 @@ export const SigningInfo = {
 
   toJSON(message: SigningInfo): unknown {
     const obj: any = {};
-    message.address !== undefined && (obj.address = message.address);
-    message.validatorSigningInfo !== undefined && (obj.validatorSigningInfo = message.validatorSigningInfo
-      ? ValidatorSigningInfo.toJSON(message.validatorSigningInfo)
-      : undefined);
+    if (message.address !== "") {
+      obj.address = message.address;
+    }
+    if (message.validatorSigningInfo !== undefined) {
+      obj.validatorSigningInfo = ValidatorSigningInfo.toJSON(message.validatorSigningInfo);
+    }
     return obj;
   },
 
@@ -281,11 +281,11 @@ export const ValidatorMissedBlocks = {
 
   toJSON(message: ValidatorMissedBlocks): unknown {
     const obj: any = {};
-    message.address !== undefined && (obj.address = message.address);
-    if (message.missedBlocks) {
-      obj.missedBlocks = message.missedBlocks.map((e) => e ? MissedBlock.toJSON(e) : undefined);
-    } else {
-      obj.missedBlocks = [];
+    if (message.address !== "") {
+      obj.address = message.address;
+    }
+    if (message.missedBlocks?.length) {
+      obj.missedBlocks = message.missedBlocks.map((e) => MissedBlock.toJSON(e));
     }
     return obj;
   },
@@ -356,8 +356,12 @@ export const MissedBlock = {
 
   toJSON(message: MissedBlock): unknown {
     const obj: any = {};
-    message.index !== undefined && (obj.index = Math.round(message.index));
-    message.missed !== undefined && (obj.missed = message.missed);
+    if (message.index !== 0) {
+      obj.index = Math.round(message.index);
+    }
+    if (message.missed === true) {
+      obj.missed = message.missed;
+    }
     return obj;
   },
 
@@ -373,10 +377,10 @@ export const MissedBlock = {
   },
 };
 
-declare var self: any | undefined;
-declare var window: any | undefined;
-declare var global: any | undefined;
-var tsProtoGlobalThis: any = (() => {
+declare const self: any | undefined;
+declare const window: any | undefined;
+declare const global: any | undefined;
+const tsProtoGlobalThis: any = (() => {
   if (typeof globalThis !== "undefined") {
     return globalThis;
   }

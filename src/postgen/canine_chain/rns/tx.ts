@@ -186,10 +186,18 @@ export const MsgRegister = {
 
   toJSON(message: MsgRegister): unknown {
     const obj: any = {};
-    message.creator !== undefined && (obj.creator = message.creator);
-    message.name !== undefined && (obj.name = message.name);
-    message.years !== undefined && (obj.years = message.years);
-    message.data !== undefined && (obj.data = message.data);
+    if (message.creator !== "") {
+      obj.creator = message.creator;
+    }
+    if (message.name !== "") {
+      obj.name = message.name;
+    }
+    if (message.years !== "") {
+      obj.years = message.years;
+    }
+    if (message.data !== "") {
+      obj.data = message.data;
+    }
     return obj;
   },
 
@@ -316,9 +324,15 @@ export const MsgUpdate = {
 
   toJSON(message: MsgUpdate): unknown {
     const obj: any = {};
-    message.creator !== undefined && (obj.creator = message.creator);
-    message.name !== undefined && (obj.name = message.name);
-    message.data !== undefined && (obj.data = message.data);
+    if (message.creator !== "") {
+      obj.creator = message.creator;
+    }
+    if (message.name !== "") {
+      obj.name = message.name;
+    }
+    if (message.data !== "") {
+      obj.data = message.data;
+    }
     return obj;
   },
 
@@ -444,9 +458,15 @@ export const MsgBid = {
 
   toJSON(message: MsgBid): unknown {
     const obj: any = {};
-    message.creator !== undefined && (obj.creator = message.creator);
-    message.name !== undefined && (obj.name = message.name);
-    message.bid !== undefined && (obj.bid = message.bid);
+    if (message.creator !== "") {
+      obj.creator = message.creator;
+    }
+    if (message.name !== "") {
+      obj.name = message.name;
+    }
+    if (message.bid !== "") {
+      obj.bid = message.bid;
+    }
     return obj;
   },
 
@@ -572,9 +592,15 @@ export const MsgAcceptBid = {
 
   toJSON(message: MsgAcceptBid): unknown {
     const obj: any = {};
-    message.creator !== undefined && (obj.creator = message.creator);
-    message.name !== undefined && (obj.name = message.name);
-    message.from !== undefined && (obj.from = message.from);
+    if (message.creator !== "") {
+      obj.creator = message.creator;
+    }
+    if (message.name !== "") {
+      obj.name = message.name;
+    }
+    if (message.from !== "") {
+      obj.from = message.from;
+    }
     return obj;
   },
 
@@ -689,8 +715,12 @@ export const MsgCancelBid = {
 
   toJSON(message: MsgCancelBid): unknown {
     const obj: any = {};
-    message.creator !== undefined && (obj.creator = message.creator);
-    message.name !== undefined && (obj.name = message.name);
+    if (message.creator !== "") {
+      obj.creator = message.creator;
+    }
+    if (message.name !== "") {
+      obj.name = message.name;
+    }
     return obj;
   },
 
@@ -815,9 +845,15 @@ export const MsgList = {
 
   toJSON(message: MsgList): unknown {
     const obj: any = {};
-    message.creator !== undefined && (obj.creator = message.creator);
-    message.name !== undefined && (obj.name = message.name);
-    message.price !== undefined && (obj.price = message.price);
+    if (message.creator !== "") {
+      obj.creator = message.creator;
+    }
+    if (message.name !== "") {
+      obj.name = message.name;
+    }
+    if (message.price !== "") {
+      obj.price = message.price;
+    }
     return obj;
   },
 
@@ -932,8 +968,12 @@ export const MsgBuy = {
 
   toJSON(message: MsgBuy): unknown {
     const obj: any = {};
-    message.creator !== undefined && (obj.creator = message.creator);
-    message.name !== undefined && (obj.name = message.name);
+    if (message.creator !== "") {
+      obj.creator = message.creator;
+    }
+    if (message.name !== "") {
+      obj.name = message.name;
+    }
     return obj;
   },
 
@@ -1047,8 +1087,12 @@ export const MsgDelist = {
 
   toJSON(message: MsgDelist): unknown {
     const obj: any = {};
-    message.creator !== undefined && (obj.creator = message.creator);
-    message.name !== undefined && (obj.name = message.name);
+    if (message.creator !== "") {
+      obj.creator = message.creator;
+    }
+    if (message.name !== "") {
+      obj.name = message.name;
+    }
     return obj;
   },
 
@@ -1173,9 +1217,15 @@ export const MsgTransfer = {
 
   toJSON(message: MsgTransfer): unknown {
     const obj: any = {};
-    message.creator !== undefined && (obj.creator = message.creator);
-    message.name !== undefined && (obj.name = message.name);
-    message.receiver !== undefined && (obj.receiver = message.receiver);
+    if (message.creator !== "") {
+      obj.creator = message.creator;
+    }
+    if (message.name !== "") {
+      obj.name = message.name;
+    }
+    if (message.receiver !== "") {
+      obj.receiver = message.receiver;
+    }
     return obj;
   },
 
@@ -1323,11 +1373,21 @@ export const MsgAddRecord = {
 
   toJSON(message: MsgAddRecord): unknown {
     const obj: any = {};
-    message.creator !== undefined && (obj.creator = message.creator);
-    message.name !== undefined && (obj.name = message.name);
-    message.value !== undefined && (obj.value = message.value);
-    message.data !== undefined && (obj.data = message.data);
-    message.record !== undefined && (obj.record = message.record);
+    if (message.creator !== "") {
+      obj.creator = message.creator;
+    }
+    if (message.name !== "") {
+      obj.name = message.name;
+    }
+    if (message.value !== "") {
+      obj.value = message.value;
+    }
+    if (message.data !== "") {
+      obj.data = message.data;
+    }
+    if (message.record !== "") {
+      obj.record = message.record;
+    }
     return obj;
   },
 
@@ -1444,8 +1504,12 @@ export const MsgDelRecord = {
 
   toJSON(message: MsgDelRecord): unknown {
     const obj: any = {};
-    message.creator !== undefined && (obj.creator = message.creator);
-    message.name !== undefined && (obj.name = message.name);
+    if (message.creator !== "") {
+      obj.creator = message.creator;
+    }
+    if (message.name !== "") {
+      obj.name = message.name;
+    }
     return obj;
   },
 
@@ -1546,7 +1610,9 @@ export const MsgInit = {
 
   toJSON(message: MsgInit): unknown {
     const obj: any = {};
-    message.creator !== undefined && (obj.creator = message.creator);
+    if (message.creator !== "") {
+      obj.creator = message.creator;
+    }
     return obj;
   },
 
@@ -2014,14 +2080,14 @@ export class GrpcWebImpl {
     const request = { ..._request, ...methodDesc.requestType };
     const maybeCombinedMetadata = metadata && this.options.metadata
       ? new BrowserHeaders({ ...this.options?.metadata.headersMap, ...metadata?.headersMap })
-      : metadata || this.options.metadata;
+      : metadata ?? this.options.metadata;
     return new Promise((resolve, reject) => {
       grpc.unary(methodDesc, {
         request,
         host: this.host,
-        metadata: maybeCombinedMetadata,
-        transport: this.options.transport,
-        debug: this.options.debug,
+        metadata: maybeCombinedMetadata ?? {},
+        ...(this.options.transport !== undefined ? { transport: this.options.transport } : {}),
+        debug: this.options.debug ?? false,
         onEnd: function (response) {
           if (response.status === grpc.Code.OK) {
             resolve(response.message!.toObject());
@@ -2035,10 +2101,10 @@ export class GrpcWebImpl {
   }
 }
 
-declare var self: any | undefined;
-declare var window: any | undefined;
-declare var global: any | undefined;
-var tsProtoGlobalThis: any = (() => {
+declare const self: any | undefined;
+declare const window: any | undefined;
+declare const global: any | undefined;
+const tsProtoGlobalThis: any = (() => {
   if (typeof globalThis !== "undefined") {
     return globalThis;
   }

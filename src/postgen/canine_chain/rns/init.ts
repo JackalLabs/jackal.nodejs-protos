@@ -62,8 +62,12 @@ export const Init = {
 
   toJSON(message: Init): unknown {
     const obj: any = {};
-    message.address !== undefined && (obj.address = message.address);
-    message.complete !== undefined && (obj.complete = message.complete);
+    if (message.address !== "") {
+      obj.address = message.address;
+    }
+    if (message.complete === true) {
+      obj.complete = message.complete;
+    }
     return obj;
   },
 

@@ -170,16 +170,36 @@ export const Contracts = {
 
   toJSON(message: Contracts): unknown {
     const obj: any = {};
-    message.cid !== undefined && (obj.cid = message.cid);
-    message.priceamt !== undefined && (obj.priceamt = message.priceamt);
-    message.pricedenom !== undefined && (obj.pricedenom = message.pricedenom);
-    message.creator !== undefined && (obj.creator = message.creator);
-    message.merkle !== undefined && (obj.merkle = message.merkle);
-    message.signee !== undefined && (obj.signee = message.signee);
-    message.duration !== undefined && (obj.duration = message.duration);
-    message.filesize !== undefined && (obj.filesize = message.filesize);
-    message.fid !== undefined && (obj.fid = message.fid);
-    message.age !== undefined && (obj.age = Math.round(message.age));
+    if (message.cid !== "") {
+      obj.cid = message.cid;
+    }
+    if (message.priceamt !== "") {
+      obj.priceamt = message.priceamt;
+    }
+    if (message.pricedenom !== "") {
+      obj.pricedenom = message.pricedenom;
+    }
+    if (message.creator !== "") {
+      obj.creator = message.creator;
+    }
+    if (message.merkle !== "") {
+      obj.merkle = message.merkle;
+    }
+    if (message.signee !== "") {
+      obj.signee = message.signee;
+    }
+    if (message.duration !== "") {
+      obj.duration = message.duration;
+    }
+    if (message.filesize !== "") {
+      obj.filesize = message.filesize;
+    }
+    if (message.fid !== "") {
+      obj.fid = message.fid;
+    }
+    if (message.age !== 0) {
+      obj.age = Math.round(message.age);
+    }
     return obj;
   },
 
@@ -203,10 +223,10 @@ export const Contracts = {
   },
 };
 
-declare var self: any | undefined;
-declare var window: any | undefined;
-declare var global: any | undefined;
-var tsProtoGlobalThis: any = (() => {
+declare const self: any | undefined;
+declare const window: any | undefined;
+declare const global: any | undefined;
+const tsProtoGlobalThis: any = (() => {
   if (typeof globalThis !== "undefined") {
     return globalThis;
   }

@@ -256,14 +256,30 @@ export const MsgPostFile = {
 
   toJSON(message: MsgPostFile): unknown {
     const obj: any = {};
-    message.creator !== undefined && (obj.creator = message.creator);
-    message.account !== undefined && (obj.account = message.account);
-    message.hashParent !== undefined && (obj.hashParent = message.hashParent);
-    message.hashChild !== undefined && (obj.hashChild = message.hashChild);
-    message.contents !== undefined && (obj.contents = message.contents);
-    message.viewers !== undefined && (obj.viewers = message.viewers);
-    message.editors !== undefined && (obj.editors = message.editors);
-    message.trackingNumber !== undefined && (obj.trackingNumber = message.trackingNumber);
+    if (message.creator !== "") {
+      obj.creator = message.creator;
+    }
+    if (message.account !== "") {
+      obj.account = message.account;
+    }
+    if (message.hashParent !== "") {
+      obj.hashParent = message.hashParent;
+    }
+    if (message.hashChild !== "") {
+      obj.hashChild = message.hashChild;
+    }
+    if (message.contents !== "") {
+      obj.contents = message.contents;
+    }
+    if (message.viewers !== "") {
+      obj.viewers = message.viewers;
+    }
+    if (message.editors !== "") {
+      obj.editors = message.editors;
+    }
+    if (message.trackingNumber !== "") {
+      obj.trackingNumber = message.trackingNumber;
+    }
     return obj;
   },
 
@@ -326,7 +342,9 @@ export const MsgPostFileResponse = {
 
   toJSON(message: MsgPostFileResponse): unknown {
     const obj: any = {};
-    message.path !== undefined && (obj.path = message.path);
+    if (message.path !== "") {
+      obj.path = message.path;
+    }
     return obj;
   },
 
@@ -428,11 +446,21 @@ export const MsgAddViewers = {
 
   toJSON(message: MsgAddViewers): unknown {
     const obj: any = {};
-    message.creator !== undefined && (obj.creator = message.creator);
-    message.viewerIds !== undefined && (obj.viewerIds = message.viewerIds);
-    message.viewerKeys !== undefined && (obj.viewerKeys = message.viewerKeys);
-    message.address !== undefined && (obj.address = message.address);
-    message.fileowner !== undefined && (obj.fileowner = message.fileowner);
+    if (message.creator !== "") {
+      obj.creator = message.creator;
+    }
+    if (message.viewerIds !== "") {
+      obj.viewerIds = message.viewerIds;
+    }
+    if (message.viewerKeys !== "") {
+      obj.viewerKeys = message.viewerKeys;
+    }
+    if (message.address !== "") {
+      obj.address = message.address;
+    }
+    if (message.fileowner !== "") {
+      obj.fileowner = message.fileowner;
+    }
     return obj;
   },
 
@@ -549,8 +577,12 @@ export const MsgPostkey = {
 
   toJSON(message: MsgPostkey): unknown {
     const obj: any = {};
-    message.creator !== undefined && (obj.creator = message.creator);
-    message.key !== undefined && (obj.key = message.key);
+    if (message.creator !== "") {
+      obj.creator = message.creator;
+    }
+    if (message.key !== "") {
+      obj.key = message.key;
+    }
     return obj;
   },
 
@@ -675,9 +707,15 @@ export const MsgDeleteFile = {
 
   toJSON(message: MsgDeleteFile): unknown {
     const obj: any = {};
-    message.creator !== undefined && (obj.creator = message.creator);
-    message.hashPath !== undefined && (obj.hashPath = message.hashPath);
-    message.account !== undefined && (obj.account = message.account);
+    if (message.creator !== "") {
+      obj.creator = message.creator;
+    }
+    if (message.hashPath !== "") {
+      obj.hashPath = message.hashPath;
+    }
+    if (message.account !== "") {
+      obj.account = message.account;
+    }
     return obj;
   },
 
@@ -814,10 +852,18 @@ export const MsgRemoveViewers = {
 
   toJSON(message: MsgRemoveViewers): unknown {
     const obj: any = {};
-    message.creator !== undefined && (obj.creator = message.creator);
-    message.viewerIds !== undefined && (obj.viewerIds = message.viewerIds);
-    message.address !== undefined && (obj.address = message.address);
-    message.fileowner !== undefined && (obj.fileowner = message.fileowner);
+    if (message.creator !== "") {
+      obj.creator = message.creator;
+    }
+    if (message.viewerIds !== "") {
+      obj.viewerIds = message.viewerIds;
+    }
+    if (message.address !== "") {
+      obj.address = message.address;
+    }
+    if (message.fileowner !== "") {
+      obj.fileowner = message.fileowner;
+    }
     return obj;
   },
 
@@ -988,13 +1034,27 @@ export const MsgMakeRoot = {
 
   toJSON(message: MsgMakeRoot): unknown {
     const obj: any = {};
-    message.creator !== undefined && (obj.creator = message.creator);
-    message.account !== undefined && (obj.account = message.account);
-    message.rootHashPath !== undefined && (obj.rootHashPath = message.rootHashPath);
-    message.contents !== undefined && (obj.contents = message.contents);
-    message.editors !== undefined && (obj.editors = message.editors);
-    message.viewers !== undefined && (obj.viewers = message.viewers);
-    message.trackingNumber !== undefined && (obj.trackingNumber = message.trackingNumber);
+    if (message.creator !== "") {
+      obj.creator = message.creator;
+    }
+    if (message.account !== "") {
+      obj.account = message.account;
+    }
+    if (message.rootHashPath !== "") {
+      obj.rootHashPath = message.rootHashPath;
+    }
+    if (message.contents !== "") {
+      obj.contents = message.contents;
+    }
+    if (message.editors !== "") {
+      obj.editors = message.editors;
+    }
+    if (message.viewers !== "") {
+      obj.viewers = message.viewers;
+    }
+    if (message.trackingNumber !== "") {
+      obj.trackingNumber = message.trackingNumber;
+    }
     return obj;
   },
 
@@ -1135,10 +1195,18 @@ export const MsgMakeRootV2 = {
 
   toJSON(message: MsgMakeRootV2): unknown {
     const obj: any = {};
-    message.creator !== undefined && (obj.creator = message.creator);
-    message.editors !== undefined && (obj.editors = message.editors);
-    message.viewers !== undefined && (obj.viewers = message.viewers);
-    message.trackingNumber !== undefined && (obj.trackingNumber = message.trackingNumber);
+    if (message.creator !== "") {
+      obj.creator = message.creator;
+    }
+    if (message.editors !== "") {
+      obj.editors = message.editors;
+    }
+    if (message.viewers !== "") {
+      obj.viewers = message.viewers;
+    }
+    if (message.trackingNumber !== "") {
+      obj.trackingNumber = message.trackingNumber;
+    }
     return obj;
   },
 
@@ -1243,11 +1311,21 @@ export const MsgAddEditors = {
 
   toJSON(message: MsgAddEditors): unknown {
     const obj: any = {};
-    message.creator !== undefined && (obj.creator = message.creator);
-    message.editorIds !== undefined && (obj.editorIds = message.editorIds);
-    message.editorKeys !== undefined && (obj.editorKeys = message.editorKeys);
-    message.address !== undefined && (obj.address = message.address);
-    message.fileowner !== undefined && (obj.fileowner = message.fileowner);
+    if (message.creator !== "") {
+      obj.creator = message.creator;
+    }
+    if (message.editorIds !== "") {
+      obj.editorIds = message.editorIds;
+    }
+    if (message.editorKeys !== "") {
+      obj.editorKeys = message.editorKeys;
+    }
+    if (message.address !== "") {
+      obj.address = message.address;
+    }
+    if (message.fileowner !== "") {
+      obj.fileowner = message.fileowner;
+    }
     return obj;
   },
 
@@ -1386,10 +1464,18 @@ export const MsgRemoveEditors = {
 
   toJSON(message: MsgRemoveEditors): unknown {
     const obj: any = {};
-    message.creator !== undefined && (obj.creator = message.creator);
-    message.editorIds !== undefined && (obj.editorIds = message.editorIds);
-    message.address !== undefined && (obj.address = message.address);
-    message.fileowner !== undefined && (obj.fileowner = message.fileowner);
+    if (message.creator !== "") {
+      obj.creator = message.creator;
+    }
+    if (message.editorIds !== "") {
+      obj.editorIds = message.editorIds;
+    }
+    if (message.address !== "") {
+      obj.address = message.address;
+    }
+    if (message.fileowner !== "") {
+      obj.fileowner = message.fileowner;
+    }
     return obj;
   },
 
@@ -1516,9 +1602,15 @@ export const MsgResetEditors = {
 
   toJSON(message: MsgResetEditors): unknown {
     const obj: any = {};
-    message.creator !== undefined && (obj.creator = message.creator);
-    message.address !== undefined && (obj.address = message.address);
-    message.fileowner !== undefined && (obj.fileowner = message.fileowner);
+    if (message.creator !== "") {
+      obj.creator = message.creator;
+    }
+    if (message.address !== "") {
+      obj.address = message.address;
+    }
+    if (message.fileowner !== "") {
+      obj.fileowner = message.fileowner;
+    }
     return obj;
   },
 
@@ -1644,9 +1736,15 @@ export const MsgResetViewers = {
 
   toJSON(message: MsgResetViewers): unknown {
     const obj: any = {};
-    message.creator !== undefined && (obj.creator = message.creator);
-    message.address !== undefined && (obj.address = message.address);
-    message.fileowner !== undefined && (obj.fileowner = message.fileowner);
+    if (message.creator !== "") {
+      obj.creator = message.creator;
+    }
+    if (message.address !== "") {
+      obj.address = message.address;
+    }
+    if (message.fileowner !== "") {
+      obj.fileowner = message.fileowner;
+    }
     return obj;
   },
 
@@ -1783,10 +1881,18 @@ export const MsgChangeOwner = {
 
   toJSON(message: MsgChangeOwner): unknown {
     const obj: any = {};
-    message.creator !== undefined && (obj.creator = message.creator);
-    message.address !== undefined && (obj.address = message.address);
-    message.fileOwner !== undefined && (obj.fileOwner = message.fileOwner);
-    message.newOwner !== undefined && (obj.newOwner = message.newOwner);
+    if (message.creator !== "") {
+      obj.creator = message.creator;
+    }
+    if (message.address !== "") {
+      obj.address = message.address;
+    }
+    if (message.fileOwner !== "") {
+      obj.fileOwner = message.fileOwner;
+    }
+    if (message.newOwner !== "") {
+      obj.newOwner = message.newOwner;
+    }
     return obj;
   },
 
@@ -2257,14 +2363,14 @@ export class GrpcWebImpl {
     const request = { ..._request, ...methodDesc.requestType };
     const maybeCombinedMetadata = metadata && this.options.metadata
       ? new BrowserHeaders({ ...this.options?.metadata.headersMap, ...metadata?.headersMap })
-      : metadata || this.options.metadata;
+      : metadata ?? this.options.metadata;
     return new Promise((resolve, reject) => {
       grpc.unary(methodDesc, {
         request,
         host: this.host,
-        metadata: maybeCombinedMetadata,
-        transport: this.options.transport,
-        debug: this.options.debug,
+        metadata: maybeCombinedMetadata ?? {},
+        ...(this.options.transport !== undefined ? { transport: this.options.transport } : {}),
+        debug: this.options.debug ?? false,
         onEnd: function (response) {
           if (response.status === grpc.Code.OK) {
             resolve(response.message!.toObject());
@@ -2278,10 +2384,10 @@ export class GrpcWebImpl {
   }
 }
 
-declare var self: any | undefined;
-declare var window: any | undefined;
-declare var global: any | undefined;
-var tsProtoGlobalThis: any = (() => {
+declare const self: any | undefined;
+declare const window: any | undefined;
+declare const global: any | undefined;
+const tsProtoGlobalThis: any = (() => {
   if (typeof globalThis !== "undefined") {
     return globalThis;
   }

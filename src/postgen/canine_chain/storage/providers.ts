@@ -130,16 +130,26 @@ export const Providers = {
 
   toJSON(message: Providers): unknown {
     const obj: any = {};
-    message.address !== undefined && (obj.address = message.address);
-    message.ip !== undefined && (obj.ip = message.ip);
-    message.totalspace !== undefined && (obj.totalspace = message.totalspace);
-    message.burnedContracts !== undefined && (obj.burnedContracts = message.burnedContracts);
-    message.creator !== undefined && (obj.creator = message.creator);
-    message.keybaseIdentity !== undefined && (obj.keybaseIdentity = message.keybaseIdentity);
-    if (message.authClaimers) {
-      obj.authClaimers = message.authClaimers.map((e) => e);
-    } else {
-      obj.authClaimers = [];
+    if (message.address !== "") {
+      obj.address = message.address;
+    }
+    if (message.ip !== "") {
+      obj.ip = message.ip;
+    }
+    if (message.totalspace !== "") {
+      obj.totalspace = message.totalspace;
+    }
+    if (message.burnedContracts !== "") {
+      obj.burnedContracts = message.burnedContracts;
+    }
+    if (message.creator !== "") {
+      obj.creator = message.creator;
+    }
+    if (message.keybaseIdentity !== "") {
+      obj.keybaseIdentity = message.keybaseIdentity;
+    }
+    if (message.authClaimers?.length) {
+      obj.authClaimers = message.authClaimers;
     }
     return obj;
   },

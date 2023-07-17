@@ -82,16 +82,14 @@ export const GenesisState = {
 
   toJSON(message: GenesisState): unknown {
     const obj: any = {};
-    message.params !== undefined && (obj.params = message.params ? Params.toJSON(message.params) : undefined);
-    if (message.notificationsList) {
-      obj.notificationsList = message.notificationsList.map((e) => e ? Notifications.toJSON(e) : undefined);
-    } else {
-      obj.notificationsList = [];
+    if (message.params !== undefined) {
+      obj.params = Params.toJSON(message.params);
     }
-    if (message.notiCounterList) {
-      obj.notiCounterList = message.notiCounterList.map((e) => e ? NotiCounter.toJSON(e) : undefined);
-    } else {
-      obj.notiCounterList = [];
+    if (message.notificationsList?.length) {
+      obj.notificationsList = message.notificationsList.map((e) => Notifications.toJSON(e));
+    }
+    if (message.notiCounterList?.length) {
+      obj.notiCounterList = message.notiCounterList.map((e) => NotiCounter.toJSON(e));
     }
     return obj;
   },

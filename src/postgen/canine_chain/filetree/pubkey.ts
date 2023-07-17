@@ -62,8 +62,12 @@ export const Pubkey = {
 
   toJSON(message: Pubkey): unknown {
     const obj: any = {};
-    message.address !== undefined && (obj.address = message.address);
-    message.key !== undefined && (obj.key = message.key);
+    if (message.address !== "") {
+      obj.address = message.address;
+    }
+    if (message.key !== "") {
+      obj.key = message.key;
+    }
     return obj;
   },
 

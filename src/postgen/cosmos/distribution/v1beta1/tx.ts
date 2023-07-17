@@ -111,8 +111,12 @@ export const MsgSetWithdrawAddress = {
 
   toJSON(message: MsgSetWithdrawAddress): unknown {
     const obj: any = {};
-    message.delegatorAddress !== undefined && (obj.delegatorAddress = message.delegatorAddress);
-    message.withdrawAddress !== undefined && (obj.withdrawAddress = message.withdrawAddress);
+    if (message.delegatorAddress !== "") {
+      obj.delegatorAddress = message.delegatorAddress;
+    }
+    if (message.withdrawAddress !== "") {
+      obj.withdrawAddress = message.withdrawAddress;
+    }
     return obj;
   },
 
@@ -226,8 +230,12 @@ export const MsgWithdrawDelegatorReward = {
 
   toJSON(message: MsgWithdrawDelegatorReward): unknown {
     const obj: any = {};
-    message.delegatorAddress !== undefined && (obj.delegatorAddress = message.delegatorAddress);
-    message.validatorAddress !== undefined && (obj.validatorAddress = message.validatorAddress);
+    if (message.delegatorAddress !== "") {
+      obj.delegatorAddress = message.delegatorAddress;
+    }
+    if (message.validatorAddress !== "") {
+      obj.validatorAddress = message.validatorAddress;
+    }
     return obj;
   },
 
@@ -332,7 +340,9 @@ export const MsgWithdrawValidatorCommission = {
 
   toJSON(message: MsgWithdrawValidatorCommission): unknown {
     const obj: any = {};
-    message.validatorAddress !== undefined && (obj.validatorAddress = message.validatorAddress);
+    if (message.validatorAddress !== "") {
+      obj.validatorAddress = message.validatorAddress;
+    }
     return obj;
   },
 
@@ -451,12 +461,12 @@ export const MsgFundCommunityPool = {
 
   toJSON(message: MsgFundCommunityPool): unknown {
     const obj: any = {};
-    if (message.amount) {
-      obj.amount = message.amount.map((e) => e ? Coin.toJSON(e) : undefined);
-    } else {
-      obj.amount = [];
+    if (message.amount?.length) {
+      obj.amount = message.amount.map((e) => Coin.toJSON(e));
     }
-    message.depositor !== undefined && (obj.depositor = message.depositor);
+    if (message.depositor !== "") {
+      obj.depositor = message.depositor;
+    }
     return obj;
   },
 
@@ -737,14 +747,14 @@ export class GrpcWebImpl {
     const request = { ..._request, ...methodDesc.requestType };
     const maybeCombinedMetadata = metadata && this.options.metadata
       ? new BrowserHeaders({ ...this.options?.metadata.headersMap, ...metadata?.headersMap })
-      : metadata || this.options.metadata;
+      : metadata ?? this.options.metadata;
     return new Promise((resolve, reject) => {
       grpc.unary(methodDesc, {
         request,
         host: this.host,
-        metadata: maybeCombinedMetadata,
-        transport: this.options.transport,
-        debug: this.options.debug,
+        metadata: maybeCombinedMetadata ?? {},
+        ...(this.options.transport !== undefined ? { transport: this.options.transport } : {}),
+        debug: this.options.debug ?? false,
         onEnd: function (response) {
           if (response.status === grpc.Code.OK) {
             resolve(response.message!.toObject());
@@ -758,10 +768,10 @@ export class GrpcWebImpl {
   }
 }
 
-declare var self: any | undefined;
-declare var window: any | undefined;
-declare var global: any | undefined;
-var tsProtoGlobalThis: any = (() => {
+declare const self: any | undefined;
+declare const window: any | undefined;
+declare const global: any | undefined;
+const tsProtoGlobalThis: any = (() => {
   if (typeof globalThis !== "undefined") {
     return globalThis;
   }

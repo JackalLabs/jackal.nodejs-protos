@@ -121,7 +121,9 @@ export const QueryParamsResponse = {
 
   toJSON(message: QueryParamsResponse): unknown {
     const obj: any = {};
-    message.params !== undefined && (obj.params = message.params ? Params.toJSON(message.params) : undefined);
+    if (message.params !== undefined) {
+      obj.params = Params.toJSON(message.params);
+    }
     return obj;
   },
 
@@ -179,7 +181,9 @@ export const QueryFeedRequest = {
 
   toJSON(message: QueryFeedRequest): unknown {
     const obj: any = {};
-    message.name !== undefined && (obj.name = message.name);
+    if (message.name !== "") {
+      obj.name = message.name;
+    }
     return obj;
   },
 
@@ -235,7 +239,9 @@ export const QueryFeedResponse = {
 
   toJSON(message: QueryFeedResponse): unknown {
     const obj: any = {};
-    message.feed !== undefined && (obj.feed = message.feed ? Feed.toJSON(message.feed) : undefined);
+    if (message.feed !== undefined) {
+      obj.feed = Feed.toJSON(message.feed);
+    }
     return obj;
   },
 
@@ -348,13 +354,12 @@ export const QueryAllFeedsResponse = {
 
   toJSON(message: QueryAllFeedsResponse): unknown {
     const obj: any = {};
-    if (message.feed) {
-      obj.feed = message.feed.map((e) => e ? Feed.toJSON(e) : undefined);
-    } else {
-      obj.feed = [];
+    if (message.feed?.length) {
+      obj.feed = message.feed.map((e) => Feed.toJSON(e));
     }
-    message.pagination !== undefined &&
-      (obj.pagination = message.pagination ? PageResponse.toJSON(message.pagination) : undefined);
+    if (message.pagination !== undefined) {
+      obj.pagination = PageResponse.toJSON(message.pagination);
+    }
     return obj;
   },
 
@@ -521,14 +526,14 @@ export class GrpcWebImpl {
     const request = { ..._request, ...methodDesc.requestType };
     const maybeCombinedMetadata = metadata && this.options.metadata
       ? new BrowserHeaders({ ...this.options?.metadata.headersMap, ...metadata?.headersMap })
-      : metadata || this.options.metadata;
+      : metadata ?? this.options.metadata;
     return new Promise((resolve, reject) => {
       grpc.unary(methodDesc, {
         request,
         host: this.host,
-        metadata: maybeCombinedMetadata,
-        transport: this.options.transport,
-        debug: this.options.debug,
+        metadata: maybeCombinedMetadata ?? {},
+        ...(this.options.transport !== undefined ? { transport: this.options.transport } : {}),
+        debug: this.options.debug ?? false,
         onEnd: function (response) {
           if (response.status === grpc.Code.OK) {
             resolve(response.message!.toObject());
@@ -542,10 +547,10 @@ export class GrpcWebImpl {
   }
 }
 
-declare var self: any | undefined;
-declare var window: any | undefined;
-declare var global: any | undefined;
-var tsProtoGlobalThis: any = (() => {
+declare const self: any | undefined;
+declare const window: any | undefined;
+declare const global: any | undefined;
+const tsProtoGlobalThis: any = (() => {
   if (typeof globalThis !== "undefined") {
     return globalThis;
   }

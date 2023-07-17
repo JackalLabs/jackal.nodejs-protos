@@ -144,28 +144,27 @@ export const GenesisState = {
 
   toJSON(message: GenesisState): unknown {
     const obj: any = {};
-    message.startingProposalId !== undefined && (obj.startingProposalId = Math.round(message.startingProposalId));
-    if (message.deposits) {
-      obj.deposits = message.deposits.map((e) => e ? Deposit.toJSON(e) : undefined);
-    } else {
-      obj.deposits = [];
+    if (message.startingProposalId !== 0) {
+      obj.startingProposalId = Math.round(message.startingProposalId);
     }
-    if (message.votes) {
-      obj.votes = message.votes.map((e) => e ? Vote.toJSON(e) : undefined);
-    } else {
-      obj.votes = [];
+    if (message.deposits?.length) {
+      obj.deposits = message.deposits.map((e) => Deposit.toJSON(e));
     }
-    if (message.proposals) {
-      obj.proposals = message.proposals.map((e) => e ? Proposal.toJSON(e) : undefined);
-    } else {
-      obj.proposals = [];
+    if (message.votes?.length) {
+      obj.votes = message.votes.map((e) => Vote.toJSON(e));
     }
-    message.depositParams !== undefined &&
-      (obj.depositParams = message.depositParams ? DepositParams.toJSON(message.depositParams) : undefined);
-    message.votingParams !== undefined &&
-      (obj.votingParams = message.votingParams ? VotingParams.toJSON(message.votingParams) : undefined);
-    message.tallyParams !== undefined &&
-      (obj.tallyParams = message.tallyParams ? TallyParams.toJSON(message.tallyParams) : undefined);
+    if (message.proposals?.length) {
+      obj.proposals = message.proposals.map((e) => Proposal.toJSON(e));
+    }
+    if (message.depositParams !== undefined) {
+      obj.depositParams = DepositParams.toJSON(message.depositParams);
+    }
+    if (message.votingParams !== undefined) {
+      obj.votingParams = VotingParams.toJSON(message.votingParams);
+    }
+    if (message.tallyParams !== undefined) {
+      obj.tallyParams = TallyParams.toJSON(message.tallyParams);
+    }
     return obj;
   },
 
@@ -192,10 +191,10 @@ export const GenesisState = {
   },
 };
 
-declare var self: any | undefined;
-declare var window: any | undefined;
-declare var global: any | undefined;
-var tsProtoGlobalThis: any = (() => {
+declare const self: any | undefined;
+declare const window: any | undefined;
+declare const global: any | undefined;
+const tsProtoGlobalThis: any = (() => {
   if (typeof globalThis !== "undefined") {
     return globalThis;
   }

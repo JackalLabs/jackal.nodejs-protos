@@ -74,9 +74,15 @@ export const Forsale = {
 
   toJSON(message: Forsale): unknown {
     const obj: any = {};
-    message.name !== undefined && (obj.name = message.name);
-    message.price !== undefined && (obj.price = message.price);
-    message.owner !== undefined && (obj.owner = message.owner);
+    if (message.name !== "") {
+      obj.name = message.name;
+    }
+    if (message.price !== "") {
+      obj.price = message.price;
+    }
+    if (message.owner !== "") {
+      obj.owner = message.owner;
+    }
     return obj;
   },
 

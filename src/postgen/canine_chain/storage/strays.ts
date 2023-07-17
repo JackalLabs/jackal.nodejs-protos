@@ -111,12 +111,24 @@ export const Strays = {
 
   toJSON(message: Strays): unknown {
     const obj: any = {};
-    message.cid !== undefined && (obj.cid = message.cid);
-    message.fid !== undefined && (obj.fid = message.fid);
-    message.signee !== undefined && (obj.signee = message.signee);
-    message.filesize !== undefined && (obj.filesize = message.filesize);
-    message.merkle !== undefined && (obj.merkle = message.merkle);
-    message.end !== undefined && (obj.end = Math.round(message.end));
+    if (message.cid !== "") {
+      obj.cid = message.cid;
+    }
+    if (message.fid !== "") {
+      obj.fid = message.fid;
+    }
+    if (message.signee !== "") {
+      obj.signee = message.signee;
+    }
+    if (message.filesize !== "") {
+      obj.filesize = message.filesize;
+    }
+    if (message.merkle !== "") {
+      obj.merkle = message.merkle;
+    }
+    if (message.end !== 0) {
+      obj.end = Math.round(message.end);
+    }
     return obj;
   },
 
@@ -136,10 +148,10 @@ export const Strays = {
   },
 };
 
-declare var self: any | undefined;
-declare var window: any | undefined;
-declare var global: any | undefined;
-var tsProtoGlobalThis: any = (() => {
+declare const self: any | undefined;
+declare const window: any | undefined;
+declare const global: any | undefined;
+const tsProtoGlobalThis: any = (() => {
   if (typeof globalThis !== "undefined") {
     return globalThis;
   }

@@ -76,8 +76,12 @@ export const MsgCreateFeed = {
 
   toJSON(message: MsgCreateFeed): unknown {
     const obj: any = {};
-    message.creator !== undefined && (obj.creator = message.creator);
-    message.name !== undefined && (obj.name = message.name);
+    if (message.creator !== "") {
+      obj.creator = message.creator;
+    }
+    if (message.name !== "") {
+      obj.name = message.name;
+    }
     return obj;
   },
 
@@ -202,9 +206,15 @@ export const MsgUpdateFeed = {
 
   toJSON(message: MsgUpdateFeed): unknown {
     const obj: any = {};
-    message.creator !== undefined && (obj.creator = message.creator);
-    message.name !== undefined && (obj.name = message.name);
-    message.data !== undefined && (obj.data = message.data);
+    if (message.creator !== "") {
+      obj.creator = message.creator;
+    }
+    if (message.name !== "") {
+      obj.name = message.name;
+    }
+    if (message.data !== "") {
+      obj.data = message.data;
+    }
     return obj;
   },
 
@@ -384,14 +394,14 @@ export class GrpcWebImpl {
     const request = { ..._request, ...methodDesc.requestType };
     const maybeCombinedMetadata = metadata && this.options.metadata
       ? new BrowserHeaders({ ...this.options?.metadata.headersMap, ...metadata?.headersMap })
-      : metadata || this.options.metadata;
+      : metadata ?? this.options.metadata;
     return new Promise((resolve, reject) => {
       grpc.unary(methodDesc, {
         request,
         host: this.host,
-        metadata: maybeCombinedMetadata,
-        transport: this.options.transport,
-        debug: this.options.debug,
+        metadata: maybeCombinedMetadata ?? {},
+        ...(this.options.transport !== undefined ? { transport: this.options.transport } : {}),
+        debug: this.options.debug ?? false,
         onEnd: function (response) {
           if (response.status === grpc.Code.OK) {
             resolve(response.message!.toObject());
@@ -405,10 +415,10 @@ export class GrpcWebImpl {
   }
 }
 
-declare var self: any | undefined;
-declare var window: any | undefined;
-declare var global: any | undefined;
-var tsProtoGlobalThis: any = (() => {
+declare const self: any | undefined;
+declare const window: any | undefined;
+declare const global: any | undefined;
+const tsProtoGlobalThis: any = (() => {
   if (typeof globalThis !== "undefined") {
     return globalThis;
   }

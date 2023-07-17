@@ -87,10 +87,18 @@ export const Notifications = {
 
   toJSON(message: Notifications): unknown {
     const obj: any = {};
-    message.count !== undefined && (obj.count = Math.round(message.count));
-    message.notification !== undefined && (obj.notification = message.notification);
-    message.address !== undefined && (obj.address = message.address);
-    message.sender !== undefined && (obj.sender = message.sender);
+    if (message.count !== 0) {
+      obj.count = Math.round(message.count);
+    }
+    if (message.notification !== "") {
+      obj.notification = message.notification;
+    }
+    if (message.address !== "") {
+      obj.address = message.address;
+    }
+    if (message.sender !== "") {
+      obj.sender = message.sender;
+    }
     return obj;
   },
 
@@ -108,10 +116,10 @@ export const Notifications = {
   },
 };
 
-declare var self: any | undefined;
-declare var window: any | undefined;
-declare var global: any | undefined;
-var tsProtoGlobalThis: any = (() => {
+declare const self: any | undefined;
+declare const window: any | undefined;
+declare const global: any | undefined;
+const tsProtoGlobalThis: any = (() => {
   if (typeof globalThis !== "undefined") {
     return globalThis;
   }

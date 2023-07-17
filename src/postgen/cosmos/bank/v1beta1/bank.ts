@@ -147,12 +147,12 @@ export const Params = {
 
   toJSON(message: Params): unknown {
     const obj: any = {};
-    if (message.sendEnabled) {
-      obj.sendEnabled = message.sendEnabled.map((e) => e ? SendEnabled.toJSON(e) : undefined);
-    } else {
-      obj.sendEnabled = [];
+    if (message.sendEnabled?.length) {
+      obj.sendEnabled = message.sendEnabled.map((e) => SendEnabled.toJSON(e));
     }
-    message.defaultSendEnabled !== undefined && (obj.defaultSendEnabled = message.defaultSendEnabled);
+    if (message.defaultSendEnabled === true) {
+      obj.defaultSendEnabled = message.defaultSendEnabled;
+    }
     return obj;
   },
 
@@ -222,8 +222,12 @@ export const SendEnabled = {
 
   toJSON(message: SendEnabled): unknown {
     const obj: any = {};
-    message.denom !== undefined && (obj.denom = message.denom);
-    message.enabled !== undefined && (obj.enabled = message.enabled);
+    if (message.denom !== "") {
+      obj.denom = message.denom;
+    }
+    if (message.enabled === true) {
+      obj.enabled = message.enabled;
+    }
     return obj;
   },
 
@@ -293,11 +297,11 @@ export const Input = {
 
   toJSON(message: Input): unknown {
     const obj: any = {};
-    message.address !== undefined && (obj.address = message.address);
-    if (message.coins) {
-      obj.coins = message.coins.map((e) => e ? Coin.toJSON(e) : undefined);
-    } else {
-      obj.coins = [];
+    if (message.address !== "") {
+      obj.address = message.address;
+    }
+    if (message.coins?.length) {
+      obj.coins = message.coins.map((e) => Coin.toJSON(e));
     }
     return obj;
   },
@@ -368,11 +372,11 @@ export const Output = {
 
   toJSON(message: Output): unknown {
     const obj: any = {};
-    message.address !== undefined && (obj.address = message.address);
-    if (message.coins) {
-      obj.coins = message.coins.map((e) => e ? Coin.toJSON(e) : undefined);
-    } else {
-      obj.coins = [];
+    if (message.address !== "") {
+      obj.address = message.address;
+    }
+    if (message.coins?.length) {
+      obj.coins = message.coins.map((e) => Coin.toJSON(e));
     }
     return obj;
   },
@@ -430,10 +434,8 @@ export const Supply = {
 
   toJSON(message: Supply): unknown {
     const obj: any = {};
-    if (message.total) {
-      obj.total = message.total.map((e) => e ? Coin.toJSON(e) : undefined);
-    } else {
-      obj.total = [];
+    if (message.total?.length) {
+      obj.total = message.total.map((e) => Coin.toJSON(e));
     }
     return obj;
   },
@@ -514,12 +516,14 @@ export const DenomUnit = {
 
   toJSON(message: DenomUnit): unknown {
     const obj: any = {};
-    message.denom !== undefined && (obj.denom = message.denom);
-    message.exponent !== undefined && (obj.exponent = Math.round(message.exponent));
-    if (message.aliases) {
-      obj.aliases = message.aliases.map((e) => e);
-    } else {
-      obj.aliases = [];
+    if (message.denom !== "") {
+      obj.denom = message.denom;
+    }
+    if (message.exponent !== 0) {
+      obj.exponent = Math.round(message.exponent);
+    }
+    if (message.aliases?.length) {
+      obj.aliases = message.aliases;
     }
     return obj;
   },
@@ -635,16 +639,24 @@ export const Metadata = {
 
   toJSON(message: Metadata): unknown {
     const obj: any = {};
-    message.description !== undefined && (obj.description = message.description);
-    if (message.denomUnits) {
-      obj.denomUnits = message.denomUnits.map((e) => e ? DenomUnit.toJSON(e) : undefined);
-    } else {
-      obj.denomUnits = [];
+    if (message.description !== "") {
+      obj.description = message.description;
     }
-    message.base !== undefined && (obj.base = message.base);
-    message.display !== undefined && (obj.display = message.display);
-    message.name !== undefined && (obj.name = message.name);
-    message.symbol !== undefined && (obj.symbol = message.symbol);
+    if (message.denomUnits?.length) {
+      obj.denomUnits = message.denomUnits.map((e) => DenomUnit.toJSON(e));
+    }
+    if (message.base !== "") {
+      obj.base = message.base;
+    }
+    if (message.display !== "") {
+      obj.display = message.display;
+    }
+    if (message.name !== "") {
+      obj.name = message.name;
+    }
+    if (message.symbol !== "") {
+      obj.symbol = message.symbol;
+    }
     return obj;
   },
 

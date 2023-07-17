@@ -89,8 +89,12 @@ export const Coin = {
 
   toJSON(message: Coin): unknown {
     const obj: any = {};
-    message.denom !== undefined && (obj.denom = message.denom);
-    message.amount !== undefined && (obj.amount = message.amount);
+    if (message.denom !== "") {
+      obj.denom = message.denom;
+    }
+    if (message.amount !== "") {
+      obj.amount = message.amount;
+    }
     return obj;
   },
 
@@ -160,8 +164,12 @@ export const DecCoin = {
 
   toJSON(message: DecCoin): unknown {
     const obj: any = {};
-    message.denom !== undefined && (obj.denom = message.denom);
-    message.amount !== undefined && (obj.amount = message.amount);
+    if (message.denom !== "") {
+      obj.denom = message.denom;
+    }
+    if (message.amount !== "") {
+      obj.amount = message.amount;
+    }
     return obj;
   },
 
@@ -218,7 +226,9 @@ export const IntProto = {
 
   toJSON(message: IntProto): unknown {
     const obj: any = {};
-    message.int !== undefined && (obj.int = message.int);
+    if (message.int !== "") {
+      obj.int = message.int;
+    }
     return obj;
   },
 
@@ -274,7 +284,9 @@ export const DecProto = {
 
   toJSON(message: DecProto): unknown {
     const obj: any = {};
-    message.dec !== undefined && (obj.dec = message.dec);
+    if (message.dec !== "") {
+      obj.dec = message.dec;
+    }
     return obj;
   },
 

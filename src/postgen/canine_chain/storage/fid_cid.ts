@@ -59,8 +59,12 @@ export const FidCid = {
 
   toJSON(message: FidCid): unknown {
     const obj: any = {};
-    message.fid !== undefined && (obj.fid = message.fid);
-    message.cids !== undefined && (obj.cids = message.cids);
+    if (message.fid !== "") {
+      obj.fid = message.fid;
+    }
+    if (message.cids !== "") {
+      obj.cids = message.cids;
+    }
     return obj;
   },
 

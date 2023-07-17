@@ -170,8 +170,12 @@ export const DelegatorWithdrawInfo = {
 
   toJSON(message: DelegatorWithdrawInfo): unknown {
     const obj: any = {};
-    message.delegatorAddress !== undefined && (obj.delegatorAddress = message.delegatorAddress);
-    message.withdrawAddress !== undefined && (obj.withdrawAddress = message.withdrawAddress);
+    if (message.delegatorAddress !== "") {
+      obj.delegatorAddress = message.delegatorAddress;
+    }
+    if (message.withdrawAddress !== "") {
+      obj.withdrawAddress = message.withdrawAddress;
+    }
     return obj;
   },
 
@@ -243,11 +247,11 @@ export const ValidatorOutstandingRewardsRecord = {
 
   toJSON(message: ValidatorOutstandingRewardsRecord): unknown {
     const obj: any = {};
-    message.validatorAddress !== undefined && (obj.validatorAddress = message.validatorAddress);
-    if (message.outstandingRewards) {
-      obj.outstandingRewards = message.outstandingRewards.map((e) => e ? DecCoin.toJSON(e) : undefined);
-    } else {
-      obj.outstandingRewards = [];
+    if (message.validatorAddress !== "") {
+      obj.validatorAddress = message.validatorAddress;
+    }
+    if (message.outstandingRewards?.length) {
+      obj.outstandingRewards = message.outstandingRewards.map((e) => DecCoin.toJSON(e));
     }
     return obj;
   },
@@ -322,9 +326,12 @@ export const ValidatorAccumulatedCommissionRecord = {
 
   toJSON(message: ValidatorAccumulatedCommissionRecord): unknown {
     const obj: any = {};
-    message.validatorAddress !== undefined && (obj.validatorAddress = message.validatorAddress);
-    message.accumulated !== undefined &&
-      (obj.accumulated = message.accumulated ? ValidatorAccumulatedCommission.toJSON(message.accumulated) : undefined);
+    if (message.validatorAddress !== "") {
+      obj.validatorAddress = message.validatorAddress;
+    }
+    if (message.accumulated !== undefined) {
+      obj.accumulated = ValidatorAccumulatedCommission.toJSON(message.accumulated);
+    }
     return obj;
   },
 
@@ -411,10 +418,15 @@ export const ValidatorHistoricalRewardsRecord = {
 
   toJSON(message: ValidatorHistoricalRewardsRecord): unknown {
     const obj: any = {};
-    message.validatorAddress !== undefined && (obj.validatorAddress = message.validatorAddress);
-    message.period !== undefined && (obj.period = Math.round(message.period));
-    message.rewards !== undefined &&
-      (obj.rewards = message.rewards ? ValidatorHistoricalRewards.toJSON(message.rewards) : undefined);
+    if (message.validatorAddress !== "") {
+      obj.validatorAddress = message.validatorAddress;
+    }
+    if (message.period !== 0) {
+      obj.period = Math.round(message.period);
+    }
+    if (message.rewards !== undefined) {
+      obj.rewards = ValidatorHistoricalRewards.toJSON(message.rewards);
+    }
     return obj;
   },
 
@@ -491,9 +503,12 @@ export const ValidatorCurrentRewardsRecord = {
 
   toJSON(message: ValidatorCurrentRewardsRecord): unknown {
     const obj: any = {};
-    message.validatorAddress !== undefined && (obj.validatorAddress = message.validatorAddress);
-    message.rewards !== undefined &&
-      (obj.rewards = message.rewards ? ValidatorCurrentRewards.toJSON(message.rewards) : undefined);
+    if (message.validatorAddress !== "") {
+      obj.validatorAddress = message.validatorAddress;
+    }
+    if (message.rewards !== undefined) {
+      obj.rewards = ValidatorCurrentRewards.toJSON(message.rewards);
+    }
     return obj;
   },
 
@@ -578,10 +593,15 @@ export const DelegatorStartingInfoRecord = {
 
   toJSON(message: DelegatorStartingInfoRecord): unknown {
     const obj: any = {};
-    message.delegatorAddress !== undefined && (obj.delegatorAddress = message.delegatorAddress);
-    message.validatorAddress !== undefined && (obj.validatorAddress = message.validatorAddress);
-    message.startingInfo !== undefined &&
-      (obj.startingInfo = message.startingInfo ? DelegatorStartingInfo.toJSON(message.startingInfo) : undefined);
+    if (message.delegatorAddress !== "") {
+      obj.delegatorAddress = message.delegatorAddress;
+    }
+    if (message.validatorAddress !== "") {
+      obj.validatorAddress = message.validatorAddress;
+    }
+    if (message.startingInfo !== undefined) {
+      obj.startingInfo = DelegatorStartingInfo.toJSON(message.startingInfo);
+    }
     return obj;
   },
 
@@ -678,12 +698,18 @@ export const ValidatorSlashEventRecord = {
 
   toJSON(message: ValidatorSlashEventRecord): unknown {
     const obj: any = {};
-    message.validatorAddress !== undefined && (obj.validatorAddress = message.validatorAddress);
-    message.height !== undefined && (obj.height = Math.round(message.height));
-    message.period !== undefined && (obj.period = Math.round(message.period));
-    message.validatorSlashEvent !== undefined && (obj.validatorSlashEvent = message.validatorSlashEvent
-      ? ValidatorSlashEvent.toJSON(message.validatorSlashEvent)
-      : undefined);
+    if (message.validatorAddress !== "") {
+      obj.validatorAddress = message.validatorAddress;
+    }
+    if (message.height !== 0) {
+      obj.height = Math.round(message.height);
+    }
+    if (message.period !== 0) {
+      obj.period = Math.round(message.period);
+    }
+    if (message.validatorSlashEvent !== undefined) {
+      obj.validatorSlashEvent = ValidatorSlashEvent.toJSON(message.validatorSlashEvent);
+    }
     return obj;
   },
 
@@ -872,57 +898,39 @@ export const GenesisState = {
 
   toJSON(message: GenesisState): unknown {
     const obj: any = {};
-    message.params !== undefined && (obj.params = message.params ? Params.toJSON(message.params) : undefined);
-    message.feePool !== undefined && (obj.feePool = message.feePool ? FeePool.toJSON(message.feePool) : undefined);
-    if (message.delegatorWithdrawInfos) {
-      obj.delegatorWithdrawInfos = message.delegatorWithdrawInfos.map((e) =>
-        e ? DelegatorWithdrawInfo.toJSON(e) : undefined
-      );
-    } else {
-      obj.delegatorWithdrawInfos = [];
+    if (message.params !== undefined) {
+      obj.params = Params.toJSON(message.params);
     }
-    message.previousProposer !== undefined && (obj.previousProposer = message.previousProposer);
-    if (message.outstandingRewards) {
-      obj.outstandingRewards = message.outstandingRewards.map((e) =>
-        e ? ValidatorOutstandingRewardsRecord.toJSON(e) : undefined
-      );
-    } else {
-      obj.outstandingRewards = [];
+    if (message.feePool !== undefined) {
+      obj.feePool = FeePool.toJSON(message.feePool);
     }
-    if (message.validatorAccumulatedCommissions) {
+    if (message.delegatorWithdrawInfos?.length) {
+      obj.delegatorWithdrawInfos = message.delegatorWithdrawInfos.map((e) => DelegatorWithdrawInfo.toJSON(e));
+    }
+    if (message.previousProposer !== "") {
+      obj.previousProposer = message.previousProposer;
+    }
+    if (message.outstandingRewards?.length) {
+      obj.outstandingRewards = message.outstandingRewards.map((e) => ValidatorOutstandingRewardsRecord.toJSON(e));
+    }
+    if (message.validatorAccumulatedCommissions?.length) {
       obj.validatorAccumulatedCommissions = message.validatorAccumulatedCommissions.map((e) =>
-        e ? ValidatorAccumulatedCommissionRecord.toJSON(e) : undefined
+        ValidatorAccumulatedCommissionRecord.toJSON(e)
       );
-    } else {
-      obj.validatorAccumulatedCommissions = [];
     }
-    if (message.validatorHistoricalRewards) {
+    if (message.validatorHistoricalRewards?.length) {
       obj.validatorHistoricalRewards = message.validatorHistoricalRewards.map((e) =>
-        e ? ValidatorHistoricalRewardsRecord.toJSON(e) : undefined
+        ValidatorHistoricalRewardsRecord.toJSON(e)
       );
-    } else {
-      obj.validatorHistoricalRewards = [];
     }
-    if (message.validatorCurrentRewards) {
-      obj.validatorCurrentRewards = message.validatorCurrentRewards.map((e) =>
-        e ? ValidatorCurrentRewardsRecord.toJSON(e) : undefined
-      );
-    } else {
-      obj.validatorCurrentRewards = [];
+    if (message.validatorCurrentRewards?.length) {
+      obj.validatorCurrentRewards = message.validatorCurrentRewards.map((e) => ValidatorCurrentRewardsRecord.toJSON(e));
     }
-    if (message.delegatorStartingInfos) {
-      obj.delegatorStartingInfos = message.delegatorStartingInfos.map((e) =>
-        e ? DelegatorStartingInfoRecord.toJSON(e) : undefined
-      );
-    } else {
-      obj.delegatorStartingInfos = [];
+    if (message.delegatorStartingInfos?.length) {
+      obj.delegatorStartingInfos = message.delegatorStartingInfos.map((e) => DelegatorStartingInfoRecord.toJSON(e));
     }
-    if (message.validatorSlashEvents) {
-      obj.validatorSlashEvents = message.validatorSlashEvents.map((e) =>
-        e ? ValidatorSlashEventRecord.toJSON(e) : undefined
-      );
-    } else {
-      obj.validatorSlashEvents = [];
+    if (message.validatorSlashEvents?.length) {
+      obj.validatorSlashEvents = message.validatorSlashEvents.map((e) => ValidatorSlashEventRecord.toJSON(e));
     }
     return obj;
   },
@@ -958,10 +966,10 @@ export const GenesisState = {
   },
 };
 
-declare var self: any | undefined;
-declare var window: any | undefined;
-declare var global: any | undefined;
-var tsProtoGlobalThis: any = (() => {
+declare const self: any | undefined;
+declare const window: any | undefined;
+declare const global: any | undefined;
+const tsProtoGlobalThis: any = (() => {
   if (typeof globalThis !== "undefined") {
     return globalThis;
   }

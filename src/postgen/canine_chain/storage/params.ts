@@ -137,14 +137,27 @@ export const Params = {
 
   toJSON(message: Params): unknown {
     const obj: any = {};
-    message.depositAccount !== undefined && (obj.depositAccount = message.depositAccount);
-    message.proofWindow !== undefined && (obj.proofWindow = Math.round(message.proofWindow));
-    message.chunkSize !== undefined && (obj.chunkSize = Math.round(message.chunkSize));
-    message.missesToBurn !== undefined && (obj.missesToBurn = Math.round(message.missesToBurn));
-    message.priceFeed !== undefined && (obj.priceFeed = message.priceFeed);
-    message.maxContractAgeInBlocks !== undefined &&
-      (obj.maxContractAgeInBlocks = Math.round(message.maxContractAgeInBlocks));
-    message.pricePerTbPerMonth !== undefined && (obj.pricePerTbPerMonth = Math.round(message.pricePerTbPerMonth));
+    if (message.depositAccount !== "") {
+      obj.depositAccount = message.depositAccount;
+    }
+    if (message.proofWindow !== 0) {
+      obj.proofWindow = Math.round(message.proofWindow);
+    }
+    if (message.chunkSize !== 0) {
+      obj.chunkSize = Math.round(message.chunkSize);
+    }
+    if (message.missesToBurn !== 0) {
+      obj.missesToBurn = Math.round(message.missesToBurn);
+    }
+    if (message.priceFeed !== "") {
+      obj.priceFeed = message.priceFeed;
+    }
+    if (message.maxContractAgeInBlocks !== 0) {
+      obj.maxContractAgeInBlocks = Math.round(message.maxContractAgeInBlocks);
+    }
+    if (message.pricePerTbPerMonth !== 0) {
+      obj.pricePerTbPerMonth = Math.round(message.pricePerTbPerMonth);
+    }
     return obj;
   },
 
@@ -165,10 +178,10 @@ export const Params = {
   },
 };
 
-declare var self: any | undefined;
-declare var window: any | undefined;
-declare var global: any | undefined;
-var tsProtoGlobalThis: any = (() => {
+declare const self: any | undefined;
+declare const window: any | undefined;
+declare const global: any | undefined;
+const tsProtoGlobalThis: any = (() => {
   if (typeof globalThis !== "undefined") {
     return globalThis;
   }

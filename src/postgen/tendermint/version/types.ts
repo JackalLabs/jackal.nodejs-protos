@@ -78,8 +78,12 @@ export const App = {
 
   toJSON(message: App): unknown {
     const obj: any = {};
-    message.protocol !== undefined && (obj.protocol = Math.round(message.protocol));
-    message.software !== undefined && (obj.software = message.software);
+    if (message.protocol !== 0) {
+      obj.protocol = Math.round(message.protocol);
+    }
+    if (message.software !== "") {
+      obj.software = message.software;
+    }
     return obj;
   },
 
@@ -146,8 +150,12 @@ export const Consensus = {
 
   toJSON(message: Consensus): unknown {
     const obj: any = {};
-    message.block !== undefined && (obj.block = Math.round(message.block));
-    message.app !== undefined && (obj.app = Math.round(message.app));
+    if (message.block !== 0) {
+      obj.block = Math.round(message.block);
+    }
+    if (message.app !== 0) {
+      obj.app = Math.round(message.app);
+    }
     return obj;
   },
 
@@ -163,10 +171,10 @@ export const Consensus = {
   },
 };
 
-declare var self: any | undefined;
-declare var window: any | undefined;
-declare var global: any | undefined;
-var tsProtoGlobalThis: any = (() => {
+declare const self: any | undefined;
+declare const window: any | undefined;
+declare const global: any | undefined;
+const tsProtoGlobalThis: any = (() => {
   if (typeof globalThis !== "undefined") {
     return globalThis;
   }

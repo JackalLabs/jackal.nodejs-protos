@@ -270,7 +270,9 @@ export const QueryParamsResponse = {
 
   toJSON(message: QueryParamsResponse): unknown {
     const obj: any = {};
-    message.params !== undefined && (obj.params = message.params ? Params.toJSON(message.params) : undefined);
+    if (message.params !== undefined) {
+      obj.params = Params.toJSON(message.params);
+    }
     return obj;
   },
 
@@ -328,7 +330,9 @@ export const QueryContractRequest = {
 
   toJSON(message: QueryContractRequest): unknown {
     const obj: any = {};
-    message.cid !== undefined && (obj.cid = message.cid);
+    if (message.cid !== "") {
+      obj.cid = message.cid;
+    }
     return obj;
   },
 
@@ -384,8 +388,9 @@ export const QueryContractResponse = {
 
   toJSON(message: QueryContractResponse): unknown {
     const obj: any = {};
-    message.contracts !== undefined &&
-      (obj.contracts = message.contracts ? Contracts.toJSON(message.contracts) : undefined);
+    if (message.contracts !== undefined) {
+      obj.contracts = Contracts.toJSON(message.contracts);
+    }
     return obj;
   },
 
@@ -443,8 +448,9 @@ export const QueryAllContractsRequest = {
 
   toJSON(message: QueryAllContractsRequest): unknown {
     const obj: any = {};
-    message.pagination !== undefined &&
-      (obj.pagination = message.pagination ? PageRequest.toJSON(message.pagination) : undefined);
+    if (message.pagination !== undefined) {
+      obj.pagination = PageRequest.toJSON(message.pagination);
+    }
     return obj;
   },
 
@@ -515,13 +521,12 @@ export const QueryAllContractsResponse = {
 
   toJSON(message: QueryAllContractsResponse): unknown {
     const obj: any = {};
-    if (message.contracts) {
-      obj.contracts = message.contracts.map((e) => e ? Contracts.toJSON(e) : undefined);
-    } else {
-      obj.contracts = [];
+    if (message.contracts?.length) {
+      obj.contracts = message.contracts.map((e) => Contracts.toJSON(e));
     }
-    message.pagination !== undefined &&
-      (obj.pagination = message.pagination ? PageResponse.toJSON(message.pagination) : undefined);
+    if (message.pagination !== undefined) {
+      obj.pagination = PageResponse.toJSON(message.pagination);
+    }
     return obj;
   },
 
@@ -580,7 +585,9 @@ export const QueryActiveDealRequest = {
 
   toJSON(message: QueryActiveDealRequest): unknown {
     const obj: any = {};
-    message.cid !== undefined && (obj.cid = message.cid);
+    if (message.cid !== "") {
+      obj.cid = message.cid;
+    }
     return obj;
   },
 
@@ -636,8 +643,9 @@ export const QueryActiveDealResponse = {
 
   toJSON(message: QueryActiveDealResponse): unknown {
     const obj: any = {};
-    message.activeDeals !== undefined &&
-      (obj.activeDeals = message.activeDeals ? ActiveDeals.toJSON(message.activeDeals) : undefined);
+    if (message.activeDeals !== undefined) {
+      obj.activeDeals = ActiveDeals.toJSON(message.activeDeals);
+    }
     return obj;
   },
 
@@ -695,8 +703,9 @@ export const QueryAllActiveDealsRequest = {
 
   toJSON(message: QueryAllActiveDealsRequest): unknown {
     const obj: any = {};
-    message.pagination !== undefined &&
-      (obj.pagination = message.pagination ? PageRequest.toJSON(message.pagination) : undefined);
+    if (message.pagination !== undefined) {
+      obj.pagination = PageRequest.toJSON(message.pagination);
+    }
     return obj;
   },
 
@@ -769,13 +778,12 @@ export const QueryAllActiveDealsResponse = {
 
   toJSON(message: QueryAllActiveDealsResponse): unknown {
     const obj: any = {};
-    if (message.activeDeals) {
-      obj.activeDeals = message.activeDeals.map((e) => e ? ActiveDeals.toJSON(e) : undefined);
-    } else {
-      obj.activeDeals = [];
+    if (message.activeDeals?.length) {
+      obj.activeDeals = message.activeDeals.map((e) => ActiveDeals.toJSON(e));
     }
-    message.pagination !== undefined &&
-      (obj.pagination = message.pagination ? PageResponse.toJSON(message.pagination) : undefined);
+    if (message.pagination !== undefined) {
+      obj.pagination = PageResponse.toJSON(message.pagination);
+    }
     return obj;
   },
 
@@ -834,7 +842,9 @@ export const QueryProviderRequest = {
 
   toJSON(message: QueryProviderRequest): unknown {
     const obj: any = {};
-    message.address !== undefined && (obj.address = message.address);
+    if (message.address !== "") {
+      obj.address = message.address;
+    }
     return obj;
   },
 
@@ -890,8 +900,9 @@ export const QueryProviderResponse = {
 
   toJSON(message: QueryProviderResponse): unknown {
     const obj: any = {};
-    message.providers !== undefined &&
-      (obj.providers = message.providers ? Providers.toJSON(message.providers) : undefined);
+    if (message.providers !== undefined) {
+      obj.providers = Providers.toJSON(message.providers);
+    }
     return obj;
   },
 
@@ -949,8 +960,9 @@ export const QueryAllProvidersRequest = {
 
   toJSON(message: QueryAllProvidersRequest): unknown {
     const obj: any = {};
-    message.pagination !== undefined &&
-      (obj.pagination = message.pagination ? PageRequest.toJSON(message.pagination) : undefined);
+    if (message.pagination !== undefined) {
+      obj.pagination = PageRequest.toJSON(message.pagination);
+    }
     return obj;
   },
 
@@ -1021,13 +1033,12 @@ export const QueryAllProvidersResponse = {
 
   toJSON(message: QueryAllProvidersResponse): unknown {
     const obj: any = {};
-    if (message.providers) {
-      obj.providers = message.providers.map((e) => e ? Providers.toJSON(e) : undefined);
-    } else {
-      obj.providers = [];
+    if (message.providers?.length) {
+      obj.providers = message.providers.map((e) => Providers.toJSON(e));
     }
-    message.pagination !== undefined &&
-      (obj.pagination = message.pagination ? PageResponse.toJSON(message.pagination) : undefined);
+    if (message.pagination !== undefined) {
+      obj.pagination = PageResponse.toJSON(message.pagination);
+    }
     return obj;
   },
 
@@ -1086,7 +1097,9 @@ export const QueryFreespaceRequest = {
 
   toJSON(message: QueryFreespaceRequest): unknown {
     const obj: any = {};
-    message.address !== undefined && (obj.address = message.address);
+    if (message.address !== "") {
+      obj.address = message.address;
+    }
     return obj;
   },
 
@@ -1142,7 +1155,9 @@ export const QueryStoreCountRequest = {
 
   toJSON(message: QueryStoreCountRequest): unknown {
     const obj: any = {};
-    message.address !== undefined && (obj.address = message.address);
+    if (message.address !== "") {
+      obj.address = message.address;
+    }
     return obj;
   },
 
@@ -1198,7 +1213,9 @@ export const QueryFreespaceResponse = {
 
   toJSON(message: QueryFreespaceResponse): unknown {
     const obj: any = {};
-    message.space !== undefined && (obj.space = message.space);
+    if (message.space !== "") {
+      obj.space = message.space;
+    }
     return obj;
   },
 
@@ -1254,7 +1271,9 @@ export const QueryStoreCountResponse = {
 
   toJSON(message: QueryStoreCountResponse): unknown {
     const obj: any = {};
-    message.count !== undefined && (obj.count = message.count);
+    if (message.count !== "") {
+      obj.count = message.count;
+    }
     return obj;
   },
 
@@ -1310,7 +1329,9 @@ export const QueryFindFileRequest = {
 
   toJSON(message: QueryFindFileRequest): unknown {
     const obj: any = {};
-    message.fid !== undefined && (obj.fid = message.fid);
+    if (message.fid !== "") {
+      obj.fid = message.fid;
+    }
     return obj;
   },
 
@@ -1366,7 +1387,9 @@ export const QueryFindFileResponse = {
 
   toJSON(message: QueryFindFileResponse): unknown {
     const obj: any = {};
-    message.providerIps !== undefined && (obj.providerIps = message.providerIps);
+    if (message.providerIps !== "") {
+      obj.providerIps = message.providerIps;
+    }
     return obj;
   },
 
@@ -1422,7 +1445,9 @@ export const QueryStrayRequest = {
 
   toJSON(message: QueryStrayRequest): unknown {
     const obj: any = {};
-    message.cid !== undefined && (obj.cid = message.cid);
+    if (message.cid !== "") {
+      obj.cid = message.cid;
+    }
     return obj;
   },
 
@@ -1478,7 +1503,9 @@ export const QueryStrayResponse = {
 
   toJSON(message: QueryStrayResponse): unknown {
     const obj: any = {};
-    message.strays !== undefined && (obj.strays = message.strays ? Strays.toJSON(message.strays) : undefined);
+    if (message.strays !== undefined) {
+      obj.strays = Strays.toJSON(message.strays);
+    }
     return obj;
   },
 
@@ -1536,8 +1563,9 @@ export const QueryAllStraysRequest = {
 
   toJSON(message: QueryAllStraysRequest): unknown {
     const obj: any = {};
-    message.pagination !== undefined &&
-      (obj.pagination = message.pagination ? PageRequest.toJSON(message.pagination) : undefined);
+    if (message.pagination !== undefined) {
+      obj.pagination = PageRequest.toJSON(message.pagination);
+    }
     return obj;
   },
 
@@ -1608,13 +1636,12 @@ export const QueryAllStraysResponse = {
 
   toJSON(message: QueryAllStraysResponse): unknown {
     const obj: any = {};
-    if (message.strays) {
-      obj.strays = message.strays.map((e) => e ? Strays.toJSON(e) : undefined);
-    } else {
-      obj.strays = [];
+    if (message.strays?.length) {
+      obj.strays = message.strays.map((e) => Strays.toJSON(e));
     }
-    message.pagination !== undefined &&
-      (obj.pagination = message.pagination ? PageResponse.toJSON(message.pagination) : undefined);
+    if (message.pagination !== undefined) {
+      obj.pagination = PageResponse.toJSON(message.pagination);
+    }
     return obj;
   },
 
@@ -1673,7 +1700,9 @@ export const QueryClientFreeSpaceRequest = {
 
   toJSON(message: QueryClientFreeSpaceRequest): unknown {
     const obj: any = {};
-    message.address !== undefined && (obj.address = message.address);
+    if (message.address !== "") {
+      obj.address = message.address;
+    }
     return obj;
   },
 
@@ -1729,7 +1758,9 @@ export const QueryClientFreeSpaceResponse = {
 
   toJSON(message: QueryClientFreeSpaceResponse): unknown {
     const obj: any = {};
-    message.bytesfree !== undefined && (obj.bytesfree = Math.round(message.bytesfree));
+    if (message.bytesfree !== 0) {
+      obj.bytesfree = Math.round(message.bytesfree);
+    }
     return obj;
   },
 
@@ -1785,7 +1816,9 @@ export const QueryFidCidRequest = {
 
   toJSON(message: QueryFidCidRequest): unknown {
     const obj: any = {};
-    message.fid !== undefined && (obj.fid = message.fid);
+    if (message.fid !== "") {
+      obj.fid = message.fid;
+    }
     return obj;
   },
 
@@ -1841,7 +1874,9 @@ export const QueryFidCidResponse = {
 
   toJSON(message: QueryFidCidResponse): unknown {
     const obj: any = {};
-    message.fidCid !== undefined && (obj.fidCid = message.fidCid ? FidCid.toJSON(message.fidCid) : undefined);
+    if (message.fidCid !== undefined) {
+      obj.fidCid = FidCid.toJSON(message.fidCid);
+    }
     return obj;
   },
 
@@ -1899,8 +1934,9 @@ export const QueryAllFidCidRequest = {
 
   toJSON(message: QueryAllFidCidRequest): unknown {
     const obj: any = {};
-    message.pagination !== undefined &&
-      (obj.pagination = message.pagination ? PageRequest.toJSON(message.pagination) : undefined);
+    if (message.pagination !== undefined) {
+      obj.pagination = PageRequest.toJSON(message.pagination);
+    }
     return obj;
   },
 
@@ -1971,13 +2007,12 @@ export const QueryAllFidCidResponse = {
 
   toJSON(message: QueryAllFidCidResponse): unknown {
     const obj: any = {};
-    if (message.fidCid) {
-      obj.fidCid = message.fidCid.map((e) => e ? FidCid.toJSON(e) : undefined);
-    } else {
-      obj.fidCid = [];
+    if (message.fidCid?.length) {
+      obj.fidCid = message.fidCid.map((e) => FidCid.toJSON(e));
     }
-    message.pagination !== undefined &&
-      (obj.pagination = message.pagination ? PageResponse.toJSON(message.pagination) : undefined);
+    if (message.pagination !== undefined) {
+      obj.pagination = PageResponse.toJSON(message.pagination);
+    }
     return obj;
   },
 
@@ -2036,7 +2071,9 @@ export const QueryPayDataRequest = {
 
   toJSON(message: QueryPayDataRequest): unknown {
     const obj: any = {};
-    message.address !== undefined && (obj.address = message.address);
+    if (message.address !== "") {
+      obj.address = message.address;
+    }
     return obj;
   },
 
@@ -2105,8 +2142,12 @@ export const QueryPayDataResponse = {
 
   toJSON(message: QueryPayDataResponse): unknown {
     const obj: any = {};
-    message.timeRemaining !== undefined && (obj.timeRemaining = Math.round(message.timeRemaining));
-    message.bytes !== undefined && (obj.bytes = Math.round(message.bytes));
+    if (message.timeRemaining !== 0) {
+      obj.timeRemaining = Math.round(message.timeRemaining);
+    }
+    if (message.bytes !== 0) {
+      obj.bytes = Math.round(message.bytes);
+    }
     return obj;
   },
 
@@ -2163,7 +2204,9 @@ export const QueryStoragePaymentInfoRequest = {
 
   toJSON(message: QueryStoragePaymentInfoRequest): unknown {
     const obj: any = {};
-    message.address !== undefined && (obj.address = message.address);
+    if (message.address !== "") {
+      obj.address = message.address;
+    }
     return obj;
   },
 
@@ -2225,9 +2268,9 @@ export const QueryStoragePaymentInfoResponse = {
 
   toJSON(message: QueryStoragePaymentInfoResponse): unknown {
     const obj: any = {};
-    message.storagePaymentInfo !== undefined && (obj.storagePaymentInfo = message.storagePaymentInfo
-      ? StoragePaymentInfo.toJSON(message.storagePaymentInfo)
-      : undefined);
+    if (message.storagePaymentInfo !== undefined) {
+      obj.storagePaymentInfo = StoragePaymentInfo.toJSON(message.storagePaymentInfo);
+    }
     return obj;
   },
 
@@ -2287,8 +2330,9 @@ export const QueryAllStoragePaymentInfoRequest = {
 
   toJSON(message: QueryAllStoragePaymentInfoRequest): unknown {
     const obj: any = {};
-    message.pagination !== undefined &&
-      (obj.pagination = message.pagination ? PageRequest.toJSON(message.pagination) : undefined);
+    if (message.pagination !== undefined) {
+      obj.pagination = PageRequest.toJSON(message.pagination);
+    }
     return obj;
   },
 
@@ -2365,13 +2409,12 @@ export const QueryAllStoragePaymentInfoResponse = {
 
   toJSON(message: QueryAllStoragePaymentInfoResponse): unknown {
     const obj: any = {};
-    if (message.storagePaymentInfo) {
-      obj.storagePaymentInfo = message.storagePaymentInfo.map((e) => e ? StoragePaymentInfo.toJSON(e) : undefined);
-    } else {
-      obj.storagePaymentInfo = [];
+    if (message.storagePaymentInfo?.length) {
+      obj.storagePaymentInfo = message.storagePaymentInfo.map((e) => StoragePaymentInfo.toJSON(e));
     }
-    message.pagination !== undefined &&
-      (obj.pagination = message.pagination ? PageResponse.toJSON(message.pagination) : undefined);
+    if (message.pagination !== undefined) {
+      obj.pagination = PageResponse.toJSON(message.pagination);
+    }
     return obj;
   },
 
@@ -2447,8 +2490,12 @@ export const QueryFileUploadCheckRequest = {
 
   toJSON(message: QueryFileUploadCheckRequest): unknown {
     const obj: any = {};
-    message.address !== undefined && (obj.address = message.address);
-    message.bytes !== undefined && (obj.bytes = Math.round(message.bytes));
+    if (message.address !== "") {
+      obj.address = message.address;
+    }
+    if (message.bytes !== 0) {
+      obj.bytes = Math.round(message.bytes);
+    }
     return obj;
   },
 
@@ -2505,7 +2552,9 @@ export const QueryFileUploadCheckResponse = {
 
   toJSON(message: QueryFileUploadCheckResponse): unknown {
     const obj: any = {};
-    message.valid !== undefined && (obj.valid = message.valid);
+    if (message.valid === true) {
+      obj.valid = message.valid;
+    }
     return obj;
   },
 
@@ -2574,8 +2623,12 @@ export const QueryPriceCheckRequest = {
 
   toJSON(message: QueryPriceCheckRequest): unknown {
     const obj: any = {};
-    message.duration !== undefined && (obj.duration = message.duration);
-    message.bytes !== undefined && (obj.bytes = Math.round(message.bytes));
+    if (message.duration !== "") {
+      obj.duration = message.duration;
+    }
+    if (message.bytes !== 0) {
+      obj.bytes = Math.round(message.bytes);
+    }
     return obj;
   },
 
@@ -2632,7 +2685,9 @@ export const QueryPriceCheckResponse = {
 
   toJSON(message: QueryPriceCheckResponse): unknown {
     const obj: any = {};
-    message.price !== undefined && (obj.price = Math.round(message.price));
+    if (message.price !== 0) {
+      obj.price = Math.round(message.price);
+    }
     return obj;
   },
 
@@ -3357,14 +3412,14 @@ export class GrpcWebImpl {
     const request = { ..._request, ...methodDesc.requestType };
     const maybeCombinedMetadata = metadata && this.options.metadata
       ? new BrowserHeaders({ ...this.options?.metadata.headersMap, ...metadata?.headersMap })
-      : metadata || this.options.metadata;
+      : metadata ?? this.options.metadata;
     return new Promise((resolve, reject) => {
       grpc.unary(methodDesc, {
         request,
         host: this.host,
-        metadata: maybeCombinedMetadata,
-        transport: this.options.transport,
-        debug: this.options.debug,
+        metadata: maybeCombinedMetadata ?? {},
+        ...(this.options.transport !== undefined ? { transport: this.options.transport } : {}),
+        debug: this.options.debug ?? false,
         onEnd: function (response) {
           if (response.status === grpc.Code.OK) {
             resolve(response.message!.toObject());
@@ -3378,10 +3433,10 @@ export class GrpcWebImpl {
   }
 }
 
-declare var self: any | undefined;
-declare var window: any | undefined;
-declare var global: any | undefined;
-var tsProtoGlobalThis: any = (() => {
+declare const self: any | undefined;
+declare const window: any | undefined;
+declare const global: any | undefined;
+const tsProtoGlobalThis: any = (() => {
   if (typeof globalThis !== "undefined") {
     return globalThis;
   }

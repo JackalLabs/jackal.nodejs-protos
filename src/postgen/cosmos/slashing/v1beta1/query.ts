@@ -137,7 +137,9 @@ export const QueryParamsResponse = {
 
   toJSON(message: QueryParamsResponse): unknown {
     const obj: any = {};
-    message.params !== undefined && (obj.params = message.params ? Params.toJSON(message.params) : undefined);
+    if (message.params !== undefined) {
+      obj.params = Params.toJSON(message.params);
+    }
     return obj;
   },
 
@@ -195,7 +197,9 @@ export const QuerySigningInfoRequest = {
 
   toJSON(message: QuerySigningInfoRequest): unknown {
     const obj: any = {};
-    message.consAddress !== undefined && (obj.consAddress = message.consAddress);
+    if (message.consAddress !== "") {
+      obj.consAddress = message.consAddress;
+    }
     return obj;
   },
 
@@ -253,8 +257,9 @@ export const QuerySigningInfoResponse = {
 
   toJSON(message: QuerySigningInfoResponse): unknown {
     const obj: any = {};
-    message.valSigningInfo !== undefined &&
-      (obj.valSigningInfo = message.valSigningInfo ? ValidatorSigningInfo.toJSON(message.valSigningInfo) : undefined);
+    if (message.valSigningInfo !== undefined) {
+      obj.valSigningInfo = ValidatorSigningInfo.toJSON(message.valSigningInfo);
+    }
     return obj;
   },
 
@@ -312,8 +317,9 @@ export const QuerySigningInfosRequest = {
 
   toJSON(message: QuerySigningInfosRequest): unknown {
     const obj: any = {};
-    message.pagination !== undefined &&
-      (obj.pagination = message.pagination ? PageRequest.toJSON(message.pagination) : undefined);
+    if (message.pagination !== undefined) {
+      obj.pagination = PageRequest.toJSON(message.pagination);
+    }
     return obj;
   },
 
@@ -384,13 +390,12 @@ export const QuerySigningInfosResponse = {
 
   toJSON(message: QuerySigningInfosResponse): unknown {
     const obj: any = {};
-    if (message.info) {
-      obj.info = message.info.map((e) => e ? ValidatorSigningInfo.toJSON(e) : undefined);
-    } else {
-      obj.info = [];
+    if (message.info?.length) {
+      obj.info = message.info.map((e) => ValidatorSigningInfo.toJSON(e));
     }
-    message.pagination !== undefined &&
-      (obj.pagination = message.pagination ? PageResponse.toJSON(message.pagination) : undefined);
+    if (message.pagination !== undefined) {
+      obj.pagination = PageResponse.toJSON(message.pagination);
+    }
     return obj;
   },
 
@@ -571,14 +576,14 @@ export class GrpcWebImpl {
     const request = { ..._request, ...methodDesc.requestType };
     const maybeCombinedMetadata = metadata && this.options.metadata
       ? new BrowserHeaders({ ...this.options?.metadata.headersMap, ...metadata?.headersMap })
-      : metadata || this.options.metadata;
+      : metadata ?? this.options.metadata;
     return new Promise((resolve, reject) => {
       grpc.unary(methodDesc, {
         request,
         host: this.host,
-        metadata: maybeCombinedMetadata,
-        transport: this.options.transport,
-        debug: this.options.debug,
+        metadata: maybeCombinedMetadata ?? {},
+        ...(this.options.transport !== undefined ? { transport: this.options.transport } : {}),
+        debug: this.options.debug ?? false,
         onEnd: function (response) {
           if (response.status === grpc.Code.OK) {
             resolve(response.message!.toObject());
@@ -592,10 +597,10 @@ export class GrpcWebImpl {
   }
 }
 
-declare var self: any | undefined;
-declare var window: any | undefined;
-declare var global: any | undefined;
-var tsProtoGlobalThis: any = (() => {
+declare const self: any | undefined;
+declare const window: any | undefined;
+declare const global: any | undefined;
+const tsProtoGlobalThis: any = (() => {
   if (typeof globalThis !== "undefined") {
     return globalThis;
   }

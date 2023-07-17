@@ -195,18 +195,42 @@ export const ActiveDeals = {
 
   toJSON(message: ActiveDeals): unknown {
     const obj: any = {};
-    message.cid !== undefined && (obj.cid = message.cid);
-    message.signee !== undefined && (obj.signee = message.signee);
-    message.provider !== undefined && (obj.provider = message.provider);
-    message.startblock !== undefined && (obj.startblock = message.startblock);
-    message.endblock !== undefined && (obj.endblock = message.endblock);
-    message.filesize !== undefined && (obj.filesize = message.filesize);
-    message.proofverified !== undefined && (obj.proofverified = message.proofverified);
-    message.proofsmissed !== undefined && (obj.proofsmissed = message.proofsmissed);
-    message.blocktoprove !== undefined && (obj.blocktoprove = message.blocktoprove);
-    message.creator !== undefined && (obj.creator = message.creator);
-    message.merkle !== undefined && (obj.merkle = message.merkle);
-    message.fid !== undefined && (obj.fid = message.fid);
+    if (message.cid !== "") {
+      obj.cid = message.cid;
+    }
+    if (message.signee !== "") {
+      obj.signee = message.signee;
+    }
+    if (message.provider !== "") {
+      obj.provider = message.provider;
+    }
+    if (message.startblock !== "") {
+      obj.startblock = message.startblock;
+    }
+    if (message.endblock !== "") {
+      obj.endblock = message.endblock;
+    }
+    if (message.filesize !== "") {
+      obj.filesize = message.filesize;
+    }
+    if (message.proofverified !== "") {
+      obj.proofverified = message.proofverified;
+    }
+    if (message.proofsmissed !== "") {
+      obj.proofsmissed = message.proofsmissed;
+    }
+    if (message.blocktoprove !== "") {
+      obj.blocktoprove = message.blocktoprove;
+    }
+    if (message.creator !== "") {
+      obj.creator = message.creator;
+    }
+    if (message.merkle !== "") {
+      obj.merkle = message.merkle;
+    }
+    if (message.fid !== "") {
+      obj.fid = message.fid;
+    }
     return obj;
   },
 

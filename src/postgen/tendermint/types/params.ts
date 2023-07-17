@@ -163,13 +163,18 @@ export const ConsensusParams = {
 
   toJSON(message: ConsensusParams): unknown {
     const obj: any = {};
-    message.block !== undefined && (obj.block = message.block ? BlockParams.toJSON(message.block) : undefined);
-    message.evidence !== undefined &&
-      (obj.evidence = message.evidence ? EvidenceParams.toJSON(message.evidence) : undefined);
-    message.validator !== undefined &&
-      (obj.validator = message.validator ? ValidatorParams.toJSON(message.validator) : undefined);
-    message.version !== undefined &&
-      (obj.version = message.version ? VersionParams.toJSON(message.version) : undefined);
+    if (message.block !== undefined) {
+      obj.block = BlockParams.toJSON(message.block);
+    }
+    if (message.evidence !== undefined) {
+      obj.evidence = EvidenceParams.toJSON(message.evidence);
+    }
+    if (message.validator !== undefined) {
+      obj.validator = ValidatorParams.toJSON(message.validator);
+    }
+    if (message.version !== undefined) {
+      obj.version = VersionParams.toJSON(message.version);
+    }
     return obj;
   },
 
@@ -260,9 +265,15 @@ export const BlockParams = {
 
   toJSON(message: BlockParams): unknown {
     const obj: any = {};
-    message.maxBytes !== undefined && (obj.maxBytes = Math.round(message.maxBytes));
-    message.maxGas !== undefined && (obj.maxGas = Math.round(message.maxGas));
-    message.timeIotaMs !== undefined && (obj.timeIotaMs = Math.round(message.timeIotaMs));
+    if (message.maxBytes !== 0) {
+      obj.maxBytes = Math.round(message.maxBytes);
+    }
+    if (message.maxGas !== 0) {
+      obj.maxGas = Math.round(message.maxGas);
+    }
+    if (message.timeIotaMs !== 0) {
+      obj.timeIotaMs = Math.round(message.timeIotaMs);
+    }
     return obj;
   },
 
@@ -344,10 +355,15 @@ export const EvidenceParams = {
 
   toJSON(message: EvidenceParams): unknown {
     const obj: any = {};
-    message.maxAgeNumBlocks !== undefined && (obj.maxAgeNumBlocks = Math.round(message.maxAgeNumBlocks));
-    message.maxAgeDuration !== undefined &&
-      (obj.maxAgeDuration = message.maxAgeDuration ? Duration.toJSON(message.maxAgeDuration) : undefined);
-    message.maxBytes !== undefined && (obj.maxBytes = Math.round(message.maxBytes));
+    if (message.maxAgeNumBlocks !== 0) {
+      obj.maxAgeNumBlocks = Math.round(message.maxAgeNumBlocks);
+    }
+    if (message.maxAgeDuration !== undefined) {
+      obj.maxAgeDuration = Duration.toJSON(message.maxAgeDuration);
+    }
+    if (message.maxBytes !== 0) {
+      obj.maxBytes = Math.round(message.maxBytes);
+    }
     return obj;
   },
 
@@ -407,10 +423,8 @@ export const ValidatorParams = {
 
   toJSON(message: ValidatorParams): unknown {
     const obj: any = {};
-    if (message.pubKeyTypes) {
-      obj.pubKeyTypes = message.pubKeyTypes.map((e) => e);
-    } else {
-      obj.pubKeyTypes = [];
+    if (message.pubKeyTypes?.length) {
+      obj.pubKeyTypes = message.pubKeyTypes;
     }
     return obj;
   },
@@ -467,7 +481,9 @@ export const VersionParams = {
 
   toJSON(message: VersionParams): unknown {
     const obj: any = {};
-    message.appVersion !== undefined && (obj.appVersion = Math.round(message.appVersion));
+    if (message.appVersion !== 0) {
+      obj.appVersion = Math.round(message.appVersion);
+    }
     return obj;
   },
 
@@ -536,8 +552,12 @@ export const HashedParams = {
 
   toJSON(message: HashedParams): unknown {
     const obj: any = {};
-    message.blockMaxBytes !== undefined && (obj.blockMaxBytes = Math.round(message.blockMaxBytes));
-    message.blockMaxGas !== undefined && (obj.blockMaxGas = Math.round(message.blockMaxGas));
+    if (message.blockMaxBytes !== 0) {
+      obj.blockMaxBytes = Math.round(message.blockMaxBytes);
+    }
+    if (message.blockMaxGas !== 0) {
+      obj.blockMaxGas = Math.round(message.blockMaxGas);
+    }
     return obj;
   },
 
@@ -553,10 +573,10 @@ export const HashedParams = {
   },
 };
 
-declare var self: any | undefined;
-declare var window: any | undefined;
-declare var global: any | undefined;
-var tsProtoGlobalThis: any = (() => {
+declare const self: any | undefined;
+declare const window: any | undefined;
+declare const global: any | undefined;
+const tsProtoGlobalThis: any = (() => {
   if (typeof globalThis !== "undefined") {
     return globalThis;
   }

@@ -202,7 +202,9 @@ export const QueryParamsResponse = {
 
   toJSON(message: QueryParamsResponse): unknown {
     const obj: any = {};
-    message.params !== undefined && (obj.params = message.params ? Params.toJSON(message.params) : undefined);
+    if (message.params !== undefined) {
+      obj.params = Params.toJSON(message.params);
+    }
     return obj;
   },
 
@@ -260,7 +262,9 @@ export const QueryWhoisRequest = {
 
   toJSON(message: QueryWhoisRequest): unknown {
     const obj: any = {};
-    message.index !== undefined && (obj.index = message.index);
+    if (message.index !== "") {
+      obj.index = message.index;
+    }
     return obj;
   },
 
@@ -316,7 +320,9 @@ export const QueryWhoisResponse = {
 
   toJSON(message: QueryWhoisResponse): unknown {
     const obj: any = {};
-    message.whois !== undefined && (obj.whois = message.whois ? Whois.toJSON(message.whois) : undefined);
+    if (message.whois !== undefined) {
+      obj.whois = Whois.toJSON(message.whois);
+    }
     return obj;
   },
 
@@ -372,8 +378,9 @@ export const QueryAllWhoisRequest = {
 
   toJSON(message: QueryAllWhoisRequest): unknown {
     const obj: any = {};
-    message.pagination !== undefined &&
-      (obj.pagination = message.pagination ? PageRequest.toJSON(message.pagination) : undefined);
+    if (message.pagination !== undefined) {
+      obj.pagination = PageRequest.toJSON(message.pagination);
+    }
     return obj;
   },
 
@@ -444,13 +451,12 @@ export const QueryAllWhoisResponse = {
 
   toJSON(message: QueryAllWhoisResponse): unknown {
     const obj: any = {};
-    if (message.whois) {
-      obj.whois = message.whois.map((e) => e ? Whois.toJSON(e) : undefined);
-    } else {
-      obj.whois = [];
+    if (message.whois?.length) {
+      obj.whois = message.whois.map((e) => Whois.toJSON(e));
     }
-    message.pagination !== undefined &&
-      (obj.pagination = message.pagination ? PageResponse.toJSON(message.pagination) : undefined);
+    if (message.pagination !== undefined) {
+      obj.pagination = PageResponse.toJSON(message.pagination);
+    }
     return obj;
   },
 
@@ -509,7 +515,9 @@ export const QueryNameRequest = {
 
   toJSON(message: QueryNameRequest): unknown {
     const obj: any = {};
-    message.index !== undefined && (obj.index = message.index);
+    if (message.index !== "") {
+      obj.index = message.index;
+    }
     return obj;
   },
 
@@ -565,7 +573,9 @@ export const QueryNameResponse = {
 
   toJSON(message: QueryNameResponse): unknown {
     const obj: any = {};
-    message.names !== undefined && (obj.names = message.names ? Names.toJSON(message.names) : undefined);
+    if (message.names !== undefined) {
+      obj.names = Names.toJSON(message.names);
+    }
     return obj;
   },
 
@@ -621,8 +631,9 @@ export const QueryAllNamesRequest = {
 
   toJSON(message: QueryAllNamesRequest): unknown {
     const obj: any = {};
-    message.pagination !== undefined &&
-      (obj.pagination = message.pagination ? PageRequest.toJSON(message.pagination) : undefined);
+    if (message.pagination !== undefined) {
+      obj.pagination = PageRequest.toJSON(message.pagination);
+    }
     return obj;
   },
 
@@ -693,13 +704,12 @@ export const QueryAllNamesResponse = {
 
   toJSON(message: QueryAllNamesResponse): unknown {
     const obj: any = {};
-    if (message.names) {
-      obj.names = message.names.map((e) => e ? Names.toJSON(e) : undefined);
-    } else {
-      obj.names = [];
+    if (message.names?.length) {
+      obj.names = message.names.map((e) => Names.toJSON(e));
     }
-    message.pagination !== undefined &&
-      (obj.pagination = message.pagination ? PageResponse.toJSON(message.pagination) : undefined);
+    if (message.pagination !== undefined) {
+      obj.pagination = PageResponse.toJSON(message.pagination);
+    }
     return obj;
   },
 
@@ -758,7 +768,9 @@ export const QueryBidRequest = {
 
   toJSON(message: QueryBidRequest): unknown {
     const obj: any = {};
-    message.index !== undefined && (obj.index = message.index);
+    if (message.index !== "") {
+      obj.index = message.index;
+    }
     return obj;
   },
 
@@ -814,7 +826,9 @@ export const QueryBidResponse = {
 
   toJSON(message: QueryBidResponse): unknown {
     const obj: any = {};
-    message.bids !== undefined && (obj.bids = message.bids ? Bids.toJSON(message.bids) : undefined);
+    if (message.bids !== undefined) {
+      obj.bids = Bids.toJSON(message.bids);
+    }
     return obj;
   },
 
@@ -870,8 +884,9 @@ export const QueryAllBidsRequest = {
 
   toJSON(message: QueryAllBidsRequest): unknown {
     const obj: any = {};
-    message.pagination !== undefined &&
-      (obj.pagination = message.pagination ? PageRequest.toJSON(message.pagination) : undefined);
+    if (message.pagination !== undefined) {
+      obj.pagination = PageRequest.toJSON(message.pagination);
+    }
     return obj;
   },
 
@@ -942,13 +957,12 @@ export const QueryAllBidsResponse = {
 
   toJSON(message: QueryAllBidsResponse): unknown {
     const obj: any = {};
-    if (message.bids) {
-      obj.bids = message.bids.map((e) => e ? Bids.toJSON(e) : undefined);
-    } else {
-      obj.bids = [];
+    if (message.bids?.length) {
+      obj.bids = message.bids.map((e) => Bids.toJSON(e));
     }
-    message.pagination !== undefined &&
-      (obj.pagination = message.pagination ? PageResponse.toJSON(message.pagination) : undefined);
+    if (message.pagination !== undefined) {
+      obj.pagination = PageResponse.toJSON(message.pagination);
+    }
     return obj;
   },
 
@@ -1007,7 +1021,9 @@ export const QueryForsaleRequest = {
 
   toJSON(message: QueryForsaleRequest): unknown {
     const obj: any = {};
-    message.name !== undefined && (obj.name = message.name);
+    if (message.name !== "") {
+      obj.name = message.name;
+    }
     return obj;
   },
 
@@ -1063,7 +1079,9 @@ export const QueryForsaleResponse = {
 
   toJSON(message: QueryForsaleResponse): unknown {
     const obj: any = {};
-    message.forsale !== undefined && (obj.forsale = message.forsale ? Forsale.toJSON(message.forsale) : undefined);
+    if (message.forsale !== undefined) {
+      obj.forsale = Forsale.toJSON(message.forsale);
+    }
     return obj;
   },
 
@@ -1121,8 +1139,9 @@ export const QueryAllForsalesRequest = {
 
   toJSON(message: QueryAllForsalesRequest): unknown {
     const obj: any = {};
-    message.pagination !== undefined &&
-      (obj.pagination = message.pagination ? PageRequest.toJSON(message.pagination) : undefined);
+    if (message.pagination !== undefined) {
+      obj.pagination = PageRequest.toJSON(message.pagination);
+    }
     return obj;
   },
 
@@ -1193,13 +1212,12 @@ export const QueryAllForsalesResponse = {
 
   toJSON(message: QueryAllForsalesResponse): unknown {
     const obj: any = {};
-    if (message.forsale) {
-      obj.forsale = message.forsale.map((e) => e ? Forsale.toJSON(e) : undefined);
-    } else {
-      obj.forsale = [];
+    if (message.forsale?.length) {
+      obj.forsale = message.forsale.map((e) => Forsale.toJSON(e));
     }
-    message.pagination !== undefined &&
-      (obj.pagination = message.pagination ? PageResponse.toJSON(message.pagination) : undefined);
+    if (message.pagination !== undefined) {
+      obj.pagination = PageResponse.toJSON(message.pagination);
+    }
     return obj;
   },
 
@@ -1258,7 +1276,9 @@ export const QueryInitRequest = {
 
   toJSON(message: QueryInitRequest): unknown {
     const obj: any = {};
-    message.address !== undefined && (obj.address = message.address);
+    if (message.address !== "") {
+      obj.address = message.address;
+    }
     return obj;
   },
 
@@ -1314,7 +1334,9 @@ export const QueryInitResponse = {
 
   toJSON(message: QueryInitResponse): unknown {
     const obj: any = {};
-    message.init !== undefined && (obj.init = message.init);
+    if (message.init === true) {
+      obj.init = message.init;
+    }
     return obj;
   },
 
@@ -1370,8 +1392,9 @@ export const QueryAllInitsRequest = {
 
   toJSON(message: QueryAllInitsRequest): unknown {
     const obj: any = {};
-    message.pagination !== undefined &&
-      (obj.pagination = message.pagination ? PageRequest.toJSON(message.pagination) : undefined);
+    if (message.pagination !== undefined) {
+      obj.pagination = PageRequest.toJSON(message.pagination);
+    }
     return obj;
   },
 
@@ -1442,13 +1465,12 @@ export const QueryAllInitsResponse = {
 
   toJSON(message: QueryAllInitsResponse): unknown {
     const obj: any = {};
-    if (message.init) {
-      obj.init = message.init.map((e) => e ? Init.toJSON(e) : undefined);
-    } else {
-      obj.init = [];
+    if (message.init?.length) {
+      obj.init = message.init.map((e) => Init.toJSON(e));
     }
-    message.pagination !== undefined &&
-      (obj.pagination = message.pagination ? PageResponse.toJSON(message.pagination) : undefined);
+    if (message.pagination !== undefined) {
+      obj.pagination = PageResponse.toJSON(message.pagination);
+    }
     return obj;
   },
 
@@ -1520,9 +1542,12 @@ export const QueryListOwnedNamesRequest = {
 
   toJSON(message: QueryListOwnedNamesRequest): unknown {
     const obj: any = {};
-    message.address !== undefined && (obj.address = message.address);
-    message.pagination !== undefined &&
-      (obj.pagination = message.pagination ? PageRequest.toJSON(message.pagination) : undefined);
+    if (message.address !== "") {
+      obj.address = message.address;
+    }
+    if (message.pagination !== undefined) {
+      obj.pagination = PageRequest.toJSON(message.pagination);
+    }
     return obj;
   },
 
@@ -1594,13 +1619,12 @@ export const QueryListOwnedNamesResponse = {
 
   toJSON(message: QueryListOwnedNamesResponse): unknown {
     const obj: any = {};
-    if (message.names) {
-      obj.names = message.names.map((e) => e ? Names.toJSON(e) : undefined);
-    } else {
-      obj.names = [];
+    if (message.names?.length) {
+      obj.names = message.names.map((e) => Names.toJSON(e));
     }
-    message.pagination !== undefined &&
-      (obj.pagination = message.pagination ? PageResponse.toJSON(message.pagination) : undefined);
+    if (message.pagination !== undefined) {
+      obj.pagination = PageResponse.toJSON(message.pagination);
+    }
     return obj;
   },
 
@@ -1991,14 +2015,14 @@ export class GrpcWebImpl {
     const request = { ..._request, ...methodDesc.requestType };
     const maybeCombinedMetadata = metadata && this.options.metadata
       ? new BrowserHeaders({ ...this.options?.metadata.headersMap, ...metadata?.headersMap })
-      : metadata || this.options.metadata;
+      : metadata ?? this.options.metadata;
     return new Promise((resolve, reject) => {
       grpc.unary(methodDesc, {
         request,
         host: this.host,
-        metadata: maybeCombinedMetadata,
-        transport: this.options.transport,
-        debug: this.options.debug,
+        metadata: maybeCombinedMetadata ?? {},
+        ...(this.options.transport !== undefined ? { transport: this.options.transport } : {}),
+        debug: this.options.debug ?? false,
         onEnd: function (response) {
           if (response.status === grpc.Code.OK) {
             resolve(response.message!.toObject());
@@ -2012,10 +2036,10 @@ export class GrpcWebImpl {
   }
 }
 
-declare var self: any | undefined;
-declare var window: any | undefined;
-declare var global: any | undefined;
-var tsProtoGlobalThis: any = (() => {
+declare const self: any | undefined;
+declare const window: any | undefined;
+declare const global: any | undefined;
+const tsProtoGlobalThis: any = (() => {
   if (typeof globalThis !== "undefined") {
     return globalThis;
   }

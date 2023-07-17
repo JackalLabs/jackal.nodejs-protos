@@ -86,10 +86,18 @@ export const Whois = {
 
   toJSON(message: Whois): unknown {
     const obj: any = {};
-    message.index !== undefined && (obj.index = message.index);
-    message.name !== undefined && (obj.name = message.name);
-    message.value !== undefined && (obj.value = message.value);
-    message.data !== undefined && (obj.data = message.data);
+    if (message.index !== "") {
+      obj.index = message.index;
+    }
+    if (message.name !== "") {
+      obj.name = message.name;
+    }
+    if (message.value !== "") {
+      obj.value = message.value;
+    }
+    if (message.data !== "") {
+      obj.data = message.data;
+    }
     return obj;
   },
 

@@ -93,12 +93,14 @@ export const MsgSend = {
 
   toJSON(message: MsgSend): unknown {
     const obj: any = {};
-    message.fromAddress !== undefined && (obj.fromAddress = message.fromAddress);
-    message.toAddress !== undefined && (obj.toAddress = message.toAddress);
-    if (message.amount) {
-      obj.amount = message.amount.map((e) => e ? Coin.toJSON(e) : undefined);
-    } else {
-      obj.amount = [];
+    if (message.fromAddress !== "") {
+      obj.fromAddress = message.fromAddress;
+    }
+    if (message.toAddress !== "") {
+      obj.toAddress = message.toAddress;
+    }
+    if (message.amount?.length) {
+      obj.amount = message.amount.map((e) => Coin.toJSON(e));
     }
     return obj;
   },
@@ -214,15 +216,11 @@ export const MsgMultiSend = {
 
   toJSON(message: MsgMultiSend): unknown {
     const obj: any = {};
-    if (message.inputs) {
-      obj.inputs = message.inputs.map((e) => e ? Input.toJSON(e) : undefined);
-    } else {
-      obj.inputs = [];
+    if (message.inputs?.length) {
+      obj.inputs = message.inputs.map((e) => Input.toJSON(e));
     }
-    if (message.outputs) {
-      obj.outputs = message.outputs.map((e) => e ? Output.toJSON(e) : undefined);
-    } else {
-      obj.outputs = [];
+    if (message.outputs?.length) {
+      obj.outputs = message.outputs.map((e) => Output.toJSON(e));
     }
     return obj;
   },
@@ -404,14 +402,14 @@ export class GrpcWebImpl {
     const request = { ..._request, ...methodDesc.requestType };
     const maybeCombinedMetadata = metadata && this.options.metadata
       ? new BrowserHeaders({ ...this.options?.metadata.headersMap, ...metadata?.headersMap })
-      : metadata || this.options.metadata;
+      : metadata ?? this.options.metadata;
     return new Promise((resolve, reject) => {
       grpc.unary(methodDesc, {
         request,
         host: this.host,
-        metadata: maybeCombinedMetadata,
-        transport: this.options.transport,
-        debug: this.options.debug,
+        metadata: maybeCombinedMetadata ?? {},
+        ...(this.options.transport !== undefined ? { transport: this.options.transport } : {}),
+        debug: this.options.debug ?? false,
         onEnd: function (response) {
           if (response.status === grpc.Code.OK) {
             resolve(response.message!.toObject());
@@ -425,10 +423,10 @@ export class GrpcWebImpl {
   }
 }
 
-declare var self: any | undefined;
-declare var window: any | undefined;
-declare var global: any | undefined;
-var tsProtoGlobalThis: any = (() => {
+declare const self: any | undefined;
+declare const window: any | undefined;
+declare const global: any | undefined;
+const tsProtoGlobalThis: any = (() => {
   if (typeof globalThis !== "undefined") {
     return globalThis;
   }

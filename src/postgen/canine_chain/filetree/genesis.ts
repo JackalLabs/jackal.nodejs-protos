@@ -78,16 +78,14 @@ export const GenesisState = {
 
   toJSON(message: GenesisState): unknown {
     const obj: any = {};
-    message.params !== undefined && (obj.params = message.params ? Params.toJSON(message.params) : undefined);
-    if (message.filesList) {
-      obj.filesList = message.filesList.map((e) => e ? Files.toJSON(e) : undefined);
-    } else {
-      obj.filesList = [];
+    if (message.params !== undefined) {
+      obj.params = Params.toJSON(message.params);
     }
-    if (message.pubkeyList) {
-      obj.pubkeyList = message.pubkeyList.map((e) => e ? Pubkey.toJSON(e) : undefined);
-    } else {
-      obj.pubkeyList = [];
+    if (message.filesList?.length) {
+      obj.filesList = message.filesList.map((e) => Files.toJSON(e));
+    }
+    if (message.pubkeyList?.length) {
+      obj.pubkeyList = message.pubkeyList.map((e) => Pubkey.toJSON(e));
     }
     return obj;
   },
