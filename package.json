@@ -24,7 +24,8 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsc -p tsconfig.json && tscpaths -p tsconfig.json -s ./src -o ./tsc && rollup -c",
+    "build": "tsc -p tsconfig.json && tscpaths -p tsconfig.json -s ./src -o ./tsc && npm run tidy",
+    "tidy": "rollup -c && rm -R dist/tsc",
     "compile": "./scripts/protocgen.sh",
     "packit": "npm run build && npm pack --pack-destination packs"
   },
