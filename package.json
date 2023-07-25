@@ -1,6 +1,6 @@
 {
-  "name": "jackal.nodejs-protos",
-  "version": "0.0.1",
+  "name": "@jackallabs/jackal.nodejs-protos",
+  "version": "1.0.0",
   "description": "Package of all protos used by Jackal.nodejs",
   "keywords": [
     "jackal",
@@ -27,7 +27,8 @@
     "build": "tsc -p tsconfig.json && tscpaths -p tsconfig.json -s ./src -o ./tsc && npm run tidy",
     "tidy": "rollup -c && rm -R dist/tsc",
     "compile": "./scripts/protocgen.sh",
-    "packit": "npm run build && npm pack --pack-destination packs"
+    "packit": "npm run build && npm pack --pack-destination packs",
+    "gen-docs": "npx typedoc"
   },
   "contributors": [
     {
